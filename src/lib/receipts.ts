@@ -72,5 +72,3 @@ export async function listReceipts({
     take: Math.min(200, Math.max(1, limit)),
   });
 }
-
-

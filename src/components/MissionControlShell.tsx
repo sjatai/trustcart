@@ -1,31 +1,12 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
-export type RailState = "collapsed" | "normal" | "expanded";
-export type DrawerState = "collapsed" | "normal" | "expanded";
+export type RailState = "collapsed" | "normal";
+export type DrawerState = "normal";
 
-const RAIL_WIDTH: Record<RailState, number> = { collapsed: 56, normal: 420, expanded: 720 };
-const DRAWER_HEIGHT: Record<DrawerState, number> = { collapsed: 72, normal: 300, expanded: 420 };
-
-function cycleRailState(s: RailState): RailState {
-  if (s === "collapsed") return "normal";
-  if (s === "normal") return "expanded";
-  return "normal";
-}
-
-function railTooltip(s: RailState) {
-  if (s === "collapsed") return "Expand panel";
-  if (s === "normal") return "Expand panel (wide)";
-  return "Shrink panel";
-}
-
-function cycleDrawerState(s: DrawerState): DrawerState {
-  if (s === "collapsed") return "normal";
-  if (s === "normal") return "expanded";
-  return "collapsed";
-}
+const RAIL_WIDTH = 420;
 
 export function MissionControlShell({
   hero,
@@ -49,114 +30,80 @@ export function MissionControlShell({
   lastCommand?: string;
   onAfterSuccessfulRunCollapse?: () => void;
 }) {
-  const [railState, setRailState] = useState<RailState>("normal");
-  const [drawerState, setDrawerState] = useState<DrawerState>("normal");
-
-  // Persist rail state in localStorage.
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem("trusteye:railState");
-      if (raw === "collapsed" || raw === "normal" || raw === "expanded") setRailState(raw);
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem("trusteye:railState", railState);
-    } catch {}
-  }, [railState]);
-
-  const railWidth = useMemo(() => RAIL_WIDTH[railState], [railState]);
-  const drawerHeight = useMemo(() => DRAWER_HEIGHT[drawerState], [drawerState]);
+  const [railState, setRailState] = useState<RailState>("collapsed");
+  const drawerState: DrawerState = "normal";
 
   return (
     <div className="mx-auto h-[100vh] max-h-[100vh] max-w-[1280px] bg-[var(--te-bg)] p-4 md:p-6">
-      <div className="grid h-full grid-rows-[minmax(0,1fr)_auto] gap-4">
-        {/* Top: hero + rail */}
-        <div className="grid min-h-0 grid-cols-1 gap-4 xl:grid-cols-[1fr_auto]">
-          <div className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white">
-            {hero}
-          </div>
-
-          <div
-            className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
-            style={{ width: railWidth }}
-          >
-            <div className="flex h-12 items-center justify-between gap-2 border-b border-[var(--te-border)] px-3">
-              <div className="min-w-0">
-                <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">
-                  {railState === "collapsed" ? "" : "Intelligence"}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {presentationToggle}
-                {railState !== "collapsed" ? (
-                  <button
-                    type="button"
-                    className="rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-                    title="Collapse panel"
-                    aria-label="Collapse panel"
-                    onClick={() => setRailState("collapsed")}
-                  >
-                    ⇤
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  className="rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-                  title={railTooltip(railState)}
-                  aria-label={railTooltip(railState)}
-                  onClick={() => setRailState((s) => cycleRailState(s))}
-                >
-                  {railState === "expanded" ? "⤡" : "⤢"}
-                </button>
-              </div>
-            </div>
-
-            <div className="min-h-0 overflow-hidden" style={{ height: "calc(100% - 48px)" }}>
-              {rail({ railState, setRailState })}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom drawer */}
-        <div
-          className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
-          style={{ height: drawerHeight }}
-        >
-          <div className="flex h-12 items-center justify-between gap-3 border-b border-[var(--te-border)] px-3">
+      <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] gap-4">
+        {/* Header */}
+        <div className="rounded-2xl border border-[var(--te-border)] bg-white px-4 py-3">
+          <div className="flex items-center justify-between">
             <div className="min-w-0">
-              <div className="text-[14px] font-semibold text-[var(--te-text)]">Mission Control</div>
-              {lastCommand ? (
-                <div className="truncate text-[12px] text-[var(--te-muted)]">Last: {lastCommand}</div>
-              ) : null}
+              <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">TrustEye</div>
+              <div className="truncate text-[12px] text-[var(--te-muted)]">Mission Control</div>
             </div>
-            <button
-              type="button"
-              className="rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-              title={drawerState === "collapsed" ? "Expand drawer" : drawerState === "normal" ? "Expand drawer (tall)" : "Collapse drawer"}
-              aria-label="Toggle drawer size"
-              onClick={() => setDrawerState((s) => cycleDrawerState(s))}
-            >
-              {drawerState === "collapsed" ? "⤢" : drawerState === "normal" ? "⤢" : "⤡"}
-            </button>
+            <div className="flex items-center gap-2">
+              {presentationToggle}
+              <button
+                type="button"
+                className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
+                aria-label={railState === "collapsed" ? "Open Inspect panel" : "Close Inspect panel"}
+                title={railState === "collapsed" ? "Open Inspect" : "Close Inspect"}
+                onClick={() => setRailState((s) => (s === "collapsed" ? "normal" : "collapsed"))}
+              >
+                {railState === "collapsed" ? "Inspect" : "Close"}
+              </button>
+            </div>
           </div>
 
-          <div className="min-h-0 overflow-hidden" style={{ height: "calc(100% - 48px)" }}>
+          <div className="mt-3 border-t border-[var(--te-border)] pt-3">
             {drawer({
-              drawerState,
-              setDrawerState,
+              drawerState: "normal",
+              setDrawerState: () => {},
               onSuccessfulRun: () => {
-                setDrawerState("collapsed");
                 onAfterSuccessfulRunCollapse?.();
               },
             })}
           </div>
         </div>
+
+        {/* Main stage + optional Inspect rail */}
+        <div
+          className={
+            railState === "collapsed"
+              ? "min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
+              : "grid min-h-0 grid-cols-[1fr_auto] gap-4"
+          }
+        >
+          <div className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white">
+            {hero}
+          </div>
+
+          {railState === "normal" ? (
+            <div
+              className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
+              style={{ width: RAIL_WIDTH }}
+            >
+              <div className="flex h-12 items-center justify-between gap-2 border-b border-[var(--te-border)] px-3">
+                <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">Inspect</div>
+                <button
+                  type="button"
+                  className="rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
+                  title="Close Inspect"
+                  aria-label="Close Inspect"
+                  onClick={() => setRailState("collapsed")}
+                >
+                  ⇤
+                </button>
+              </div>
+              <div className="min-h-0 overflow-auto" style={{ height: "calc(100% - 48px)" }}>
+                {rail({ railState, setRailState })}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );
 }
-
-
