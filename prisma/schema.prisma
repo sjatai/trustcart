@@ -76,6 +76,24 @@ enum SendStatus {
   SUPPRESSED
 }
 
+enum ReceiptKind {
+  READ
+  DECIDE
+  EXECUTE
+  PUBLISH
+  SUPPRESS
+}
+
+enum ReceiptActor {
+  CRAWLER
+  ORCHESTRATOR
+  INTENT_ENGINE
+  TRUST_ENGINE
+  CONTENT_ENGINE
+  RULE_ENGINE
+  DELIVERY
+}
+
 model Customer {
   id        String   @id @default(cuid())
   name      String
@@ -93,9 +111,12 @@ model Customer {
   probeRuns  ProbeRun[]
   visibilityScoreSnapshots VisibilityScoreSnapshot[]
   trustScoreSnapshots TrustScoreSnapshot[]
+  consumerTrustScoreSnapshots ConsumerTrustSnapshot[]
   activityEvents ActivityEvent[]
   ruleSets RuleSet[]
   segmentSnapshots SegmentSnapshot[]
+  receipts Receipt[]
+  endCustomers EndCustomer[]
 }
 
 model Location {
@@ -194,6 +215,7 @@ model Question {
   customer      Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
   needs         QuestionNeed[]
   gaps          QuestionGap[]
+  assets        Asset[]
 }
 
 model QuestionNeed {
@@ -283,9 +305,26 @@ model TrustScoreSnapshot {
   @@index([customerId])
 }
 
+model ConsumerTrustSnapshot {
+  id            String   @id @default(cuid())
+  customerId    String
+  total         Int      @default(70)
+  clarity       Int      @default(70)
+  proof         Int      @default(70)
+  freshness     Int      @default(70)
+  consistency   Int      @default(70)
+  sentimentLift Int      @default(70)
+  createdAt     DateTime @default(now())
+
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+}
+
 model Asset {
   id          String      @id @default(cuid())
   customerId  String
+  questionId  String?
   type        AssetType
   status      AssetStatus @default(DRAFT)
   title       String?
@@ -295,7 +334,11 @@ model Asset {
   updatedAt   DateTime    @updatedAt
 
   customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  question    Question?   @relation(fields: [questionId], references: [id], onDelete: SetNull)
   versions    AssetVersion[]
+  assetEvidence AssetEvidence[]
+
+  @@index([customerId, questionId])
 }
 
 model AssetVersion {
@@ -308,6 +351,20 @@ model AssetVersion {
   asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@unique([assetId, version])
+}
+
+model AssetEvidence {
+  id        String   @id @default(cuid())
+  assetId   String
+  url       String
+  snippet   String?
+  weight    Int      @default(50)
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@index([assetId])
 }
 
 model Campaign {
@@ -401,6 +458,7 @@ model Session {
 
   customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
   events      Event[]
+  receipts    Receipt[]
 }
 
 model Event {
@@ -426,4 +484,39 @@ model ActivityEvent {
   customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
   @@index([customerId, createdAt])
+}
+
+model Receipt {
+  id        String      @id @default(cuid())
+  customerId String
+  sessionId  String?
+  kind      ReceiptKind
+  actor     ReceiptActor
+  summary   String
+  input     Json?
+  output    Json?
+  createdAt DateTime @default(now())
+
+  customer  Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  session   Session?  @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+
+  @@index([customerId, createdAt])
+  @@index([sessionId, createdAt])
+}
+
+model EndCustomer {
+  id         String   @id @default(cuid())
+  customerId String
+  email      String
+  phone      String?
+  firstName  String?
+  lastName   String?
+  attributes Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@unique([customerId, email])
 }

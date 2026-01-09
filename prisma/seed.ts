@@ -3,14 +3,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const domain = process.env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+  const primaryDomain = "reliablenissan.com";
+  const domain = process.env.NEXT_PUBLIC_DEMO_DOMAIN || primaryDomain;
 
+  // Ensure the demo customer exists (Phase 1 requirement).
   const customer = await prisma.customer.upsert({
-    where: { domain },
+    where: { domain: primaryDomain },
     update: { name: "Reliable Nissan" },
     create: {
       name: "Reliable Nissan",
-      domain,
+      domain: primaryDomain,
       locations: {
         create: [
           {
@@ -37,6 +39,15 @@ async function main() {
     include: { locations: true },
   });
 
+  // Backward-compat: if NEXT_PUBLIC_DEMO_DOMAIN differs, ensure a customer exists for that domain too.
+  if (domain !== primaryDomain) {
+    await prisma.customer.upsert({
+      where: { domain },
+      update: { name: "Demo Customer" },
+      create: { name: "Demo Customer", domain },
+    });
+  }
+
   const questions = [
     { taxonomy: "COST_VALUE", text: "Do you offer bad credit financing?", impactScore: 92, recommendedAssetType: "FAQ" },
     { taxonomy: "NEXT_STEP", text: "How do I book a test drive today?", impactScore: 90, recommendedAssetType: "TRUTH_BLOCK" },
@@ -60,16 +71,117 @@ async function main() {
     });
   }
 
-  await prisma.trustScoreSnapshot.create({
-    data: {
-      customerId: customer.id,
-      total: 72,
-      experience: 78,
-      responsiveness: 70,
-      stability: 68,
-      recency: 72,
-      risk: 60,
-    },
+  // Baseline trust snapshots (System trust + Consumer trust)
+  const existingTrust = await prisma.trustScoreSnapshot.findFirst({ where: { customerId: customer.id } });
+  if (!existingTrust) {
+    await prisma.trustScoreSnapshot.create({
+      data: {
+        customerId: customer.id,
+        total: 72,
+        experience: 78,
+        responsiveness: 70,
+        stability: 68,
+        recency: 72,
+        risk: 60,
+      },
+    });
+  }
+
+  const existingConsumer = await prisma.consumerTrustSnapshot.findFirst({ where: { customerId: customer.id } });
+  if (!existingConsumer) {
+    await prisma.consumerTrustSnapshot.create({
+      data: {
+        customerId: customer.id,
+        total: 70,
+        clarity: 72,
+        proof: 66,
+        freshness: 70,
+        consistency: 68,
+        sentimentLift: 70,
+      },
+    });
+  }
+
+  // Seed EndCustomers (growth targeting)
+  const endCustomers: Array<{ email: string; firstName: string; lastName: string; attributes: any }> = [];
+  for (let i = 0; i < 10; i++) {
+    endCustomers.push({
+      email: `demo.advocate+${i + 1}@example.com`,
+      firstName: "Alex",
+      lastName: `Advocate${i + 1}`,
+      attributes: { rating: 5, sentiment: "positive", referralSent: false, lastReviewAt: new Date().toISOString() },
+    });
+  }
+  for (let i = 0; i < 6; i++) {
+    endCustomers.push({
+      email: `demo.neutral+${i + 1}@example.com`,
+      firstName: "Sam",
+      lastName: `Neutral${i + 1}`,
+      attributes: { rating: 3, sentiment: "neutral", referralSent: false, lastReviewAt: new Date().toISOString() },
+    });
+  }
+  for (let i = 0; i < 4; i++) {
+    endCustomers.push({
+      email: `demo.risk+${i + 1}@example.com`,
+      firstName: "Riley",
+      lastName: `Risk${i + 1}`,
+      attributes: { rating: 1, sentiment: "negative", referralSent: false, lastReviewAt: new Date().toISOString() },
+    });
+  }
+
+  for (const ec of endCustomers) {
+    await prisma.endCustomer.upsert({
+      where: { customerId_email: { customerId: customer.id, email: ec.email } },
+      update: { firstName: ec.firstName, lastName: ec.lastName, attributes: ec.attributes },
+      create: { customerId: customer.id, email: ec.email, firstName: ec.firstName, lastName: ec.lastName, attributes: ec.attributes },
+    });
+  }
+
+  // Seed canonical Receipt ledger (enterprise audit trail)
+  await prisma.receipt.createMany({
+    data: [
+      {
+        customerId: customer.id,
+        kind: "READ" as any,
+        actor: "CRAWLER" as any,
+        summary: "Crawler read seed pages for reliablenissan.com",
+        input: { domain: customer.domain, maxPages: 8 } as any,
+        output: { pages: 8 } as any,
+      },
+      {
+        customerId: customer.id,
+        kind: "DECIDE" as any,
+        actor: "TRUST_ENGINE" as any,
+        summary: "Trust engine computed system trust gate",
+        input: { signals: "seeded" } as any,
+        output: { zone: "READY", total: 72 } as any,
+      },
+      {
+        customerId: customer.id,
+        kind: "PUBLISH" as any,
+        actor: "CONTENT_ENGINE" as any,
+        summary: "Content engine published verified answers (demo)",
+        input: { assets: 2 } as any,
+        output: { published: true } as any,
+      },
+      {
+        customerId: customer.id,
+        kind: "DECIDE" as any,
+        actor: "RULE_ENGINE" as any,
+        summary: "Rule engine evaluated segment for referral advocates",
+        input: { ruleset: "Referral advocates" } as any,
+        output: { size: 42, suppressed: 6 } as any,
+      },
+      {
+        customerId: customer.id,
+        kind: "EXECUTE" as any,
+        actor: "DELIVERY" as any,
+        summary: "Delivery executed DRY_RUN campaign (no sends)",
+        input: { channel: "email", mode: "dry_run" } as any,
+        output: { status: "DRY_RUN" } as any,
+      },
+    ],
+    skipDuplicates: true,
   });
 
   // Default RuleSets (Block C1)
