@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { sendMissionControlMessage } from "@/lib/chatClient";
 import { MissionControlShell } from "@/components/MissionControlShell";
@@ -8,7 +8,16 @@ import { RightRail } from "@/components/RightRail";
 import type { AgentStep } from "@/components/ui/AgentStepCard";
 
 type Step = AgentStep;
-type ChatMessage = { id: string; role: "user" | "assistant"; text: string };
+
+const SCRIPTED_COMMANDS = [
+  "Onboard reliablenissan.com",
+  "Generate intent graph for Reliable Nissan (top 20)",
+  "Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score.",
+  "Generate Trust Pack for top 5 gaps and route for approval.",
+  "Approve and publish the top 2 assets.",
+  "Launch a test-drive campaign; only if safe. Dry-run if needed.",
+  "Summarize outcomes and next 3 highest ROI moves.",
+] as const;
 
 function extractNextCommand(text: string): string | null {
   const matches: string[] = [];
@@ -41,21 +50,7 @@ function MissionDrawer({
   const [input, setInput] = useState("Onboard reliablenissan.com");
   const [loading, setLoading] = useState(false);
   const [lastCommand, setLastCommand] = useState<string>("");
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-
-  const demoScript = useMemo(
-    () => [
-      { id: "act1", label: "Act 1: Onboard", command: "Onboard reliablenissan.com" },
-      { id: "act2", label: "Act 2: Intent graph", command: "Generate intent graph for Reliable Nissan (top 20)" },
-      { id: "act3", label: "Act 3: Probe AI", command: "Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score." },
-      { id: "act4", label: "Act 4: Generate Trust Pack", command: "Generate Trust Pack for top 5 gaps and route for approval." },
-      { id: "act5", label: "Act 5: Publish", command: "Approve and publish the top 2 assets." },
-      { id: "act6", label: "Act 6: Growth (safe)", command: "Launch a test-drive campaign; only if safe. Dry-run if needed." },
-      { id: "act7", label: "Act 7: Summary", command: "Summarize outcomes and next 3 highest ROI moves." },
-    ],
-    []
-  );
-  const [demoIdx, setDemoIdx] = useState(0);
+  const [scriptIdx, setScriptIdx] = useState(0);
 
   async function run(cmd?: string) {
     const trimmed = (cmd ?? input).trim();
@@ -65,14 +60,13 @@ function MissionDrawer({
       const res = await sendMissionControlMessage(trimmed);
 
       const assistantText: string = res.assistantMessage || "—";
-      setMessages((m) => [...m, { id: `a_${Date.now()}`, role: "assistant", text: assistantText }]);
 
-      const currentScript = demoScript[demoIdx]?.command || "";
-      const nextScript = demoScript[Math.min(demoScript.length - 1, demoIdx + 1)]?.command || "";
+      const currentScript = SCRIPTED_COMMANDS[scriptIdx] || "";
+      const nextScript = SCRIPTED_COMMANDS[Math.min(SCRIPTED_COMMANDS.length - 1, scriptIdx + 1)] || "";
       const ranCurrentScript = Boolean(currentScript) && trimmed === currentScript;
 
-      if (ranCurrentScript && nextScript && demoIdx < demoScript.length - 1) {
-        setDemoIdx((i) => Math.min(demoScript.length - 1, i + 1));
+      if (ranCurrentScript && nextScript && scriptIdx < SCRIPTED_COMMANDS.length - 1) {
+        setScriptIdx((i) => Math.min(SCRIPTED_COMMANDS.length - 1, i + 1));
         setInput(nextScript);
       } else {
         const next = extractNextCommand(assistantText);
