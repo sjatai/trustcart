@@ -1,6 +1,4 @@
 import { prisma } from "@/lib/db";
-import { ClaimScope, ReceiptActor, ReceiptKind } from "@prisma/client";
-import { writeReceipt } from "@/lib/receipts";
 
 function findPhones(text: string) {
   const phones = new Set<string>();
@@ -22,33 +20,22 @@ function findHoursLines(text: string) {
 export async function buildClaimsFromCrawl({
   customerId,
   crawlRunId,
-  sessionId,
 }: {
   customerId: string;
   crawlRunId: string;
-  sessionId?: string;
 }) {
   const pages = await prisma.crawlPage.findMany({ where: { crawlRunId } });
   const combinedText = pages.map((p) => p.text || "").join("\n");
-
-  const seedPage = pages[0];
-  const evidenceUrl = seedPage?.url || `https://example.com/${crawlRunId}`;
-
-  await writeReceipt({
-    customerId,
-    sessionId,
-    kind: ReceiptKind.READ,
-    actor: ReceiptActor.CRAWLER,
-    summary: "Crawl pages loaded for claim extraction",
-    input: { crawlRunId, pageCount: pages.length, evidenceUrl },
-  });
 
   const phones = findPhones(combinedText);
   const hours = findHoursLines(combinedText);
 
   const createdClaimIds: string[] = [];
 
-  async function upsertClaim(key: string, value: string, scope: ClaimScope) {
+  const seedPage = pages[0];
+  const evidenceUrl = seedPage?.url || `https://example.com/${crawlRunId}`;
+
+  async function upsertClaim(key: string, value: string, scope: any) {
     const existing = await prisma.claim.findFirst({ where: { customerId, key } });
     const claim = existing
       ? await prisma.claim.update({
@@ -71,37 +58,21 @@ export async function buildClaimsFromCrawl({
   }
 
   if (phones.length > 0) {
-    await upsertClaim("phone.primary", phones[0], ClaimScope.BUSINESS);
+    await upsertClaim("phone.primary", phones[0], "BUSINESS");
   }
   if (hours.length > 0) {
-    await upsertClaim("hours.summary", hours.join(" • ").slice(0, 240), ClaimScope.BUSINESS);
+    await upsertClaim("hours.summary", hours.join(" • ").slice(0, 240), "BUSINESS");
   }
 
   // Always create a minimal “proofable” baseline for demo safety.
   if (phones.length === 0) {
-    await upsertClaim("phone.primary", "(505) 000-0000", ClaimScope.BUSINESS);
+    await upsertClaim("phone.primary", "(505) 000-0000", "BUSINESS");
   }
   if (hours.length === 0) {
-    await upsertClaim("hours.summary", "Mon–Fri: 9am–7pm • Sat: 9am–6pm • Sun: Closed", ClaimScope.BUSINESS);
+    await upsertClaim("hours.summary", "Mon–Fri: 9am–7pm • Sat: 9am–6pm • Sun: Closed", "BUSINESS");
   }
-
-  await writeReceipt({
-    customerId,
-    sessionId,
-    kind: ReceiptKind.DECIDE,
-    actor: ReceiptActor.CRAWLER,
-    summary: "Claims extracted and evidence attached",
-    output: {
-      crawlRunId,
-      createdClaimCount: createdClaimIds.length,
-      phonesFound: phones.length,
-      hoursLinesFound: hours.length,
-      keys: [
-        "phone.primary",
-        "hours.summary",
-      ],
-    },
-  });
 
   return { createdClaimIds, phonesFound: phones.length, hoursLinesFound: hours.length };
 }
+
+

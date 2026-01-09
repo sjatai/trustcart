@@ -4,9 +4,7 @@ import { getOrCreateCustomerByDomain } from "@/lib/customer";
 import { crawlDomain } from "@/lib/crawler";
 import { buildClaimsFromCrawl } from "@/lib/knowledge";
 import { prisma } from "@/lib/db";
-import { approveAndPublishVerifiedAnswers, generateVerifiedAnswerDrafts } from "@/lib/trustPack";
-import { writeReceipt } from "@/lib/receipts";
-import type { WriteReceiptInput } from "@/lib/receipts";
+import { approveAndPublishTopDrafts, generateTrustPackDrafts } from "@/lib/trustPack";
 
 function stepBase(agent: AgentStep["agent"]): AgentStep {
   return { agent, read: [], decide: [], do: [], receipts: [] };
@@ -18,7 +16,6 @@ function receipt(kind: string, summary: string, id?: string): ReceiptRef {
 
 export async function runKnowledge(state: GraphState): Promise<{ step: AgentStep; patch: Partial<GraphState> }> {
   const step = stepBase("KnowledgeAgent");
-  const sessionId = (state as any).sessionId as string | undefined;
   step.read.push("Crawl corpus + extracted facts/claims (if present).");
 
   if (state.command === "onboard") {
@@ -32,7 +29,7 @@ export async function runKnowledge(state: GraphState): Promise<{ step: AgentStep
     const crawl = await crawlDomain({ customerId: customer.id, domain, maxPages: 8 });
     step.receipts.push(receipt("crawl_run", `Crawl ${crawl.status.toLowerCase()}: ${crawl.storedPages} pages (${crawl.failures} failures).`, crawl.crawlRunId));
 
-    const kg = await buildClaimsFromCrawl({ customerId: customer.id, crawlRunId: crawl.crawlRunId, sessionId: (state as any).sessionId });
+    const kg = await buildClaimsFromCrawl({ customerId: customer.id, crawlRunId: crawl.crawlRunId });
     step.receipts.push(
       receipt(
         "knowledge_graph",
@@ -51,52 +48,30 @@ export async function runKnowledge(state: GraphState): Promise<{ step: AgentStep
       },
     });
   } else if (state.command === "generate_trust_pack" || state.command === "approve_publish") {
-    step.decide.push("Generate Verified Answers (FAQ/blog/blocks) from gaps + claims, attach evidence, and route for approval.");
-    step.do.push("Create drafts; on approval publish to /site routes with consumer trust cues (proof + freshness).");
+    step.decide.push("Generate Trust Pack assets (FAQ/blog/truth blocks) from gaps and claims; route for approval.");
+    step.do.push("Create draft assets; on approval publish to /site routes.");
     const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     if (state.command === "generate_trust_pack") {
-      const drafts = await generateVerifiedAnswerDrafts(customer.id);
-      await writeReceipt({
-        customerId: customer.id,
-        sessionId,
-        kind: "DECIDE",
-        actor: "CONTENT_ENGINE",
-        summary: "Verified Answer drafts generated",
-        input: { domain: customer.domain, command: state.command },
-        output: { draftsCount: drafts.length },
-      } satisfies WriteReceiptInput);
-      step.receipts.push(receipt("verified_answers", `Verified Answer drafts created: ${drafts.length}. Approval required.`));
+      const drafts = await generateTrustPackDrafts(customer.id);
+      step.receipts.push(receipt("assets", `Trust Pack drafts created: ${drafts.length}. Approval required.`));
       await prisma.activityEvent.create({
         data: {
           customerId: customer.id,
-          kind: "verified_answers_draft",
-          summary: `Generated ${drafts.length} Verified Answer drafts (approval required).`,
+          kind: "trust_pack_draft",
+          summary: `Generated ${drafts.length} Trust Pack drafts (approval required).`,
           payload: { drafts },
         },
       });
     } else {
-      const pub = await approveAndPublishVerifiedAnswers(customer.id);
-      await writeReceipt({
-        customerId: customer.id,
-        sessionId,
-        kind: "PUBLISH",
-        actor: "CONTENT_ENGINE",
-        summary: "Verified Answers published",
-        input: { domain: customer.domain, command: state.command },
-        output: {
-          count: pub.count,
-          publishedAssetIds: pub.publishedAssetIds,
-          publishedSlugs: pub.publishedSlugs,
-        },
-      } satisfies WriteReceiptInput);
-      step.receipts.push(receipt("verified_answers", `Published ${pub.count} verified answers to /site.`, pub.publishedAssetIds[0]));
+      const pub = await approveAndPublishTopDrafts(customer.id);
+      step.receipts.push(receipt("assets", `Published ${pub.count} assets to /site.`, pub.publishedAssetIds[0]));
       await prisma.activityEvent.create({
         data: {
           customerId: customer.id,
-          kind: "verified_answers_publish",
-          summary: `Approved and published ${pub.count} verified answers.`,
+          kind: "trust_pack_publish",
+          summary: `Approved and published ${pub.count} Trust Pack assets.`,
           payload: pub,
         },
       });
