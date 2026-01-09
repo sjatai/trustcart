@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { sendMissionControlMessage } from "@/lib/chatClient";
 import { MissionControlShell } from "@/components/MissionControlShell";
 import { RightRail } from "@/components/RightRail";
@@ -85,71 +84,36 @@ function MissionDrawer({
   return (
     <div>
       <div className="flex items-center gap-2">
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="w-full rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[14px] outline-none focus:border-[rgba(27,98,248,0.55)]"
-        placeholder="Try: Generate intent graph"
-        onKeyDown={(e) => {
-          if (e.key === "Enter") run();
-        }}
-        aria-label="Command input"
-      />
-      <button
-        type="button"
-        onClick={() => run()}
-        disabled={loading}
-        className="rounded-xl bg-[var(--te-accent)] px-4 py-2 text-[14px] font-semibold text-white disabled:opacity-60"
-      >
-        {loading ? "Running…" : "Run"}
-      </button>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="w-full rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[14px] outline-none focus:border-[rgba(27,98,248,0.55)]"
+          placeholder="Try: Generate intent graph"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") run();
+          }}
+          aria-label="Command input"
+        />
+        <button
+          type="button"
+          onClick={() => run()}
+          disabled={loading}
+          className="rounded-xl bg-[var(--te-accent)] px-4 py-2 text-[14px] font-semibold text-white disabled:opacity-60"
+        >
+          {loading ? "Running…" : "Run"}
+        </button>
       </div>
-      {lastCommand ? (
-        <div className="mt-2 text-[12px] text-[var(--te-muted)]">Last run: {lastCommand}</div>
-      ) : null}
     </div>
   );
 }
 
-export function MissionControlClient({ initialPresentation }: { initialPresentation: boolean }) {
+export function MissionControlClient({ initialPresentation: _initialPresentation }: { initialPresentation: boolean }) {
   const [lastCommand, setLastCommand] = useState<string>("");
-  const [presentation, setPresentationState] = useState<boolean>(initialPresentation);
   const [refreshToken, setRefreshToken] = useState(0);
-
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const setPresentation = (on: boolean) => {
-    setPresentationState(on);
-    try {
-      const sp = new URLSearchParams(window.location.search || "");
-      if (on) sp.set("presentation", "true");
-      else sp.delete("presentation");
-      const qs = sp.toString();
-      router.replace(qs ? `${pathname}?${qs}` : `${pathname}`);
-    } catch {
-      router.replace(on ? `${pathname}?presentation=true` : `${pathname}`);
-    }
-  };
 
   return (
     <MissionControlShell
       hero={<HeroSite />}
-      presentationToggle={
-        <button
-          type="button"
-          className={[
-            "rounded-lg border px-2 py-1 text-[12px]",
-            presentation ? "border-[rgba(27,98,248,0.45)] bg-[rgba(27,98,248,0.08)]" : "border-[var(--te-border)] bg-white",
-          ].join(" ")}
-          onClick={() => setPresentation(!presentation)}
-          aria-pressed={presentation}
-          aria-label="Toggle presentation mode"
-          title="Presentation mode"
-        >
-          Presentation
-        </button>
-      }
       rail={({ railState, setRailState }) => (
         <RightRail railState={railState} setRailState={setRailState} refreshToken={refreshToken} />
       )}

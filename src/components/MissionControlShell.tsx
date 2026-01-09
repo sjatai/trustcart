@@ -38,13 +38,21 @@ export function MissionControlShell({
       <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] gap-4">
         {/* Header */}
         <div className="rounded-2xl border border-[var(--te-border)] bg-white px-4 py-3">
-          <div className="flex items-center justify-between">
+          <div className="grid items-center gap-3 md:grid-cols-[auto_minmax(0,1fr)_auto]">
             <div className="min-w-0">
               <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">TrustEye</div>
               <div className="truncate text-[12px] text-[var(--te-muted)]">Mission Control</div>
             </div>
-            <div className="flex items-center gap-2">
-              {presentationToggle}
+            <div className="w-full md:justify-self-center" style={{ maxWidth: 720 }}>
+              {drawer({
+                drawerState: "normal",
+                setDrawerState: () => {},
+                onSuccessfulRun: () => {
+                  onAfterSuccessfulRunCollapse?.();
+                },
+              })}
+            </div>
+            <div className="flex items-center justify-end gap-2">
               <button
                 type="button"
                 className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
@@ -55,16 +63,6 @@ export function MissionControlShell({
                 {railState === "collapsed" ? "Inspect" : "Close"}
               </button>
             </div>
-          </div>
-
-          <div className="mt-3 border-t border-[var(--te-border)] pt-3">
-            {drawer({
-              drawerState: "normal",
-              setDrawerState: () => {},
-              onSuccessfulRun: () => {
-                onAfterSuccessfulRunCollapse?.();
-              },
-            })}
           </div>
         </div>
 
