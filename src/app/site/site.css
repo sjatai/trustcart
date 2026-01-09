@@ -1,0 +1,254 @@
+/* Reliable Nissan demo site styling (Block 3) */
+
+.rn-root {
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+.rn-container {
+  max-width: var(--te-maxw);
+  margin: 0 auto;
+  padding: 0 var(--te-space-6);
+}
+
+.rn-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--te-border);
+  padding: 18px 0 14px;
+}
+
+.rn-headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.rn-brandName {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--te-text);
+  text-decoration: none;
+}
+
+.rn-brandMeta {
+  font-size: 12px;
+  color: var(--te-muted);
+  margin-top: 4px;
+}
+
+.rn-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.rn-nav a {
+  color: var(--te-text);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.rn-nav a:hover {
+  background: rgba(27, 98, 248, 0.08);
+  text-decoration: none;
+}
+
+.rn-muted {
+  color: var(--te-muted);
+  font-size: 12px;
+}
+
+.rn-hero {
+  padding: 28px 0 22px;
+  background: linear-gradient(180deg, rgba(245, 247, 251, 0.9), rgba(255, 255, 255, 1));
+  border-bottom: 1px solid var(--te-border);
+}
+
+.rn-heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.rn-h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.rn-lead {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: rgba(11, 18, 32, 0.78);
+  max-width: 56ch;
+}
+
+.rn-ctaRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.rn-ctaPrimary,
+.rn-ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.rn-ctaPrimary {
+  background: var(--te-text);
+  color: #ffffff;
+  border: 1px solid var(--te-text);
+}
+
+.rn-ctaSecondary {
+  background: #ffffff;
+  color: var(--te-text);
+  border: 1px solid var(--te-border-strong);
+}
+
+.rn-heroCard {
+  border: 1px solid var(--te-border);
+  border-radius: var(--te-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--te-shadow-sm);
+  padding: 16px;
+}
+
+.rn-bullets {
+  margin: 10px 0 10px;
+  padding-left: 18px;
+  color: rgba(11, 18, 32, 0.82);
+  font-size: 13px;
+}
+
+.rn-main {
+  padding: 18px 0 34px;
+}
+
+.rn-grid2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.rn-card {
+  border: 1px solid var(--te-border);
+  border-radius: var(--te-radius-lg);
+  background: #ffffff;
+  box-shadow: var(--te-shadow-sm);
+  padding: 16px;
+}
+
+.rn-cardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.rn-cardMeta {
+  font-size: 12px;
+  color: var(--te-muted);
+  margin-top: 6px;
+}
+
+/* Featured Experiences chips */
+.rn-chips {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rn-chip {
+  text-align: left;
+  border: 1px solid var(--te-border);
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: var(--te-shadow-sm);
+}
+
+.rn-chip:hover {
+  border-color: rgba(27, 98, 248, 0.35);
+}
+
+.rn-chipActive {
+  border-color: rgba(27, 98, 248, 0.6);
+  box-shadow: 0 0 0 4px rgba(27, 98, 248, 0.12);
+}
+
+.rn-chipLabel {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--te-text);
+}
+
+.rn-chipDesc {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--te-muted);
+}
+
+.rn-chipMeta {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--te-muted);
+}
+
+/* Footer */
+.rn-footer {
+  border-top: 1px solid var(--te-border);
+  padding: 20px 0 28px;
+  background: #ffffff;
+}
+
+.rn-footerGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.rn-footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.rn-footer a {
+  color: var(--te-text);
+  text-decoration: none;
+}
+
+.rn-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 980px) {
+  .rn-heroGrid {
+    grid-template-columns: 1fr;
+  }
+  .rn-chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rn-footerGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

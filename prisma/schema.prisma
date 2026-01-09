@@ -1,0 +1,429 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CrawlStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum ClaimScope {
+  BUSINESS
+  LOCATION
+  SERVICE
+  FINANCE
+  INVENTORY
+  POLICY
+  OTHER
+}
+
+enum QuestionTaxonomy {
+  AVAILABILITY
+  SUITABILITY
+  RISK
+  COST_VALUE
+  NEXT_STEP
+}
+
+enum QuestionState {
+  UNANSWERED
+  WEAK
+  ANSWERED
+  STALE
+  TRUSTED
+}
+
+enum AssetType {
+  FAQ
+  BLOG
+  TRUTH_BLOCK
+  SCHEMA
+  SITEMAP
+  LLMS_TXT
+}
+
+enum AssetStatus {
+  DRAFT
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Provider {
+  OPENAI
+  GEMINI
+  SIMULATED
+}
+
+enum CampaignStatus {
+  DRAFT
+  READY
+  EXECUTED
+  FAILED
+}
+
+enum SendStatus {
+  DRY_RUN
+  SENT
+  FAILED
+  SUPPRESSED
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  domain    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  locations Location[]
+  crawlRuns  CrawlRun[]
+  claims     Claim[]
+  questions  Question[]
+  assets     Asset[]
+  campaigns  Campaign[]
+  sessions   Session[]
+  probeRuns  ProbeRun[]
+  visibilityScoreSnapshots VisibilityScoreSnapshot[]
+  trustScoreSnapshots TrustScoreSnapshot[]
+  activityEvents ActivityEvent[]
+  ruleSets RuleSet[]
+  segmentSnapshots SegmentSnapshot[]
+}
+
+model Location {
+  id          String   @id @default(cuid())
+  customerId  String
+  name        String
+  slug        String
+  address     String?
+  city        String?
+  region      String?
+  country     String?
+  phone       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  claims   Claim[]
+}
+
+model CrawlRun {
+  id          String      @id @default(cuid())
+  customerId  String
+  domain      String
+  status      CrawlStatus @default(PENDING)
+  maxPages    Int         @default(25)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  error       String?
+  createdAt   DateTime    @default(now())
+
+  customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  pages       CrawlPage[]
+  evidence    Evidence[]
+}
+
+model CrawlPage {
+  id         String   @id @default(cuid())
+  crawlRunId String
+  url        String
+  title      String?
+  canonical  String?
+  html       String?
+  text       String?
+  statusCode Int?
+  fetchedAt  DateTime @default(now())
+
+  crawlRun   CrawlRun @relation(fields: [crawlRunId], references: [id], onDelete: Cascade)
+
+  @@index([crawlRunId])
+  @@unique([crawlRunId, url])
+}
+
+model Claim {
+  id          String     @id @default(cuid())
+  customerId  String
+  locationId  String?
+  scope       ClaimScope @default(OTHER)
+  key         String
+  value       String
+  confidence  Int        @default(70)
+  freshnessAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  customer    Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  location    Location?  @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  evidence    Evidence[]
+  needs       QuestionNeed[]
+}
+
+model Evidence {
+  id         String   @id @default(cuid())
+  claimId    String
+  crawlRunId String?
+  url        String
+  snippet    String?
+  capturedAt DateTime @default(now())
+
+  claim      Claim     @relation(fields: [claimId], references: [id], onDelete: Cascade)
+  crawlRun   CrawlRun? @relation(fields: [crawlRunId], references: [id], onDelete: SetNull)
+
+  @@index([claimId])
+}
+
+model Question {
+  id            String           @id @default(cuid())
+  customerId    String
+  taxonomy      QuestionTaxonomy
+  text          String
+  impactScore   Int              @default(50)
+  state         QuestionState    @default(UNANSWERED)
+  recommendedAssetType AssetType @default(FAQ)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  customer      Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  needs         QuestionNeed[]
+  gaps          QuestionGap[]
+}
+
+model QuestionNeed {
+  id         String  @id @default(cuid())
+  questionId String
+  claimKey   String
+  claimId    String?
+  required   Boolean @default(true)
+
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  claim      Claim?   @relation(fields: [claimId], references: [id], onDelete: SetNull)
+
+  @@index([questionId])
+}
+
+model QuestionGap {
+  id           String @id @default(cuid())
+  questionId   String
+  gapType      String
+  severity     Int    @default(50)
+  description  String?
+
+  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model ProbeRun {
+  id          String   @id @default(cuid())
+  customerId  String
+  provider    Provider
+  mode        String
+  questions   Json
+  createdAt   DateTime @default(now())
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  answers     ProbeAnswer[]
+  visibilityScoreSnapshots VisibilityScoreSnapshot[]
+}
+
+model ProbeAnswer {
+  id          String   @id @default(cuid())
+  probeRunId  String
+  question    String
+  answer      String
+  citations   Json?
+  hedging     Int      @default(50)
+  correctness Int?
+  createdAt   DateTime @default(now())
+
+  probeRun    ProbeRun @relation(fields: [probeRunId], references: [id], onDelete: Cascade)
+
+  @@index([probeRunId])
+}
+
+model VisibilityScoreSnapshot {
+  id          String   @id @default(cuid())
+  customerId  String
+  probeRunId  String?
+  total       Int      @default(50)
+  coverage    Int      @default(50)
+  specificity Int      @default(50)
+  proof       Int      @default(50)
+  freshness   Int      @default(50)
+  aiReadiness Int      @default(50)
+  createdAt   DateTime @default(now())
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  probeRun    ProbeRun? @relation(fields: [probeRunId], references: [id], onDelete: SetNull)
+
+  @@index([customerId])
+}
+
+model TrustScoreSnapshot {
+  id             String   @id @default(cuid())
+  customerId     String
+  total          Int      @default(70)
+  experience     Int      @default(70)
+  responsiveness Int      @default(70)
+  stability      Int      @default(70)
+  recency        Int      @default(70)
+  risk           Int      @default(70)
+  createdAt      DateTime @default(now())
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+}
+
+model Asset {
+  id          String      @id @default(cuid())
+  customerId  String
+  type        AssetType
+  status      AssetStatus @default(DRAFT)
+  title       String?
+  slug        String?
+  meta        Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  versions    AssetVersion[]
+}
+
+model AssetVersion {
+  id        String   @id @default(cuid())
+  assetId   String
+  version   Int      @default(1)
+  content   String
+  createdAt DateTime @default(now())
+
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, version])
+}
+
+model Campaign {
+  id          String         @id @default(cuid())
+  customerId  String
+  ruleSetId   String?
+  name        String
+  goal        String
+  status      CampaignStatus @default(DRAFT)
+  dryRun      Boolean        @default(true)
+  requiresApproval Boolean   @default(false)
+  approvedBy  String?
+  approvedAt  DateTime?
+  segmentSize Int?
+  suppressedSize Int?
+  gatingSummary Json?
+  createdAt   DateTime       @default(now())
+  executedAt  DateTime?
+
+  customer    Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ruleSet     RuleSet?       @relation(fields: [ruleSetId], references: [id], onDelete: SetNull)
+  messages    CampaignMessage[]
+  receipts    SendReceipt[]
+}
+
+model RuleSet {
+  id          String   @id @default(cuid())
+  customerId  String
+  name        String
+  description String?
+  json        Json
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  campaigns   Campaign[]
+  segmentSnapshots SegmentSnapshot[]
+
+  @@index([customerId, updatedAt])
+  @@unique([customerId, name])
+}
+
+model SegmentSnapshot {
+  id            String   @id @default(cuid())
+  customerId    String
+  ruleSetId     String
+  size          Int
+  suppressed    Int
+  reasons       Json
+  createdAt     DateTime @default(now())
+
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  ruleSet       RuleSet  @relation(fields: [ruleSetId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, createdAt])
+  @@index([ruleSetId, createdAt])
+}
+
+model CampaignMessage {
+  id         String   @id @default(cuid())
+  campaignId String
+  channel    String
+  subject    String?
+  body       String
+  payload    Json?
+  createdAt  DateTime @default(now())
+
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+model SendReceipt {
+  id          String     @id @default(cuid())
+  campaignId  String
+  status      SendStatus @default(DRY_RUN)
+  to          String
+  channel     String
+  provider    String?
+  payload     Json?
+  error       String?
+  createdAt   DateTime   @default(now())
+
+  campaign    Campaign   @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id          String   @id @default(cuid())
+  customerId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  events      Event[]
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  sessionId String
+  type      String
+  data      Json?
+  createdAt DateTime @default(now())
+
+  session   Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model ActivityEvent {
+  id          String   @id @default(cuid())
+  customerId  String
+  kind        String
+  summary     String
+  payload     Json?
+  createdAt   DateTime @default(now())
+
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, createdAt])
+}
