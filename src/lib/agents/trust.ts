@@ -3,6 +3,7 @@ import { env } from "@/lib/env";
 import { getOrCreateCustomerByDomain } from "@/lib/customer";
 import { prisma } from "@/lib/db";
 import { allowedActionsForTrust } from "@/lib/policy";
+import { writeReceipt } from "@/lib/receipts";
 
 function stepBase(agent: AgentStep["agent"]): AgentStep {
   return { agent, read: [], decide: [], do: [], receipts: [] };
@@ -14,9 +15,10 @@ function receipt(kind: string, summary: string, id?: string): ReceiptRef {
 
 export async function runTrust(state: GraphState): Promise<{ step: AgentStep; patch: Partial<GraphState> }> {
   const step = stepBase("TrustAgent");
-  step.read.push("Birdeye trust signals: reviews/sentiment, responsiveness proxies, recency, risk (demo).");
-  step.decide.push("Compute trust score snapshot and allowed actions based on thresholds.");
-  step.do.push("Gate automation actions (reviews/referrals/campaigns) and produce policy decisions.");
+  step.read.push("System Trust (execution readiness): experience, responsiveness, stability, recency, risk.");
+  step.read.push("Consumer Trust is computed in Content/Publish steps (separate).");
+  step.decide.push("Compute System Trust score snapshot and allowed actions based on thresholds.");
+  step.do.push("Gate automation actions and return policy decisions for other agents.");
   const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
   const customer = await getOrCreateCustomerByDomain(domain);
 
@@ -40,7 +42,25 @@ export async function runTrust(state: GraphState): Promise<{ step: AgentStep; pa
     }));
 
   const policy = allowedActionsForTrust(snapshot.total);
-  step.receipts.push(receipt("trust_score", `Trust score: ${snapshot.total}/100 (${policy.zone}).`, snapshot.id));
+
+  await writeReceipt({
+    customerId: customer.id,
+    kind: "DECIDE",
+    actor: "TRUST_ENGINE",
+    summary: "System trust score computed",
+    input: { domain },
+    output: { trustTotal: snapshot.total, zone: policy.zone, allowed: policy.allowed },
+  });
+
+  await writeReceipt({
+    customerId: customer.id,
+    kind: "DECIDE",
+    actor: "TRUST_ENGINE",
+    summary: "Policy gates resolved",
+    output: { zone: policy.zone, allowed: policy.allowed, blocked: policy.blocked },
+  });
+
+  step.receipts.push(receipt("system_trust", `System Trust: ${snapshot.total}/100 (${policy.zone}).`, snapshot.id));
   step.receipts.push(receipt("policy", `Allowed: ${policy.allowed.slice(0, 4).join(", ")}${policy.allowed.length > 4 ? "…" : ""}`));
 
   await prisma.activityEvent.create({

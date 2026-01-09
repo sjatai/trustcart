@@ -8,7 +8,6 @@ import { SubtitleOverlayPlayer, type SubtitleCue } from "@/components/SubtitleOv
 import { RightRail } from "@/components/RightRail";
 import { AgentStepsAccordion, flattenReceipts } from "@/components/mission-control/AgentStepsAccordion";
 import type { AgentStep } from "@/components/ui/AgentStepCard";
-import { useLocalStorageFlag } from "@/lib/useLocalStorageFlag";
 
 type Step = AgentStep;
 type OverlayCue = SubtitleCue;
@@ -31,7 +30,9 @@ function HeroSite({ overlays, enabled }: { overlays: OverlayCue[]; enabled: bool
   return (
     <div className="relative h-full min-h-0 overflow-hidden">
       <iframe title="demo-site" src="/site" className="h-full w-full" style={{ border: 0 }} />
-      <SubtitleOverlayPlayer enabled={enabled} cues={overlays} />
+      <div className="pointer-events-none">
+        <SubtitleOverlayPlayer enabled={enabled} cues={overlays} />
+      </div>
     </div>
   );
 }
@@ -57,23 +58,45 @@ function MissionDrawer({
       text: "Mission Control is the only control plane.\nTry: “Onboard reliablenissan.com” or “Generate intent graph”.",
     },
   ]);
-  const [composerExpanded, setComposerExpanded] = useState(true);
   const [lastCommand, setLastCommand] = useState<string>("");
   const [expandedStepIdx, setExpandedStepIdx] = useState<number | null>(null);
   const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
 
-  const [demoMode, setDemoMode] = useLocalStorageFlag("trusteye_demo_mode", true);
-  const [autoRunNext, setAutoRunNext] = useLocalStorageFlag("trusteye_auto_run_next", true);
-
+  // Demo script and index
   const demoScript = useMemo(
     () => [
-      { id: "act1", label: "Act 1: Onboard", command: "Onboard reliablenissan.com" },
-      { id: "act2", label: "Act 2: Intent graph", command: "Generate intent graph for Reliable Nissan (top 20)" },
-      { id: "act3", label: "Act 3: Probe AI", command: "Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score." },
-      { id: "act4", label: "Act 4: Generate Trust Pack", command: "Generate Trust Pack for top 5 gaps and route for approval." },
-      { id: "act5", label: "Act 5: Publish", command: "Approve and publish the top 2 assets." },
-      { id: "act6", label: "Act 6: Growth (safe)", command: "Launch a test-drive campaign; only if safe. Dry-run if needed." },
-      { id: "act7", label: "Act 7: Summary", command: "Summarize outcomes and next 3 highest ROI moves." },
+      { id: "act1", label: "Scene 1: Crawl → Knowledge Graph", command: "Onboard reliablenissan.com" },
+      {
+        id: "act2",
+        label: "Scene 2: Intent Graph (Top Questions)",
+        command: "Generate intent graph for Reliable Nissan (top 20) with clusters and priority scores.",
+      },
+      {
+        id: "act3",
+        label: "Scene 3: LLM Readiness (Probe + Score)",
+        command: "Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score. Include gaps and why.",
+      },
+      {
+        id: "act4",
+        label: "Scene 4: Verified Answers (Draft + Evidence)",
+        command: "Generate verified answers for top 5 gaps, attach evidence, and route for approval.",
+      },
+      {
+        id: "act5",
+        label: "Scene 5: Publish (Consumer Trust Surface)",
+        command: "Approve and publish the top 2 verified answers. Add consumer trust cues (freshness + proof).",
+      },
+      {
+        id: "act6",
+        label: "Scene 6: Governed Growth (Rule + Trust Gate)",
+        command:
+          "Create and preview a governed growth rule: select customers with rating=5 AND sentiment=positive AND referralSent=false, then send a referral email. Show eligible vs suppressed and why. Dry-run by default.",
+      },
+      {
+        id: "act7",
+        label: "Scene 7: Proof (Receipts + ROI)",
+        command: "Show receipts for the last run (READ/DECIDE/EXECUTE/SUPPRESS) and summarize next 3 highest ROI moves.",
+      },
     ],
     []
   );
@@ -92,14 +115,19 @@ function MissionDrawer({
       const assistantText: string = res.assistantMessage || "—";
       setMessages((m) => [...m, { id: `a_${Date.now()}`, role: "assistant", text: assistantText }]);
 
-      const next = extractNextCommand(assistantText);
-      if (next) setInput(next);
-
       setLastCommand(trimmed);
       onLastCommand(trimmed);
 
-      // Collapsible composer after first successful run
-      setComposerExpanded(false);
+      // Advance demo script index and preload next command, if not at last scene
+      const nextIdx = Math.min(demoScript.length - 1, demoIdx + 1);
+      if (nextIdx !== demoIdx) {
+        setDemoIdx(nextIdx);
+        setInput(demoScript[nextIdx]?.command || input);
+      } else {
+        // If already at last scene, use extractNextCommand as fallback
+        const next = extractNextCommand(assistantText);
+        if (next) setInput(next);
+      }
 
       // Default: only latest run expanded
       setExpandedStepIdx((res.steps || []).length ? (res.steps || []).length - 1 : null);
@@ -117,171 +145,95 @@ function MissionDrawer({
     return a?.text || "";
   }, [messages]);
 
+  // Header: Scene label, Next scene, Reset
+  const nextIdx = Math.min(demoScript.length - 1, demoIdx + 1);
+
   return (
     <div className="grid h-full min-h-0 grid-cols-1 gap-3 p-3 lg:grid-cols-[1fr_420px]">
       <div className="flex min-h-0 flex-col gap-3 overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[var(--te-border)] bg-white px-3 py-2">
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="text-[12px] font-semibold text-[var(--te-muted)]">Demo Runner</div>
-            <select
-              className="h-9 rounded-xl border border-[var(--te-border)] bg-white px-2 text-[13px] text-[var(--te-text)]"
-              value={demoScript[demoIdx]?.id}
-              onChange={(e) => {
-                const idx = demoScript.findIndex((d) => d.id === e.target.value);
-                if (idx >= 0) setDemoIdx(idx);
-              }}
-              aria-label="Demo Runner selection"
-            >
-              {demoScript.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.label}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-              onClick={() => setInput(demoScript[demoIdx]?.command || "")}
-            >
-              Load
-            </button>
-            <button
-              type="button"
-              className="rounded-lg bg-[var(--te-accent)] px-3 py-1 text-[12px] font-semibold text-white disabled:opacity-60"
-              onClick={() => run(demoScript[demoIdx]?.command)}
-              disabled={loading}
-            >
-              Run
-            </button>
+          <div className="flex items-center gap-3">
+            <div className="text-[12px] font-semibold text-[var(--te-muted)]">Scene</div>
+            <div className="text-[13px] font-semibold text-[var(--te-text)]">{demoScript[demoIdx]?.label}</div>
+          </div>
+          <div className="flex items-center gap-2">
             <button
               type="button"
               className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)] disabled:opacity-60"
               onClick={() => {
-                const next = Math.min(demoScript.length - 1, demoIdx + 1);
-                setDemoIdx(next);
-                const cmd = demoScript[next]?.command || "";
-                setInput(cmd);
-                if (autoRunNext && cmd) run(cmd);
+                if (demoIdx < demoScript.length - 1) {
+                  const next = Math.min(demoScript.length - 1, demoIdx + 1);
+                  setDemoIdx(next);
+                  setInput(demoScript[next]?.command || "");
+                }
               }}
-              disabled={loading || demoIdx >= demoScript.length - 1}
+              disabled={demoIdx >= demoScript.length - 1}
             >
-              Next
+              Next scene
             </button>
-            <label className="flex items-center gap-2 rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] text-[var(--te-text)]">
-              <input type="checkbox" checked={autoRunNext} onChange={(e) => setAutoRunNext(e.target.checked)} />
-              Auto-run Next
-            </label>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="te-meta">Demo Mode</div>
             <button
               type="button"
-              className={`mc-toggle ${demoMode ? "mc-toggleOn" : ""}`.trim()}
-              onClick={() => setDemoMode(!demoMode)}
-              aria-pressed={demoMode}
-              aria-label="Toggle Demo Mode"
-              title="Demo Mode"
+              className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
+              onClick={() => {
+                setDemoIdx(0);
+                setInput(demoScript[0]?.command || "");
+              }}
             >
-              <span className="mc-toggleKnob" />
+              Reset
             </button>
           </div>
         </div>
 
         <div className="flex-none">
-          {composerExpanded ? (
-            <div className="flex items-center gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="w-full rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[14px] outline-none focus:border-[rgba(27,98,248,0.55)]"
-                placeholder="Try: Generate intent graph"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run();
-                }}
-                aria-label="Command input"
-              />
-              <button
-                type="button"
-                onClick={() => run()}
-                disabled={loading}
-                className="rounded-xl bg-[var(--te-accent)] px-4 py-2 text-[14px] font-semibold text-white disabled:opacity-60"
-              >
-                {loading ? "Running…" : "Run"}
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between gap-3 rounded-xl border border-[var(--te-border)] bg-[#fbfcff] px-3 py-2">
-              <div className="min-w-0">
-                <div className="text-[12px] text-[var(--te-muted)]">Last command</div>
-                <div className="truncate text-[13px] font-semibold text-[var(--te-text)]">{lastCommand || "—"}</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  className="rounded-lg border border-[var(--te-border)] bg-white px-3 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-                  onClick={() => {
-                    setInput(lastCommand || input);
-                    setComposerExpanded(true);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  className="rounded-lg bg-[var(--te-accent)] px-3 py-1 text-[12px] font-semibold text-white disabled:opacity-60"
-                  onClick={() => run(lastCommand)}
-                  disabled={loading || !lastCommand}
-                >
-                  Run again
-                </button>
-              </div>
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="w-full rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[14px] outline-none focus:border-[rgba(27,98,248,0.55)]"
+              placeholder="Try: Generate intent graph"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run();
+              }}
+              aria-label="Command input"
+            />
+            <button
+              type="button"
+              onClick={() => run()}
+              disabled={loading}
+              className="rounded-xl bg-[var(--te-accent)] px-4 py-2 text-[14px] font-semibold text-white disabled:opacity-60"
+            >
+              {loading ? "Running…" : "Run"}
+            </button>
+          </div>
         </div>
 
         <div className="min-h-0 flex-1 overflow-auto rounded-2xl border border-[var(--te-border)] bg-white p-3">
-          {demoMode ? (
-            <div className="space-y-3">
-              <div className="rounded-2xl border border-[var(--te-border)] bg-white p-3">
-                <div className="text-[12px] font-semibold text-[var(--te-muted)]">Assistant response</div>
-                <div className="mt-2 whitespace-pre-wrap text-[14px] text-[var(--te-text)]">{lastAssistant || "—"}</div>
+          <div className="space-y-3" aria-label="Chat transcript">
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={[
+                  "rounded-2xl border border-[var(--te-border)] p-3",
+                  m.role === "user" ? "bg-[#fbfcff]" : "bg-white",
+                ].join(" ")}
+              >
+                <div className="text-[12px] font-semibold text-[var(--te-muted)]">{m.role === "user" ? "You" : "TrustEye"}</div>
+                <div className="mt-2 whitespace-pre-wrap text-[14px] text-[var(--te-text)]">{m.text}</div>
               </div>
-              {loading ? (
-                <div className="rounded-2xl border border-[var(--te-border)] bg-white p-3">
-                  <div className="text-[12px] font-semibold text-[var(--te-muted)]">TrustEye</div>
-                  <div className="mt-2 text-[13px] text-[var(--te-muted)]">running…</div>
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <div className="space-y-3" aria-label="Chat transcript">
-              {messages.map((m) => (
-                <div
-                  key={m.id}
-                  className={[
-                    "rounded-2xl border border-[var(--te-border)] p-3",
-                    m.role === "user" ? "bg-[#fbfcff]" : "bg-white",
-                  ].join(" ")}
-                >
-                  <div className="text-[12px] font-semibold text-[var(--te-muted)]">{m.role === "user" ? "You" : "TrustEye"}</div>
-                  <div className="mt-2 whitespace-pre-wrap text-[14px] text-[var(--te-text)]">{m.text}</div>
-                </div>
-              ))}
-              {loading ? (
-                <div className="rounded-2xl border border-[var(--te-border)] bg-white p-3">
-                  <div className="text-[12px] font-semibold text-[var(--te-muted)]">TrustEye</div>
-                  <div className="mt-2 text-[13px] text-[var(--te-muted)]">running…</div>
-                </div>
-              ) : null}
-            </div>
-          )}
+            ))}
+            {loading ? (
+              <div className="rounded-2xl border border-[var(--te-border)] bg-white p-3">
+                <div className="text-[12px] font-semibold text-[var(--te-muted)]">TrustEye</div>
+                <div className="mt-2 text-[13px] text-[var(--te-muted)]">running…</div>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 
       <div className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white p-3">
         <div className="text-[14px] font-semibold text-[var(--te-text)]">Receipts</div>
-        {!demoMode ? <div className="mt-2 text-[12px] text-[var(--te-muted)]">Click a receipt to jump to the step.</div> : null}
+        <div className="mt-2 text-[12px] text-[var(--te-muted)]">Click a receipt to jump to the step.</div>
 
         <div className="mt-3 flex flex-wrap gap-2">
           {flattenReceipts(steps).length === 0 ? (
@@ -306,9 +258,9 @@ function MissionDrawer({
         </div>
 
         <div className="mt-4 border-t border-[var(--te-border)] pt-4">
-          <div className="text-[14px] font-semibold text-[var(--te-text)]">{demoMode ? "What happened" : "Agent steps"}</div>
+          <div className="text-[14px] font-semibold text-[var(--te-text)]">Agent steps</div>
           <div className="mt-2 text-[12px] text-[var(--te-muted)]">
-            {demoMode ? "Agents (collapsed). Expand a row to see details." : "Collapsed rows; latest run expanded by default."}
+            Collapsed rows; latest run expanded by default.
           </div>
           <div className="mt-3 min-h-0 overflow-auto">
             {steps.length === 0 ? (

@@ -82,8 +82,7 @@ export function buildTrustEyeGraph() {
   // NOTE: LangGraph's TS types can be overly strict when using dynamic channels;
   // cast for wiring to keep the demo build clean.
   const g = graph as any;
-  g.setEntryPoint("__start__");
-  g.addEdge("__start__", "Analyzer");
+  g.setEntryPoint("Analyzer");
   g.addEdge("Analyzer", "AIO");
   g.addEdge("AIO", "Knowledge");
   g.addEdge("Knowledge", "Trust");
