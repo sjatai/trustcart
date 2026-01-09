@@ -75,7 +75,14 @@ export function buildTrustEyeGraph() {
         ? [Overlays.gated(), Overlays.birdeyeSOR()]
         : [Overlays.birdeyeSOR()];
 
-    return addStep({ ...state, ...patch, overlays }, step);
+    // Preserve upstream deterministic notes (e.g., SIMULATED probe mode) by prefixing them
+    // to the Reporter executive summary. Reporter owns the final message but shouldn't
+    // erase important execution context from earlier agents.
+    const upstream = (state.assistantMessage || "").trim();
+    const reporterMsg = (patch.assistantMessage || "").trim();
+    const assistantMessage = upstream ? `${upstream}\n\n${reporterMsg}` : reporterMsg;
+
+    return addStep({ ...state, ...patch, assistantMessage, overlays }, step);
   });
 
   // simple linear flow for demo
