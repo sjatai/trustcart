@@ -102,6 +102,21 @@ async function main() {
     });
   }
 
+  const existingVisibility = await prisma.visibilityScoreSnapshot.findFirst({ where: { customerId: customer.id } });
+  if (!existingVisibility) {
+    await prisma.visibilityScoreSnapshot.create({
+      data: {
+        customerId: customer.id,
+        total: 83,
+        coverage: 100,
+        specificity: 95,
+        proof: 66,
+        freshness: 72,
+        aiReadiness: 76,
+      },
+    });
+  }
+
   // Seed EndCustomers (growth targeting)
   const endCustomers: Array<{ email: string; firstName: string; lastName: string; attributes: any }> = [];
   for (let i = 0; i < 10; i++) {
@@ -109,7 +124,12 @@ async function main() {
       email: `demo.advocate+${i + 1}@example.com`,
       firstName: "Alex",
       lastName: `Advocate${i + 1}`,
-      attributes: { rating: 5, sentiment: "positive", referralSent: false, lastReviewAt: new Date().toISOString() },
+      attributes: {
+        rating: 5,
+        sentiment: "positive",
+        referralSent: i % 4 === 0,
+        lastSeenAt: new Date(Date.now() - i * 86_400_000).toISOString(),
+      },
     });
   }
   for (let i = 0; i < 6; i++) {
@@ -117,7 +137,12 @@ async function main() {
       email: `demo.neutral+${i + 1}@example.com`,
       firstName: "Sam",
       lastName: `Neutral${i + 1}`,
-      attributes: { rating: 3, sentiment: "neutral", referralSent: false, lastReviewAt: new Date().toISOString() },
+      attributes: {
+        rating: 3,
+        sentiment: "neutral",
+        referralSent: false,
+        lastSeenAt: new Date(Date.now() - (i + 10) * 86_400_000).toISOString(),
+      },
     });
   }
   for (let i = 0; i < 4; i++) {
@@ -125,7 +150,12 @@ async function main() {
       email: `demo.risk+${i + 1}@example.com`,
       firstName: "Riley",
       lastName: `Risk${i + 1}`,
-      attributes: { rating: 1, sentiment: "negative", referralSent: false, lastReviewAt: new Date().toISOString() },
+      attributes: {
+        rating: 1,
+        sentiment: "negative",
+        referralSent: false,
+        lastSeenAt: new Date(Date.now() - (i + 16) * 86_400_000).toISOString(),
+      },
     });
   }
 
@@ -137,52 +167,94 @@ async function main() {
     });
   }
 
-  // Seed canonical Receipt ledger (enterprise audit trail)
-  await prisma.receipt.createMany({
-    data: [
-      {
-        customerId: customer.id,
-        kind: "READ" as any,
-        actor: "CRAWLER" as any,
-        summary: "Crawler read seed pages for reliablenissan.com",
-        input: { domain: customer.domain, maxPages: 8 } as any,
-        output: { pages: 8 } as any,
-      },
-      {
-        customerId: customer.id,
-        kind: "DECIDE" as any,
-        actor: "TRUST_ENGINE" as any,
-        summary: "Trust engine computed system trust gate",
-        input: { signals: "seeded" } as any,
-        output: { zone: "READY", total: 72 } as any,
-      },
-      {
-        customerId: customer.id,
-        kind: "PUBLISH" as any,
-        actor: "CONTENT_ENGINE" as any,
-        summary: "Content engine published verified answers (demo)",
-        input: { assets: 2 } as any,
-        output: { published: true } as any,
-      },
-      {
-        customerId: customer.id,
-        kind: "DECIDE" as any,
-        actor: "RULE_ENGINE" as any,
-        summary: "Rule engine evaluated segment for referral advocates",
-        input: { ruleset: "Referral advocates" } as any,
-        output: { size: 42, suppressed: 6 } as any,
-      },
-      {
-        customerId: customer.id,
-        kind: "EXECUTE" as any,
-        actor: "DELIVERY" as any,
-        summary: "Delivery executed DRY_RUN campaign (no sends)",
-        input: { channel: "email", mode: "dry_run" } as any,
-        output: { status: "DRY_RUN" } as any,
-      },
-    ],
-    skipDuplicates: true,
-  });
+  // Seed canonical Receipt ledger (enterprise audit trail) — deterministic chain
+  const receiptCount = await prisma.receipt.count({ where: { customerId: customer.id } });
+  if (receiptCount < 10) {
+    await prisma.receipt.createMany({
+      data: [
+        {
+          customerId: customer.id,
+          kind: "READ" as any,
+          actor: "CRAWLER" as any,
+          summary: "Crawler read seed pages for reliablenissan.com",
+          input: { domain: customer.domain, maxPages: 8 } as any,
+          output: { pages: 8, failures: 0 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "READ" as any,
+          actor: "INTENT_ENGINE" as any,
+          summary: "Intent engine loaded top questions and current gaps",
+          input: { domain: customer.domain, topN: 20 } as any,
+          output: { questionsLoaded: 20 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "DECIDE" as any,
+          actor: "TRUST_ENGINE" as any,
+          summary: "Trust engine computed system trust gate",
+          input: { signals: "seeded" } as any,
+          output: { zone: "READY", total: 72 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "DECIDE" as any,
+          actor: "TRUST_ENGINE" as any,
+          summary: "Consumer trust baseline computed",
+          input: { signals: "seeded" } as any,
+          output: { total: 70, clarity: 72, proof: 66 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "PUBLISH" as any,
+          actor: "CONTENT_ENGINE" as any,
+          summary: "Content engine published verified answers (demo)",
+          input: { assetTypes: ["FAQ", "BLOG"], count: 2 } as any,
+          output: { published: true, count: 2 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "DECIDE" as any,
+          actor: "RULE_ENGINE" as any,
+          summary: "Rule engine evaluated segment for referral advocates",
+          input: { ruleset: "Referral advocates" } as any,
+          output: { size: 42, suppressed: 6 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "SUPPRESS" as any,
+          actor: "RULE_ENGINE" as any,
+          summary: "Suppression applied (opt-outs + trust threshold)",
+          input: { reasons: ["opted_out", "trust_below_threshold"] } as any,
+          output: { suppressed: 6 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "EXECUTE" as any,
+          actor: "DELIVERY" as any,
+          summary: "Delivery executed DRY_RUN campaign (no sends)",
+          input: { channel: "email", mode: "dry_run" } as any,
+          output: { status: "DRY_RUN", recipients: 5 } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "READ" as any,
+          actor: "ORCHESTRATOR" as any,
+          summary: "Orchestrator assembled run context (demo)",
+          input: { command: "onboard", domain: customer.domain } as any,
+          output: { steps: ["Analyzer", "Knowledge", "Trust", "Reporter"] } as any,
+        },
+        {
+          customerId: customer.id,
+          kind: "DECIDE" as any,
+          actor: "ORCHESTRATOR" as any,
+          summary: "Orchestrator selected next best action",
+          input: { lastCommand: "onboard" } as any,
+          output: { suggested: "Generate intent graph for Reliable Nissan (top 20)" } as any,
+        },
+      ],
+    });
+  }
 
   // Default RuleSets (Block C1)
   await prisma.ruleSet.upsert({
