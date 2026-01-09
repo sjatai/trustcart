@@ -79,13 +79,17 @@ export function buildTrustEyeGraph() {
   });
 
   // simple linear flow for demo
-  graph.setEntryPoint("Analyzer");
-  graph.addEdge("Analyzer", "AIO");
-  graph.addEdge("AIO", "Knowledge");
-  graph.addEdge("Knowledge", "Trust");
-  graph.addEdge("Trust", "Growth");
-  graph.addEdge("Growth", "Reporter");
-  graph.addEdge("Reporter", END);
+  // NOTE: LangGraph's TS types can be overly strict when using dynamic channels;
+  // cast for wiring to keep the demo build clean.
+  const g = graph as any;
+  g.setEntryPoint("__start__");
+  g.addEdge("__start__", "Analyzer");
+  g.addEdge("Analyzer", "AIO");
+  g.addEdge("AIO", "Knowledge");
+  g.addEdge("Knowledge", "Trust");
+  g.addEdge("Trust", "Growth");
+  g.addEdge("Growth", "Reporter");
+  g.addEdge("Reporter", END);
 
   return graph.compile();
 }

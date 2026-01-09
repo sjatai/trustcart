@@ -12,6 +12,8 @@ function receipt(kind: string, summary: string, id?: string): ReceiptRef {
   return { kind, summary, id };
 }
 
+type RuleSetLite = { id: string; name: string };
+
 export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; patch: Partial<GraphState> }> {
   const step = stepBase("GrowthAgent");
   step.read.push("Intent graph + trust score + available Trust Pack assets (demo).");
@@ -28,13 +30,16 @@ export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; p
     const ruleSetModel = (prisma as any).ruleSet;
     const segmentSnapshotModel = (prisma as any).segmentSnapshot;
 
-    const ruleSets = ruleSetModel
-      ? await ruleSetModel.findMany({ where: { customerId: customer.id, active: true }, orderBy: { updatedAt: "desc" } })
+    const ruleSets: RuleSetLite[] = ruleSetModel
+      ? ((await ruleSetModel.findMany({
+          where: { customerId: customer.id, active: true },
+          orderBy: { updatedAt: "desc" },
+        })) as RuleSetLite[])
       : [];
-    const defaultRule = ruleSets.find((r) => r.name.toLowerCase().includes("referral")) || ruleSets[0];
+    const defaultRule = ruleSets.find((r: RuleSetLite) => r.name.toLowerCase().includes("referral")) || ruleSets[0];
     const selected =
-      ruleSets.find((r) => msg.includes(r.name.toLowerCase())) ||
-      (msg.includes("review") ? ruleSets.find((r) => r.name.toLowerCase().includes("review")) : null) ||
+      ruleSets.find((r: RuleSetLite) => msg.includes(r.name.toLowerCase())) ||
+      (msg.includes("review") ? ruleSets.find((r: RuleSetLite) => r.name.toLowerCase().includes("review")) : null) ||
       defaultRule;
 
     const trust = await prisma.trustScoreSnapshot.findFirst({

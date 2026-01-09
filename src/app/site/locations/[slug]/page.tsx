@@ -68,14 +68,3 @@ export default function Page({ params }: { params: { slug: string } }) {
     </>
   );
 }
-
-export default function Page() {
-  return (
-    <main style={ padding: 24 }>
-      <h1 style={ fontSize: 22, fontWeight: 600 }>Location</h1>
-      <p style={ marginTop: 8, opacity: 0.7 }>
-        Placeholder — content will be generated/published by Trust Pack workflow.
-      </p>
-    </main>
-  );
-}

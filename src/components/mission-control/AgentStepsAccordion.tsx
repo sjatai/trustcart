@@ -37,7 +37,13 @@ export function AgentStepsAccordion({
       {steps.map((s, idx) => {
         const isOpen = openIdx === idx;
         return (
-          <div key={idx} ref={(el) => (refs.current[idx] = el)} className="te-stepCard">
+          <div
+            key={idx}
+            ref={(el) => {
+              refs.current[idx] = el;
+            }}
+            className="te-stepCard"
+          >
             <button
               type="button"
               onClick={() => onOpenIdxChange(isOpen ? null : idx)}
