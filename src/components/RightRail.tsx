@@ -64,6 +64,7 @@ export function RightRail({
   const [trust, setTrust] = useState<any>(null);
   const [visibility, setVisibility] = useState<any>(null);
   const [ruleSets, setRuleSets] = useState<any[] | null>(null);
+  const [receipts, setReceipts] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null);
 
@@ -84,6 +85,11 @@ export function RightRail({
         if (!alive) return;
         const n = Array.isArray(q.json?.questions) ? q.json.questions.length : 0;
         setHasIntentData(n > 0);
+
+        // Always keep audit receipts available (canonical ledger)
+        const rc = await safeJson("/api/receipts?domain=reliablenissan.com&limit=50");
+        if (!alive) return;
+        setReceipts(Array.isArray(rc.json?.receipts) ? rc.json.receipts : []);
 
         // Fetch per-tab data (and refresh after each run via refreshToken)
         if (tab === "intent") {
@@ -282,21 +288,50 @@ export function RightRail({
         ) : null}
 
         {tab === "growth" ? (
-          <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
-            <div className="text-[14px] font-semibold text-[var(--te-text)]">Growth</div>
-            <div className="mt-2 text-[13px] text-slate-700">RuleSets (execution plans) available for this customer.</div>
-            <div className="mt-3 space-y-2">
-              {(ruleSets || []).slice(0, 5).map((r: any) => (
-                <div key={r.id} className="rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[13px] text-slate-700">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="font-semibold">{r.name}</div>
-                    <div className="text-[12px] text-[var(--te-muted)]">{r.active ? "active" : "off"}</div>
+          <div className="grid gap-3">
+            <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
+              <div className="text-[14px] font-semibold text-[var(--te-text)]">Growth</div>
+              <div className="mt-2 text-[13px] text-slate-700">RuleSets (execution plans) available for this customer.</div>
+              <div className="mt-3 space-y-2">
+                {(ruleSets || []).map((r: any) => (
+                  <div
+                    key={r.id}
+                    className="rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[13px] text-slate-700"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="font-semibold">{r.name}</div>
+                      <div className="text-[12px] text-[var(--te-muted)]">{r.active ? "active" : "off"}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-              {ruleSets && ruleSets.length === 0 ? (
-                <div className="mt-2 text-[13px] text-slate-700">No rulesets yet. Seed DB, then refresh.</div>
-              ) : null}
+                ))}
+                {ruleSets && ruleSets.length === 0 ? (
+                  <div className="mt-2 text-[13px] text-slate-700">No rulesets yet. Seed DB, then refresh.</div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
+              <div className="text-[14px] font-semibold text-[var(--te-text)]">Receipts (audit)</div>
+              <div className="mt-2 text-[13px] text-slate-700">Canonical ledger entries (READ/DECIDE/EXECUTE/PUBLISH).</div>
+              <div className="mt-3 space-y-2">
+                {(receipts || []).slice(0, 20).map((r: any) => (
+                  <div key={r.id} className="rounded-xl border border-[var(--te-border)] bg-white px-3 py-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--te-text)]">{r.summary}</div>
+                      <div className="flex items-center gap-2">
+                        <span className="te-pill">{r.kind}</span>
+                        <span className="te-pill">{r.actor}</span>
+                      </div>
+                    </div>
+                    <div className="mt-1 text-[12px] text-[var(--te-muted)]">
+                      {r.createdAt ? new Date(r.createdAt).toLocaleString() : ""}
+                    </div>
+                  </div>
+                ))}
+                {receipts && receipts.length === 0 ? (
+                  <div className="mt-2 text-[13px] text-slate-700">No receipts yet. Run any command.</div>
+                ) : null}
+              </div>
             </div>
           </div>
         ) : null}

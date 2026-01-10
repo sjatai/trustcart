@@ -34,10 +34,10 @@ export function MissionControlShell({
   const drawerState: DrawerState = "normal";
 
   return (
-    <div className="mx-auto h-[100vh] max-h-[100vh] max-w-[1280px] bg-[var(--te-bg)] p-4 md:p-6">
-      <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] gap-4">
+    <div className="mx-auto h-[100vh] max-h-[100vh] max-w-[1280px] bg-[var(--te-bg)] p-2 md:p-3">
+      <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] gap-3">
         {/* Header */}
-        <div className="rounded-2xl border border-[var(--te-border)] bg-white px-4 py-3">
+        <div className="rounded-2xl border border-[var(--te-border)] bg-white px-3 py-2">
           <div className="grid items-center gap-3 md:grid-cols-[auto_minmax(0,1fr)_auto]">
             <div className="min-w-0">
               <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">TrustEye</div>
@@ -74,7 +74,13 @@ export function MissionControlShell({
               : "grid min-h-0 grid-cols-[1fr_auto] gap-4"
           }
         >
-          <div className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white">
+          <div
+            className={
+              railState === "collapsed"
+                ? "min-h-0 overflow-hidden bg-white"
+                : "min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
+            }
+          >
             {hero}
           </div>
 
