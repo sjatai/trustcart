@@ -6,7 +6,7 @@ import { useState } from "react";
 export type RailState = "collapsed" | "normal";
 export type DrawerState = "normal";
 
-const RAIL_WIDTH = 420;
+const RAIL_WIDTH = 520;
 
 export function MissionControlShell({
   hero,
@@ -30,7 +30,7 @@ export function MissionControlShell({
   lastCommand?: string;
   onAfterSuccessfulRunCollapse?: () => void;
 }) {
-  const [railState, setRailState] = useState<RailState>("collapsed");
+  const [railState, setRailState] = useState<RailState>("normal");
   const drawerState: DrawerState = "normal";
 
   return (
@@ -91,15 +91,6 @@ export function MissionControlShell({
             >
               <div className="flex h-12 items-center justify-between gap-2 border-b border-[var(--te-border)] px-3">
                 <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">Inspect</div>
-                <button
-                  type="button"
-                  className="rounded-lg border border-[var(--te-border)] bg-white px-2 py-1 text-[12px] hover:border-[rgba(27,98,248,0.45)]"
-                  title="Close Inspect"
-                  aria-label="Close Inspect"
-                  onClick={() => setRailState("collapsed")}
-                >
-                  ⇤
-                </button>
               </div>
               <div className="min-h-0 overflow-auto" style={{ height: "calc(100% - 48px)" }}>
                 {rail({ railState, setRailState })}

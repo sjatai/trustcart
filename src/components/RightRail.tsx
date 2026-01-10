@@ -57,7 +57,7 @@ export function RightRail({
   setRailState: (s: RailState) => void;
   refreshToken?: number;
 }) {
-  const [tab, setTab] = useState<TabKey>("intent");
+  const [tab, setTab] = useState<TabKey>("growth");
   const [hasIntentData, setHasIntentData] = useState<boolean | null>(null);
   const [sessionGraph, setSessionGraph] = useState<any>(null);
   const [claims, setClaims] = useState<any[] | null>(null);
@@ -180,7 +180,7 @@ export function RightRail({
         })}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-auto p-3">
+      <div className="min-h-0 flex-1 overflow-auto p-4 pb-8">
         <div className="mb-3 flex items-center justify-between">
           <div className="text-[12px] text-[var(--te-muted)]">
             {loading ? "Updating…" : lastUpdatedAt ? `Updated ${new Date(lastUpdatedAt).toLocaleTimeString()}` : ""}
@@ -316,9 +316,11 @@ export function RightRail({
               <div className="mt-3 space-y-2">
                 {(receipts || []).slice(0, 20).map((r: any) => (
                   <div key={r.id} className="rounded-xl border border-[var(--te-border)] bg-white px-3 py-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="min-w-0 truncate text-[13px] font-semibold text-[var(--te-text)]">{r.summary}</div>
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 text-[13px] font-semibold text-[var(--te-text)]" style={{ wordBreak: "break-word" }}>
+                        {r.summary}
+                      </div>
+                      <div className="flex flex-wrap items-center justify-end gap-2">
                         <span className="te-pill">{r.kind}</span>
                         <span className="te-pill">{r.actor}</span>
                       </div>
