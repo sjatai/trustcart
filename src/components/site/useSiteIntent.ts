@@ -18,9 +18,14 @@ export function setStoredIntent(intent: PrimaryIntent) {
 }
 
 export function useSiteIntent() {
-  const [intent, setIntent] = useState<PrimaryIntent>(() => getStoredIntent());
+  // Important: keep the initial render deterministic across SSR + client hydration.
+  // We intentionally do NOT read localStorage during initial render to avoid
+  // server/client mismatches when a previous intent is stored.
+  const [intent, setIntent] = useState<PrimaryIntent>("unknown");
 
   useEffect(() => {
+    // Hydrate from localStorage after mount (safe).
+    setIntent(getStoredIntent());
     const onStorage = () => setIntent(getStoredIntent());
     const onCustom = (e: Event) => {
       const ce = e as CustomEvent<{ intent?: PrimaryIntent }>;
