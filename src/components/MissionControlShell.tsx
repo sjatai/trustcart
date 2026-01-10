@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type RailState = "collapsed" | "normal";
 export type DrawerState = "normal";
@@ -30,8 +30,14 @@ export function MissionControlShell({
   lastCommand?: string;
   onAfterSuccessfulRunCollapse?: () => void;
 }) {
-  const [railState, setRailState] = useState<RailState>("normal");
+  // Keep SSR + first client render deterministic to avoid hydration mismatches.
+  // We then open Inspect after mount (cinematic default).
+  const [railState, setRailState] = useState<RailState>("collapsed");
   const drawerState: DrawerState = "normal";
+
+  useEffect(() => {
+    setRailState("normal");
+  }, []);
 
   return (
     <div className="mx-auto h-[100vh] max-h-[100vh] max-w-[1280px] bg-[var(--te-bg)] p-2 md:p-3">
