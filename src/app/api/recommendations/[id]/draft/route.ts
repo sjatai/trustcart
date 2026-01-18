@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 import { generateDraft, type DraftPayload, type DraftType } from "@/lib/contentDraft";
 import { writeReceipt } from "@/lib/receipts";
+import { extractNeedsVerificationMarkers } from "@/lib/contentSafety";
 
 function extractId(req: Request): string {
   const url = new URL(req.url);
@@ -23,6 +24,8 @@ export async function POST(req: Request) {
   if (!rec || rec.customerId !== customer.id) {
     return NextResponse.json({ ok: false, error: "recommendation_not_found", id }, { status: 404 });
   }
+  // Narrowing doesn't reliably carry into nested helper functions; keep a non-null alias.
+  const rec0 = rec as NonNullable<typeof rec>;
 
   const action = String((rec.llmEvidence as any)?.action || "").toUpperCase();
   if (action && !["CREATE", "UPDATE"].includes(action)) {
@@ -37,11 +40,15 @@ export async function POST(req: Request) {
 
   // If user is just editing an existing draft, do not re-run the LLM.
   if (overrideMarkdown && existingDraft) {
+    const markers = extractNeedsVerificationMarkers(overrideMarkdown);
     const nextDraft = {
       ...existingDraft,
       content: {
         ...(existingDraft.content || {}),
         bodyMarkdown: overrideMarkdown,
+        // If user removed all NEEDS_VERIFICATION markers, clear the needsVerification list,
+        // otherwise publish will remain blocked even after manual edits.
+        needsVerification: markers.length ? markers : [],
       },
     };
     const updated = await prisma.contentRecommendation.update({
@@ -158,8 +165,8 @@ export async function POST(req: Request) {
     const title = args.type === "FAQ" || args.type === "TRUTH_BLOCK" ? titleBase : titleBase;
     const slug =
       args.type === "PRODUCT_UPDATE"
-        ? slugify(String(rec.productHandle || rec.productTitle || args.productSlugOrName || "product"))
-        : slugify(String((rec.llmEvidence as any)?.stableSlug || "")) || slugify(titleBase) || `draft-${String(rec.id).slice(-6)}`;
+        ? slugify(String(rec0.productHandle || rec0.productTitle || args.productSlugOrName || "product"))
+        : slugify(String((rec0.llmEvidence as any)?.stableSlug || "")) || slugify(titleBase) || `draft-${String(rec0.id).slice(-6)}`;
 
     const body =
       args.type === "PRODUCT_UPDATE"
@@ -170,7 +177,7 @@ export async function POST(req: Request) {
           ].join("\n")
         : args.type === "BLOG"
           ? [
-              `# ${String(rec.title || "New blog post")}`.trim(),
+              `# ${String(rec0.title || "New blog post")}`.trim(),
               ``,
               `## What this covers`,
               `- A quick, buyer-first guide for Singapore shoppers`,
@@ -184,7 +191,7 @@ export async function POST(req: Request) {
               `- Add/verify the policy FAQs and link them from PDPs`,
             ].join("\n")
           : [
-              `# ${String(args.questionText || rec.title || "FAQ")}`.trim(),
+              `# ${String(args.questionText || rec0.title || "FAQ")}`.trim(),
               ``,
               `Short answer: This should be answered clearly on-site with a single canonical policy answer for Singapore shoppers.`,
               ``,
@@ -195,11 +202,11 @@ export async function POST(req: Request) {
       raw: { simulated: true, reason: "llm_unavailable_or_timed_out" },
       draft: {
         type: args.type,
-        title: args.type === "PRODUCT_UPDATE" ? String(rec.productHandle || "") : String(title || "Draft"),
-        slug: args.type === "PRODUCT_UPDATE" ? String(rec.productHandle || slug) : String((rec.llmEvidence as any)?.stableSlug || slug),
+        title: args.type === "PRODUCT_UPDATE" ? String(rec0.productHandle || "") : String(title || "Draft"),
+        slug: args.type === "PRODUCT_UPDATE" ? String(rec0.productHandle || slug) : String((rec0.llmEvidence as any)?.stableSlug || slug),
         targetUrl: args.targetUrl,
         content: {
-          shortAnswer: String(args.questionText || rec.title || "").slice(0, 160),
+          shortAnswer: String(args.questionText || rec0.title || "").slice(0, 160),
           bodyMarkdown: body.trim() + "\n",
           factsUsed: [],
           needsVerification: [],

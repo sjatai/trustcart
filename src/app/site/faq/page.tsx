@@ -15,7 +15,7 @@ type FaqPageProps = {
   searchParams?: Record<string, string | string[] | undefined>;
 };
 
-export default async function FaqPage({ searchParams }: FaqPageProps = {}) {
+export default async function FaqPage({ searchParams }: FaqPageProps) {
   const domain = getDomainFromSearchParams(searchParams);
   const customer = await prisma.customer.findUnique({ where: { domain } });
   const publishedFaqAssets = customer

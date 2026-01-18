@@ -104,7 +104,7 @@ const ReceiptActor: Record<CanonicalReceiptActor, CanonicalReceiptActor> = {
 
 async function upsertQuestionGap(args: {
   questionId: string;
-  gapType: "MISSING_CLAIM" | "MISSING_PROOF" | "STALE";
+  gapType: "MISSING_CLAIM" | "MISSING_PROOF" | "STALE" | "LLM_WEAK";
   severity: number;
   description: string;
 }) {
@@ -435,7 +435,7 @@ export async function runAIO(state: GraphState): Promise<{ step: AgentStep; patc
     step.receipts.push(
       receipt(
         "gaps_computed",
-        `Gaps computed: missing_claim=${gapTotals.MISSING_CLAIM}, missing_proof=${gapTotals.MISSING_PROOF}, stale=${gapTotals.STALE}.`
+        `Gaps computed: missing_claim=${gapTotals.MISSING_CLAIM}, missing_proof=${gapTotals.MISSING_PROOF}, stale=${gapTotals.STALE}, llm_weak=${gapTotals.LLM_WEAK}.`
       )
     );
 

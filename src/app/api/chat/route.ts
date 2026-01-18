@@ -28,12 +28,13 @@ export async function POST(req: Request) {
       if (!customer) {
         return Response.json({ ok: false, error: "customer_not_found", domain }, { status: 404 });
       }
+      const customerId = customer.id;
 
       // Safety switch: block publish when draft contains any NEEDS_VERIFICATION markers.
       const needsVerification = extractNeedsVerificationMarkers(content);
       if (needsVerification.length) {
         await writeReceipt({
-          customerId: customer.id,
+          customerId,
           kind: "SUPPRESS",
           actor: "CONTENT_ENGINE",
           summary: "Publish blocked: draft contains NEEDS_VERIFICATION markers",
@@ -48,12 +49,12 @@ export async function POST(req: Request) {
 
       async function markQuestionAnswered() {
         const result = await prisma.question.updateMany({
-          where: { id: questionId, customerId: customer.id },
+          where: { id: questionId, customerId },
           data: { state: "ANSWERED" as any },
         });
         if (result.count > 0) {
           await writeReceipt({
-            customerId: customer.id,
+            customerId,
             kind: "DECIDE",
             actor: "CONTENT_ENGINE",
             summary: "Question marked answered after publish",
@@ -66,13 +67,13 @@ export async function POST(req: Request) {
   
       // idempotent publish: if already published for same question+type, skip create
       const existing = await prisma.asset.findFirst({
-        where: { customerId: customer.id, questionId, type: assetType as any, status: "PUBLISHED" as any },
+        where: { customerId, questionId, type: assetType as any, status: "PUBLISHED" as any },
         select: { id: true, slug: true },
       });
   
       if (existing) {
         await writeReceipt({
-          customerId: customer.id,
+          customerId,
           kind: "PUBLISH",
           actor: "CONTENT_ENGINE",
           summary: "Publish skipped (already published)",
@@ -100,7 +101,7 @@ export async function POST(req: Request) {
   
       const asset = await prisma.asset.create({
         data: {
-          customerId: customer.id,
+          customerId,
           questionId,
           type: assetType as any,
           status: "PUBLISHED" as any,
@@ -113,7 +114,7 @@ export async function POST(req: Request) {
       });
   
       await writeReceipt({
-        customerId: customer.id,
+        customerId,
         kind: "PUBLISH",
         actor: "CONTENT_ENGINE",
         summary: "Approved and published FAQ asset",

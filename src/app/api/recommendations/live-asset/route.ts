@@ -44,7 +44,7 @@ export async function GET(req: Request) {
           title: asset.title,
           type: asset.type,
           content: asset.versions?.[0]?.content || "",
-          placement: asset.meta?.placement || null,
+          placement: (asset.meta as any)?.placement ?? null,
         }
       : null,
   });

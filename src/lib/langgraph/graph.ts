@@ -73,7 +73,7 @@ function receiptContext(state: GraphState): { domainUsed: string; command: DemoC
 
 async function handleRecommendContent(
   state: GraphState,
-  customer: Awaited<ReturnType<typeof getOrCreateCustomerByDomain>>
+  customer: Awaited<ReturnType<typeof getCustomerByDomain>>
 ): Promise<GraphState> {
   const domain = state.customerDomain || customer.domain;
   const recommendations = await generateContentRecommendations(domain);
@@ -119,7 +119,7 @@ async function handleRecommendContent(
 
 async function handleContentStatusCommand(
   state: GraphState,
-  customer: Awaited<ReturnType<typeof getOrCreateCustomerByDomain>>
+  customer: Awaited<ReturnType<typeof getCustomerByDomain>>
 ): Promise<GraphState> {
   const domain = state.customerDomain || customer.domain;
   const id = extractRecommendationId(state.userMessage);
