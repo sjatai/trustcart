@@ -7,9 +7,9 @@ export function StoreHeader() {
         <div className="flex items-center justify-between gap-6">
           <div className="flex items-baseline gap-3">
             <Link href="/" className="no-underline hover:no-underline">
-              <span className="text-[15px] font-semibold tracking-[-0.01em]">SunnySteps</span>
+              <span className="text-[15px] font-semibold tracking-[-0.01em]">SunnyStep</span>
             </Link>
-            <span className="te-meta">demo store</span>
+            <span className="te-meta">+ Trust Cart</span>
           </div>
 
           <nav className="flex items-center gap-4">

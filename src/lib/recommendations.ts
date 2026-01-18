@@ -4,6 +4,9 @@ import { getCustomerByDomain } from "@/lib/domain";
 
 type RecAction = "CREATE" | "UPDATE" | "NO_OP" | "DEFER" | "SKIP";
 
+const DEMO_SUNNY_BLOG_TITLE = "Comfort science for walking + running: reduce fatigue, recover better";
+const DEMO_SUNNY_BLOG_REC_TITLE = `Create blog: ${DEMO_SUNNY_BLOG_TITLE}`;
+
 function excerpt(s: string, max = 280) {
   const t = (s || "").trim().replace(/\s+/g, " ");
   return t.length > max ? `${t.slice(0, max)}…` : t;
@@ -133,6 +136,46 @@ async function blogInventoryTopics(customerId: string) {
   };
 }
 
+function normalizeText(s: string) {
+  return String(s || "")
+    .toLowerCase()
+    .replace(/['"’]/g, "")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function faqTopicFromQuestion(questionText: string) {
+  const q = normalizeText(questionText);
+  if (/ship|shipping|deliver|delivery|courier|track/.test(q)) return "shipping";
+  if (/return|returns|exchange|refund/.test(q)) return "returns";
+  if (/size|sizing|fit|wide|narrow/.test(q)) return "sizing";
+  if (/clean|wash|care|maintain|maintenance/.test(q)) return "care";
+  if (/store|location|address|open|hours|hour|visit|try on/.test(q)) return "stores";
+  if (/payment|pay|card|apple pay|google pay|grabpay|paynow/.test(q)) return "payment";
+  return "general";
+}
+
+async function faqInventoryTopics(customerId: string) {
+  const assets = await prisma.asset.findMany({
+    where: { customerId, type: "FAQ" as any, status: { in: ["DRAFT", "APPROVED", "PUBLISHED"] as any } },
+    orderBy: { updatedAt: "desc" },
+    take: 80,
+    select: { title: true, slug: true },
+  });
+  const titles = assets.map((a) => normalizeText(`${a.title || ""} ${a.slug || ""}`)).filter(Boolean);
+  const has = (re: RegExp) => titles.some((t) => re.test(t));
+  return {
+    titles,
+    shipping: has(/ship|shipping|deliver|delivery|courier|track/),
+    returns: has(/return|returns|exchange|refund/),
+    sizing: has(/size|sizing|fit|wide|narrow/),
+    care: has(/clean|wash|care|maintain/),
+    stores: has(/store|location|address|hours|open/),
+    payment: has(/payment|pay|card|apple|google|paynow|grabpay/),
+  };
+}
+
 export async function generateContentRecommendations(domain: string) {
   const customer = await getCustomerByDomain(domain);
 
@@ -140,6 +183,7 @@ export async function generateContentRecommendations(domain: string) {
   const questions = await topQuestions(customer.id, 60);
   const products = await prisma.product.findMany({ where: { customerId: customer.id }, orderBy: { updatedAt: "desc" }, take: 30 });
   const blogTopics = await blogInventoryTopics(customer.id);
+  const faqTopics = await faqInventoryTopics(customer.id);
 
   const probeByQuestion = new Map<string, { answer: string; hedging?: number | null }>();
   for (const a of probe?.answers || []) {
@@ -147,6 +191,19 @@ export async function generateContentRecommendations(domain: string) {
   }
 
   const recs: any[] = [];
+
+  // Sunnystep demo: keep the DB clean and deterministic (no extra blog topics).
+  // Preserve the single curated lifestyle blog rec, remove other non-published blog recs.
+  if (domain === "sunnystep.com") {
+    await prisma.contentRecommendation.deleteMany({
+      where: {
+        customerId: customer.id,
+        publishTarget: "BLOG" as any,
+        status: { in: ["PROPOSED", "DRAFTED", "APPROVED"] as any },
+        title: { not: DEMO_SUNNY_BLOG_REC_TITLE },
+      },
+    });
+  }
 
   const pickProductFor = (qText: string, seed: string) => {
     // For demo: match by handle/title if present; otherwise spread picks deterministically across catalog.
@@ -165,15 +222,28 @@ export async function generateContentRecommendations(domain: string) {
     blogMissingThemes.push({ themeKey, title, driver });
   };
 
-  // Identify high-impact demand themes from questions.
-  for (const q of questions.slice(0, 25)) {
-    if ((q.impactScore || 0) < 70) continue;
-    const qt = q.text.toLowerCase();
-    if (/ship|deliver|courier|track/.test(qt) && !blogTopics.shipping) addTheme("shipping", "Shipping & delivery in Singapore (what to expect)", q.text);
-    if (/return|exchange|refund/.test(qt) && !blogTopics.returns) addTheme("returns", "Returns & exchanges (simple, buyer-first guide)", q.text);
-    if (/size|sizing|fit|wide|narrow/.test(qt) && !blogTopics.sizing) addTheme("sizing", "Sizing & fit guide (Singapore buyers)", q.text);
-    if (/office|work|wedding|party|travel|outfit|occasion/.test(qt) && !blogTopics.occasions) addTheme("occasions", "Occasion guide: what to wear (comfort-first)", q.text);
-    if (/material|breathable|care|clean|wash|water/.test(qt) && !blogTopics.materials_care) addTheme("materials_care", "Materials + care guide (breathability, cleaning, longevity)", q.text);
+  if (domain === "sunnystep.com") {
+    // Sunnystep demo: force ONE curated lifestyle blog recommendation (no shipping/returns/occasion noise).
+    const driver =
+      questions.find((q) => /walk|walking|running|exercise|standing|fatigue|comfort|recovery|support/i.test(String(q.text || "")))?.text ||
+      "How do supportive shoes reduce fatigue during walking, running, and standing?";
+    blogMissingThemes.splice(0, blogMissingThemes.length);
+    blogMissingThemes.push({ themeKey: "demo_lifestyle", title: DEMO_SUNNY_BLOG_TITLE, driver: String(driver) });
+  } else if (blogMissingThemes.length === 0) {
+    // Identify high-impact demand themes from questions (non-sunnystep domains only).
+    for (const q of questions.slice(0, 25)) {
+      if ((q.impactScore || 0) < 70) continue;
+      const qt = q.text.toLowerCase();
+      if (/ship|deliver|courier|track/.test(qt) && !blogTopics.shipping) addTheme("shipping", "Shipping & delivery in Singapore (what to expect)", q.text);
+      if (/return|exchange|refund/.test(qt) && !blogTopics.returns) addTheme("returns", "Returns & exchanges (simple, buyer-first guide)", q.text);
+      if (/size|sizing|fit|wide|narrow/.test(qt) && !blogTopics.sizing) addTheme("sizing", "Sizing & fit guide (Singapore buyers)", q.text);
+      if (/office|work|wedding|party|travel|outfit|occasion/.test(qt) && !blogTopics.occasions) addTheme("occasions", "Occasion guide: what to wear (comfort-first)", q.text);
+      if (/material|breathable|care|clean|wash|water/.test(qt) && !blogTopics.materials_care) addTheme("materials_care", "Materials + care guide (breathability, cleaning, longevity)", q.text);
+    }
+
+    // Other domains: if nothing is missing, still provide one blog rec for the demo flow.
+    const driver = questions.find((q) => /walk|walking|standing|comfort|fit/i.test(String(q.text || "")))?.text || "How to choose shoes that reduce fatigue?";
+    addTheme("demo_lifestyle", "Comfort science for walking: reduce fatigue, recover better", String(driver));
   }
 
   for (const t of blogMissingThemes.slice(0, 5)) {
@@ -186,7 +256,8 @@ export async function generateContentRecommendations(domain: string) {
       why: `Missing high-impact blog theme driven by demand signals: “${excerpt(t.driver, 70)}”.`,
       targetUrl: "/site/blog",
       suggestedContent: "",
-      questionId: null,
+      // Use a deterministic synthetic id so repeated runs update the same recommendation (no duplication).
+      questionId: stableSlug("demo", `${domain}|blog|${t.themeKey}`),
       questionText: t.driver,
       recommendedAssetType: "BLOG",
       llmEvidence: {
@@ -199,6 +270,66 @@ export async function generateContentRecommendations(domain: string) {
         note: "New blog only (no rewrites). Draft must stay grounded in verified claims/evidence.",
       },
     });
+  }
+
+  // Sunnystep demo: recommend at least 2 FAQ answers that are grounded in claims we already extracted,
+  // but may not be clearly stated as canonical FAQs.
+  if (domain === "sunnystep.com") {
+    const needKeys = ["store.sg.locations", "store.sg.hours", "size.guide.conversion", "product.fit.true_to_size", "product.care.cleaning"];
+    const claims = await prisma.claim.findMany({
+      where: { customerId: customer.id, key: { in: needKeys } },
+      include: { evidence: { take: 2, orderBy: { capturedAt: "desc" } } as any },
+    });
+    const byKey = new Map(claims.map((c: any) => [c.key, c]));
+
+    const mkEvidence = (keys: string[]) =>
+      keys
+        .flatMap((k) => (byKey.get(k)?.evidence || []).map((e: any) => ({ url: e.url, excerpt: excerpt(e.snippet || "", 220) })))
+        .slice(0, 3);
+
+    const demoFaqs = [
+      {
+        idSeed: "demo_faq_store_hours",
+        title: "FAQ: Where are your stores in Singapore, and what are the opening hours?",
+        questionText: "Where can I try SunnyStep shoes in Singapore, and what time are stores open?",
+        claimKey: "store.sg.locations",
+        evidence: mkEvidence(["store.sg.locations", "store.sg.hours"]),
+      },
+      {
+        idSeed: "demo_faq_size_guide",
+        title: "FAQ: How do I choose my size? (fit + size conversion)",
+        questionText: "How do I choose the right size (true-to-size + US/EU/UK conversion)?",
+        claimKey: "size.guide.conversion",
+        evidence: mkEvidence(["product.fit.true_to_size", "size.guide.conversion"]),
+      },
+    ];
+
+    for (const d of demoFaqs) {
+      recs.push({
+        customerId: customer.id,
+        kind: "CREATE",
+        publishTarget: "FAQ",
+        title: d.title,
+        why: "We found the underlying facts in discovery, but shoppers need a single clear FAQ answer.",
+        targetUrl: "/site/faq",
+        suggestedContent: "",
+        claimKey: d.claimKey,
+        questionId: stableSlug("demo", `${domain}|${d.idSeed}`),
+        questionText: d.questionText,
+        recommendedAssetType: "FAQ",
+        llmEvidence: {
+          action: "CREATE" as RecAction,
+          stableSlug: stableSlug("faq", `${domain}|${d.idSeed}`),
+          evidence: {
+            siteCoverage: { covered: true, snippets: d.evidence },
+            llmAnswerQuality: "none",
+            missingClaimKeys: [],
+            missingProofKeys: [],
+          },
+          flags: { faqMissingOnPage: true, demoPinned: true },
+        },
+      });
+    }
   }
 
   for (const q of questions) {
@@ -235,9 +366,57 @@ export async function generateContentRecommendations(domain: string) {
     const surface = cls.surface;
     const publishTarget = surface === "PRODUCT" ? "PRODUCT" : surface === "BLOG" ? "BLOG" : "FAQ";
 
+    // Sunnystep demo: keep blog recommendations to the single curated lifestyle post only.
+    if (domain === "sunnystep.com" && publishTarget === "BLOG") {
+      action = "SKIP";
+    }
+
     // If blog topics are already covered, no-op blog recs rather than creating noise.
     if (publishTarget === "BLOG" && blogMissingThemes.length === 0) {
       action = action === "CREATE" ? "NO_OP" : action;
+    }
+
+    // FAQ: recommend at least a couple of "missing on FAQ page" items for the demo.
+    // Even if we have the facts (claims/evidence), if the FAQ inventory doesn't cover the topic,
+    // create a canonical FAQ so discovery becomes visible to shoppers.
+    let faqMissingOnPage = false;
+    const faqSeemsCovered = (question: string) => {
+      const qn = normalizeText(question);
+      const tokens = qn
+        .split(" ")
+        .map((t) => t.trim())
+        .filter((t) => t.length >= 4 && !["what", "when", "where", "which", "with", "your", "does", "have", "from", "this", "that"].includes(t));
+      if (tokens.length < 2) return true;
+      for (const t of faqTopics.titles || []) {
+        let hits = 0;
+        for (const tok of tokens) if (t.includes(tok)) hits++;
+        if (hits >= 2) return true;
+      }
+      return false;
+    };
+
+    if (publishTarget === "FAQ" && action !== "SKIP" && impact >= 55) {
+      const topic = faqTopicFromQuestion(qText);
+      const coveredByFaq =
+        topic === "shipping"
+          ? faqTopics.shipping
+          : topic === "returns"
+            ? faqTopics.returns
+            : topic === "sizing"
+              ? faqTopics.sizing
+              : topic === "care"
+                ? faqTopics.care
+                : topic === "stores"
+                  ? faqTopics.stores
+                  : topic === "payment"
+                    ? faqTopics.payment
+                    : faqSeemsCovered(qText);
+      faqMissingOnPage = !(coveredByFaq || faqSeemsCovered(qText));
+      // Only label as "missing on FAQ page" if we can ground it in existing discovery/claims.
+      if (!siteCovered) faqMissingOnPage = false;
+      if (faqMissingOnPage) {
+        action = "CREATE";
+      }
     }
 
     // PRODUCT: only recommend if we have products and missing attributes
@@ -296,11 +475,13 @@ export async function generateContentRecommendations(domain: string) {
                   : "Product needs a small verified enrichment block (only missing deltas)."
                 : publishTarget === "BLOG"
                   ? "Only create a new blog if a high-impact theme is missing from inventory."
-                  : missingClaimKeys.length
-                    ? `Missing site facts: ${missingClaimKeys.slice(0, 3).join(", ")}.`
-                    : pq.label !== "strong"
-                      ? `LLM answer quality is ${pq.label}; needs a verified canonical answer.`
-                      : "Create a canonical, verified answer for this demand signal.",
+                  : faqMissingOnPage
+                    ? "We have the facts in discovery, but the FAQ page doesn’t answer this clearly yet."
+                    : missingClaimKeys.length
+                      ? `Missing site facts: ${missingClaimKeys.slice(0, 3).join(", ")}.`
+                      : pq.label !== "strong"
+                        ? `LLM answer quality is ${pq.label}; needs a verified canonical answer.`
+                        : "Create a canonical, verified answer for this demand signal.",
       targetUrl: publishTarget === "PRODUCT" && productHandle ? `/site/products/${productHandle}` : publishTarget === "BLOG" ? "/site/blog" : "/site/faq",
       suggestedContent: "",
       claimKey: missingClaimKeys[0] || null,
@@ -320,6 +501,7 @@ export async function generateContentRecommendations(domain: string) {
           missingClaimKeys,
           missingProofKeys,
         },
+        flags: { faqMissingOnPage },
         notes:
           publishTarget === "PRODUCT" && productMissing.length === 0
             ? "Product appears sufficiently covered; recommend no-op unless probe shows weak/unverifiable."
@@ -340,8 +522,14 @@ export async function generateContentRecommendations(domain: string) {
   recs.sort((a, b) => priority(a) - priority(b));
 
   const created: any[] = [];
-  const takeByTarget = (target: "PRODUCT" | "BLOG" | "FAQ", n: number) =>
-    recs.filter((r) => r.publishTarget === target && String(r.llmEvidence?.action || "") === "CREATE").slice(0, n);
+  const takeByTarget = (target: "PRODUCT" | "BLOG" | "FAQ", n: number) => {
+    const pool = recs.filter((r) => r.publishTarget === target && String(r.llmEvidence?.action || "") === "CREATE");
+    if (target !== "FAQ") return pool.slice(0, n);
+    // Prefer at least 2 FAQ items that are explicitly "missing on FAQ page".
+    const missingOnFaq = pool.filter((r) => r.llmEvidence?.flags?.faqMissingOnPage).slice(0, 2);
+    const rest = pool.filter((r) => !r.llmEvidence?.flags?.faqMissingOnPage);
+    return [...missingOnFaq, ...rest].slice(0, n);
+  };
 
   const selected = [
     ...takeByTarget("PRODUCT", 3),
@@ -403,6 +591,17 @@ export async function generateContentRecommendations(domain: string) {
       );
     }
   }
+
+  // Keep the active set deterministic and demo-friendly:
+  // prune old PROPOSED recommendations not part of the current selected set (keeps any drafted/approved work).
+  const keepIds = new Set(created.map((c) => c.id));
+  await prisma.contentRecommendation.deleteMany({
+    where: {
+      customerId: customer.id,
+      status: "PROPOSED" as any,
+      id: { notIn: Array.from(keepIds) },
+    },
+  });
 
   await writeReceipt({
     customerId: customer.id,

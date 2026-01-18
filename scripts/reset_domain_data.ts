@@ -33,6 +33,10 @@ async function main() {
   if (!domain) throw new Error("missing --domain");
 
   const keepProducts = hasFlag("keep-products") || !hasFlag("delete-products");
+  // For the Sunnystep demo we keep ONE curated lifestyle blog recommendation in the DB
+  // so it survives "clean/reset" runs before a demo.
+  const keepDemoLifestyleBlogRec = !hasFlag("delete-demo-blog-rec");
+  const demoLifestyleBlogTitle = "Create blog: Comfort science for walking + running: reduce fatigue, recover better";
 
   const customer = await prisma.customer.findUnique({ where: { domain } });
   if (!customer) throw new Error(`customer_not_found: ${domain}`);
@@ -48,7 +52,16 @@ async function main() {
   await prisma.asset.deleteMany({ where: { customerId: customer.id } });
 
   // Recommendations
-  await prisma.contentRecommendation.deleteMany({ where: { customerId: customer.id } });
+  if (!keepDemoLifestyleBlogRec) {
+    await prisma.contentRecommendation.deleteMany({ where: { customerId: customer.id } });
+  } else {
+    await prisma.contentRecommendation.deleteMany({
+      where: {
+        customerId: customer.id,
+        NOT: { publishTarget: "BLOG" as any, title: demoLifestyleBlogTitle },
+      },
+    });
+  }
 
   // Questions + gaps/needs
   await prisma.questionGap.deleteMany({ where: { question: { customerId: customer.id } } });

@@ -47,7 +47,19 @@ export function FaqAccordion({
           (r: any) => String(r.publishTarget) === "FAQ" && String(r.llmEvidence?.action || "").toUpperCase() === "CREATE",
         );
         if (!newFaq.length) return null;
-        return <TrustEyeInlineEditor domain={domain} recommendations={newFaq as any} autoOpenAll />;
+        return (
+          <TrustEyeInlineEditor
+            domain={domain}
+            recommendations={newFaq as any}
+            autoOpenAll
+            autoDraft={false}
+            showRegenerate={false}
+            emptyMessage="Please answer."
+            reloadOnPublish
+            publishVariant="subtle"
+            showDiscard
+          />
+        );
       })()}
 
       {normalized.map((it) => {
@@ -75,7 +87,17 @@ export function FaqAccordion({
                   {it.answer}
                 </div>
                 {updateRequired ? (
-                  <TrustEyeInlineEditor domain={domain} recommendations={relevant as any} autoOpenRecId={autoRecId} />
+                  <TrustEyeInlineEditor
+                    domain={domain}
+                    recommendations={relevant as any}
+                    autoOpenRecId={autoRecId}
+                    autoDraft={false}
+                    showRegenerate={false}
+                    emptyMessage="Please answer."
+                    reloadOnPublish
+                    publishVariant="subtle"
+                    showDiscard
+                  />
                 ) : null}
               </div>
             ) : null}

@@ -436,21 +436,6 @@ export function RightRail({
                 )}
               </div>
             </div>
-            <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
-              <div className="text-[14px] font-semibold text-[var(--te-text)]">AI Visibility</div>
-              <div className="mt-2 text-[13px] text-slate-700">
-                {visibility?.latest?.total ? (
-                  <>
-                    total <span className="font-semibold">{visibility.latest.total}/100</span>{" "}
-                    <span className="text-[12px] text-[var(--te-muted)]">
-                      (coverage {visibility.latest.coverage}, proof {visibility.latest.proof})
-                    </span>
-                  </>
-                ) : (
-                  "No visibility snapshot yet. Run: “Probe ChatGPT + Gemini …”"
-                )}
-              </div>
-            </div>
           </div>
         ) : null}
 
@@ -458,7 +443,7 @@ export function RightRail({
           <div className="grid gap-3">
             <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
               <div className="text-[14px] font-semibold text-[var(--te-text)]">Growth</div>
-              <div className="mt-2 text-[13px] text-slate-700">RuleSets (execution plans) available for this customer.</div>
+              <div className="mt-2 text-[13px] text-slate-700">Growth functions on intent to be integrated with customer main site.</div>
               <div className="mt-3 space-y-2">
                 {(ruleSets || []).map((r: any) => (
                   <div

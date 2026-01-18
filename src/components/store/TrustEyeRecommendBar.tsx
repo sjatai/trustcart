@@ -135,7 +135,7 @@ export function TrustEyeRecommendBar({
               TrustEye {stage === "published" ? "Published" : "Recommended"} · {label}
             </div>
             <div className="mt-1 text-[12px] text-[var(--te-muted)]">
-              {stage === "published" ? "Published changes are now reflected on this page." : `${actionable.length} item(s) to review. No duplication; no filler.`}
+              {stage === "published" ? "Published changes are now reflected on this page." : `${actionable.length} item(s) to review.`}
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-2">
