@@ -4,6 +4,9 @@ import { dbUnavailablePayload, isDbUnavailableError } from "@/lib/dbUnavailable"
 import { getOrCreateSessionId } from "@/lib/session";
 import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 function mapExperienceToIntent(experience?: string): { primaryIntent: string; recommendedExperience: string } {
   const x = String(experience || "");
   if (x === "trade_in_value") return { primaryIntent: "trade_in_value", recommendedExperience: "trade_in_value" };
