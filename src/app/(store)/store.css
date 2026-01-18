@@ -1,0 +1,114 @@
+.ss-store {
+  font-family: var(--ss-font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.ss-store .te-h1,
+.ss-store .te-h2 {
+  font-family: var(--ss-font-display), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  letter-spacing: -0.02em;
+}
+
+.ss-store header a {
+  text-decoration: none;
+}
+
+.ss-store .te-panel {
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.ss-store .te-pill {
+  background: rgba(251, 252, 255, 0.92);
+}
+
+.ss-store .te-buttonSmall {
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.ss-store .ss-metaBox {
+  margin-top: 10px;
+  border: 1px solid var(--te-border);
+  background: rgba(251, 252, 255, 0.75);
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+
+.ss-store .ss-metaTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.ss-store .ss-metaBrand {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--te-text);
+}
+
+.ss-store .ss-metaScore {
+  font-size: 12px;
+  color: var(--te-muted);
+  font-weight: 700;
+}
+
+.ss-store .ss-metaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.ss-store .ss-metaDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(100, 116, 139, 0.5);
+}
+
+.ss-store .ss-dotGood {
+  background: rgba(34, 197, 94, 0.85);
+}
+
+.ss-store .ss-dotWarn {
+  background: rgba(245, 158, 11, 0.85);
+}
+
+.ss-store .ss-metaText {
+  font-size: 12px;
+  color: var(--te-muted);
+}
+
+.ss-store .ss-discoveryBar {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.ss-store .ss-discoveryBar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 55%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(27, 98, 248, 0.0), rgba(27, 98, 248, 0.45), rgba(27, 98, 248, 0.0));
+  transform: translateX(-60%);
+  animation: ss-discoverySweep 1.2s ease-in-out infinite;
+}
+
+@keyframes ss-discoverySweep {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(190%);
+  }
+}
+

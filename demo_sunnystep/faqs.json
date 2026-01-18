@@ -1,0 +1,41 @@
+{
+  "source": "derived_from_pages_meta",
+  "items": [
+    {
+      "question": "What is this page about: Store Locations-Sunnystep-The most comfortable walking shoes?",
+      "answer": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "sourceUrl": "https://sunnystep.com/pages/store-locations",
+      "derived": true
+    },
+    {
+      "question": "What is this page about: Shipping Policy?",
+      "answer": "At Sunnystep, we aim to deliver your orders efficiently and reliably, whether youre shopping from Singapore or abroad. Singapore Orders Shipping Fees: Calculated at checkout based on the delivery address. Processing Time: Orders are processed and dispatched within 3 business days from the date of purchase. Delivery Tim",
+      "sourceUrl": "https://sunnystep.com/pages/shipping-policy",
+      "derived": true
+    },
+    {
+      "question": "What is this page about: Returns & Exchanges Policy?",
+      "answer": "Return Policy Returns are accepted only for defective products. All return requests are handled on a case-by-case basis to ensure fairness and quality control. If you receive a defective product: Contact us via WhatsApp at +65 93729406 or email care@mysunnystep.com. Provide clear photos of the defect and your order num",
+      "sourceUrl": "https://sunnystep.com/pages/returns-exchanges-policy",
+      "derived": true
+    },
+    {
+      "question": "What is this page about: Terms and Conditions-Sunnystep-The most comfortable walking shoes?",
+      "answer": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "sourceUrl": "https://sunnystep.com/pages/terms-and-conditions",
+      "derived": true
+    },
+    {
+      "question": "What is this page about: Privacy Policy?",
+      "answer": "Privacy Policy Date: 29 May 2025 1. Information on the Collection of Personal Data 1.1 Personal Data This policy explains how Sunnystep (SUNNYSTEP PTE. LTD.) collects, uses, discloses, and protects your personal data when you visit our website (www.mysunnystep.com). Personal data refers to any information that can iden",
+      "sourceUrl": "https://sunnystep.com/pages/privacy-policy",
+      "derived": true
+    },
+    {
+      "question": "What is this page about: Contact Us?",
+      "answer": "Got a Question? Were Here to Help. Whether youre wondering about fit, tracking your order, or just want to say hi were all ears (and happy feet). Our team is here to support you every step of the way. 📬 Email Us Drop us a message at [insert email] and well get back to you within 12 business days. 🛍 Visit Us In-Store",
+      "sourceUrl": "https://sunnystep.com/pages/contact-us",
+      "derived": true
+    }
+  ]
+}

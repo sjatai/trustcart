@@ -3,6 +3,22 @@ import type { DemoCommand } from "@/lib/agents/types";
 export function parseDemoCommand(userMessage: string): DemoCommand {
   const msg = userMessage.toLowerCase();
 
+  if (msg.includes("draft content") || msg.includes("draft_content")) return "draft_content";
+  if (msg.includes("approve content") || msg.includes("approve_content")) return "approve_content";
+  if (msg.includes("publish content") || msg.includes("publish_content")) return "publish_content";
+
+  if (msg.includes("recommend") || msg.includes("recommendation")) {
+    return "recommend_content";
+  }
+
+  // If the user is explicitly asking for a summary, do not hijack into reprobe just because "delta" is mentioned.
+  // (E.g. "Summarize ... visibility delta" should be "summarize".)
+  if (msg.includes("summarize") || msg.includes("summary") || msg.includes("next 3")) {
+    const explicitlyAsksToReprobe =
+      msg.includes("re-probe") || msg.includes("reprobe") || msg.includes("run probes") || msg.includes("re run probes");
+    if (!explicitlyAsksToReprobe) return "summarize";
+  }
+
   // Prefer delta/reprobe if user is explicitly asking for change-over-time.
   if (msg.includes("re-probe") || msg.includes("reprobe") || msg.includes("delta") || msg.includes("change since") || msg.includes("before/after")) {
     return "reprobe_delta";

@@ -1,12 +1,11 @@
 import { prisma } from "@/lib/db";
-import { env } from "@/lib/env";
 import { allowedActionsForTrust } from "@/lib/policy";
 import { dbUnavailablePayload, isDbUnavailableError } from "@/lib/dbUnavailable";
+import { getDomainFromRequest } from "@/lib/domain";
 
 export async function GET(req: Request) {
   try {
-    const url = new URL(req.url);
-    const customerDomain = url.searchParams.get("customerDomain") || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const customerDomain = getDomainFromRequest(req);
 
     const customer = await prisma.customer.findUnique({ where: { domain: customerDomain } });
     if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });

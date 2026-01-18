@@ -1,7 +1,8 @@
-import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
 import { dbUnavailablePayload, isDbUnavailableError } from "@/lib/dbUnavailable";
+import { getOrCreateSessionId } from "@/lib/session";
+import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
 function mapExperienceToIntent(experience?: string): { primaryIntent: string; recommendedExperience: string } {
   const x = String(experience || "");
@@ -12,13 +13,16 @@ function mapExperienceToIntent(experience?: string): { primaryIntent: string; re
   return { primaryIntent: "unknown", recommendedExperience: "unknown" };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const jar = await cookies();
-    const sessionId = jar.get("trusteye_session")?.value || "anonymous";
+    // Ensure we have a real session id (and set it if missing) instead of a placeholder like "anonymous".
+    const sessionId = await getOrCreateSessionId();
 
-    const customerDomain = env.NEXT_PUBLIC_DEMO_DOMAIN ?? "reliablenissan.com";
-    const customer = await prisma.customer.findUnique({ where: { domain: customerDomain } });
+    const url = new URL(req.url);
+    const qpDomain = url.searchParams.get("domain")?.trim();
+
+    const customerDomain = qpDomain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
+    const customer = await getCustomerByDomain(customerDomain).catch(() => null);
 
     const lastEvents = await prisma.event.findMany({
       where: { sessionId },

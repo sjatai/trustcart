@@ -1,0 +1,2914 @@
+{
+  "baseUrl": "https://sunnystep.com/",
+  "crawledAt": "2026-01-16T19:31:24.991Z",
+  "settings": {
+    "maxPages": 140,
+    "maxDepth": 4,
+    "headless": true
+  },
+  "totals": {
+    "pagesCrawled": 114,
+    "products": 32,
+    "faqs": 0,
+    "blogs": 62
+  },
+  "products": [
+    {
+      "url": "https://sunnystep.com/products/dream-satin-sneaker-cny",
+      "title": "Dream Satin Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Satin Sneaker CNY Edition",
+        "description": "Dream Satin Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484540292",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/1-88.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/-.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/-2.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-satin-sneaker-cny",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-knit-dual-tone-ballerina",
+      "title": "Dream Knit Dual Tone Ballerina-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Knit Dual Tone Ballerina",
+        "description": "Dream Knit Dual Tone Ballerina-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484534123",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/New-Arrival-Product-Frame-(3).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-148.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-149.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-knit-dual-tone-ballerina",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-satin-sneaker",
+      "title": "Dream Satin Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Satin Sneaker",
+        "description": "Dream Satin Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484540056",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/2-100.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-130.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-131.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-satin-sneaker",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-knit-sneaker",
+      "title": "Dream Knit Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Knit Sneaker",
+        "description": "Dream Knit Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484534758",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/7-28.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-139.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-140.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-knit-sneaker",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-lace-up-mules",
+      "title": "Dream Lace-up Mules - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Lace-up Mules",
+        "description": "Dream Lace-up Mules-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484534246",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/6-49.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-115.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-116.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "135",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-lace-up-mules",
+          "priceCurrency": "SGD",
+          "price": "135",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-satin-flats",
+      "title": "Dream Satin Flats-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Satin Flats",
+        "description": "Dream Satin Flats-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484540773",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/4-69.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-124.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-125.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-satin-flats",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-mesh-ballerina",
+      "title": "Dream Mesh Ballerina-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Mesh Ballerina",
+        "description": "Dream Mesh Ballerina-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484534871",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/5-63.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-136.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-137.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-mesh-ballerina",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-zip-martin-boots",
+      "title": "Balance Zip Martin Boots - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Balance Zip Martin Boots",
+        "description": "Balance Zip Martin Boots-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484532525",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/New-Arrival-Product-Frame-(2).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-32.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-31.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-zip-martin-boots",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-boat-shoe",
+      "title": "Balance Penny Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Balance Boat Shoe",
+        "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484532730",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-(36).gif?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-14.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-13.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-boat-shoe",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-dress-derby",
+      "title": "Balance Dress Derby",
+      "product": {
+        "name": "Balance Dress Derby",
+        "description": "Benefits Velvet cushioning at the heel collar for blister-free wear. Stable long-lasting arch support that will not sink overtime. Our specially formulated outsole gives you slip-resistance and durable traction. A wider anti-shock outsole for natural shock absorption. Buttery soft and flexible uppers that adapt to different foot shapes so theres no break-in period. Wider room at toe box for more relaxed toes. &lt;span style&#x3D;&quot;font-weigh",
+        "sku": "8886484532464",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-2025-10-21T114049-567.jpg?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-38.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST07-37.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "155",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-dress-derby",
+          "priceCurrency": "SGD",
+          "price": "155",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-penny-loafer",
+      "title": "Balance Penny Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Balance Penny Loafer",
+        "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484524537",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/13-32.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Penny-Loafer-Fog-01-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Penny-Loafer-Fog-02-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-penny-loafer",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-mary-jane",
+      "title": "Dream Mary Jane-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Mary Jane",
+        "description": "Dream Mary Jane - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484514231",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/E-commerce-pic-(2).jpg?w&#x3D;3240&amp;h&#x3D;3240",
+          "https://img.myshopline.com/image/store/1679305542267/4048BLK-1.jpeg?w&#x3D;2160&amp;h&#x3D;2160",
+          "https://img.myshopline.com/image/store/1679305542267/4048BLK-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-20",
+          "url": "https://www.sunnystep.com/products/dream-mary-jane",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-buckle-loafer",
+      "title": "Dream Buckle Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Buckle Loafer",
+        "description": "Dream Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484539814",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/2-92.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-112.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-113.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "135",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/dream-buckle-loafer",
+          "priceCurrency": "SGD",
+          "price": "135",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-flex-walker",
+      "title": "Dream Flex Walker - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Flex Walker",
+        "description": "Dream Flex Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484539937",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/1-79.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-121.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-122.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-flex-walker",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-sport-trainer",
+      "title": "Dream Sport Trainer - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Sport Trainer",
+        "description": "Dream Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484530347",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/11-30.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST06-8.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST06-7.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-20",
+          "url": "https://www.sunnystep.com/products/dream-sport-trainer",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-mary-jane-mules",
+      "title": "Balance Mary Jane Mules",
+      "product": {
+        "name": "Balance Mary Jane Mules",
+        "description": "Balance Mary Jane Mules bring thoughtful design and all-day comfort to a classic silhouette. The adjustable buckle and wide, accommodating toe box provide a gentle, adaptive fit that moves with your foot, while soft edges and skin-friendly vegan suede ensure a smooth, blister-free experience from the very first wear. E",
+        "sku": "8886484535953",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/9-36.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-103.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-104.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "125",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-mary-jane-mules",
+          "priceCurrency": "SGD",
+          "price": "125",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-joy-buckle-walker",
+      "title": "Balance Joy Buckle Walker",
+      "product": {
+        "name": "Balance Joy Buckle Walker",
+        "description": "Sunnystep Balance Joy Buckle Walker brings a playful and modern twist to everyday walking shoes. The perforated front allows for customizable shoe charms, adding a fun, personal touch to every pair, while the cushioned sole and supportive design keep every step gentle and balanced. With its lightweight construction and",
+        "sku": "8886484535717",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/10-27.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-67.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-68.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "135",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-joy-buckle-walker",
+          "priceCurrency": "SGD",
+          "price": "135",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-smiley-hazel-loafer",
+      "title": "Balance Smiley Hazel Loafer",
+      "product": {
+        "name": "Balance Smiley Hazel Loafer",
+        "description": "Balance Smiley Hazel Loafer combines timeless sophistication with a playful twist. Featuring a classic horsebit ornament and Sunnysteps signature smiley emblem, it adds charm and personality to a refined silhouette. The elasticized collar provides a flexible fit that comfortably accommodates higher insteps, while the s",
+        "sku": "8886484537636",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/5-59.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-37.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-38.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "155",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-smiley-hazel-loafer",
+          "priceCurrency": "SGD",
+          "price": "155",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-trainer",
+      "title": "Balance Trainer",
+      "product": {
+        "name": "Balance Trainer",
+        "description": "Balance Trainer brings a refined edge to our classic Balance Runner. Designed with a convenient spin buckle closure, it allows for quick, precise adjustment and a secure, custom fit in one effortless twist. The clean all-black silhouette offers versatile, modern style, while the cushioned sole and supportive arch desig",
+        "sku": "8886484534994",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/12-31.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-109.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-110.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "155",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-trainer",
+          "priceCurrency": "SGD",
+          "price": "155",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-buckle-walker",
+      "title": "Balance Buckle Walker",
+      "product": {
+        "name": "Balance Buckle Walker",
+        "description": "Sunnystep Balance Buckle Walker is thoughtfully designed for sensitive feet and those who spend long hours on their feet. Its spacious toe box and gentle cushioning make every step feel light, supported, and soothing. Crafted in smooth leather or soft vegan suede, it combines easy elegance with lasting comfort. Lightwe",
+        "sku": "8886484535113",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/7-26.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-73.jpg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-74.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "135",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-buckle-walker",
+          "priceCurrency": "SGD",
+          "price": "135",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-oxford",
+      "title": "Dream Oxford - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Oxford",
+        "description": "Dream Oxford-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484526029",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/AI-Lifestyle-Images-(18).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/DSC09020-4.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/DSC09019-4.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/dream-oxford",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-oxford",
+      "title": "Balance Oxford-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Oxford",
+        "description": "Balance Oxford-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484513661",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-(57).jpg?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Oxford-Nude-Suede-01.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Oxford-Nude-Suede-02.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "145",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-oxford",
+          "priceCurrency": "SGD",
+          "price": "145",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-monk-strap",
+      "title": "Balance Monk Strap - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Balance Monk Strap",
+        "description": "Balance Monk Strap-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484520225",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-2025-10-13T174857-578.jpg?w&#x3D;3240&amp;h&#x3D;3240",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Monk-Strap-Cloud-01-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Monk-Strap-Cloud-02-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "135",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-monk-strap",
+          "priceCurrency": "SGD",
+          "price": "135",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-wallabee-walker",
+      "title": "Balance Wallabee Walker - Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Wallabee Walker",
+        "description": "Balance Wallabee Walker - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484528306",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-2025-10-15T155630-013.jpg?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/1047M-1.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/1047M-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-wallabee-walker",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-solo-monk-strap",
+      "title": "Balance Solo Monk Strap - Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Solo Monk Strap",
+        "description": "Balance Solo Monk Strap - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484528382",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/This-is-the-final-version-(3)-5.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/1043M-1.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/1043M-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "139.5",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-solo-monk-strap",
+          "priceCurrency": "SGD",
+          "price": "139.5",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-derby-2",
+      "title": "Balance Derby-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Derby",
+        "description": "Balance Derby-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484504201",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/29-2.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/1033M-11.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/1033M-3.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "116",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-derby-2",
+          "priceCurrency": "SGD",
+          "price": "116",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-mules-men",
+      "title": "Balance Mules (Men)-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Mules (Men)",
+        "description": "Balance Mules (Men)-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484504072",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/This-is-the-final-version-(24).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/3009M-1.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/3009M.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "88",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-20",
+          "url": "https://www.sunnystep.com/products/balance-mules-men",
+          "priceCurrency": "SGD",
+          "price": "88",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-walker",
+      "title": "Balance Walker - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Balance Walker",
+        "description": "Balance Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484503129",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-2025-10-15T154646-170.jpg?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Walker-Cream-01.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Walker-Cream-02.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "125",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-22",
+          "url": "https://www.sunnystep.com/products/balance-walker",
+          "priceCurrency": "SGD",
+          "price": "125",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-ease-trainer",
+      "title": "Balance Ease Trainer-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Balance Ease Trainer",
+        "description": "The Balance Ease Trainer is our first step into activewear perfect for exercise and golf. With a spin buckle closure there&#x27;s no need to tie laces reducing the risk of tripping. While the higher heel pull tab offers added stability and makes it easy to slip on.",
+        "sku": "8886484514637",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Online-Exclusive-Product-Frame-(11).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/Boost-Ease-Trainer-Full-Black-01.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Boost-Ease-Trainer-Smooth-Full-Black-02.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "132",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/balance-ease-trainer",
+          "priceCurrency": "SGD",
+          "price": "132",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-loafer",
+      "title": "Dream Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "product": {
+        "name": "Dream Loafer",
+        "description": "Dream Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484518284",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/This-is-the-final-version-(17).png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/DSC08952-4.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/DSC08950-2-4.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "88",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-loafer",
+          "priceCurrency": "SGD",
+          "price": "88",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-sneaker-1",
+      "title": "Dream Sneaker-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Sneaker",
+        "description": "Dream Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484519342",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/This-is-the-final-version-(6)-0.png?w&#x3D;1024&amp;h&#x3D;1024",
+          "https://img.myshopline.com/image/store/1679305542267/adca748644824c53be3fc43665a61f8d.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ead1c9bf41d94342a30b4b841e83a186.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "165",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-sneaker-1",
+          "priceCurrency": "SGD",
+          "price": "165",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-elastic-slip-on",
+      "title": "Dream Sneaker-Sunnystep-The most comfortable walking shoes",
+      "product": {
+        "name": "Dream Elastic Slip-on",
+        "description": "Dream Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "sku": "8886484534512",
+        "brand": "Sunnystep",
+        "images": [
+          "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-2025-10-21T150143-602.jpg?w&#x3D;1080&amp;h&#x3D;1080",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-151.jpeg?w&#x3D;3000&amp;h&#x3D;3000",
+          "https://img.myshopline.com/image/store/1679305542267/ST08-152.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+        ],
+        "price": "132",
+        "priceCurrency": "SGD",
+        "availability": "https://schema.org/InStock",
+        "offers": {
+          "@type": "Offer",
+          "priceValidUntil": "2026-01-21",
+          "url": "https://www.sunnystep.com/products/dream-elastic-slip-on",
+          "priceCurrency": "SGD",
+          "price": "132",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    }
+  ],
+  "faqs": [],
+  "blogs": [
+    {
+      "url": "https://sunnystep.com/blogs/communitystory",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-nail-the-clean-girl-aesthetic-without-killing-your-feet",
+      "title": "How to Nail the Clean Girl Aesthetic Without Killing Your Feet",
+      "blog": {
+        "headline": "How to Nail the Clean Girl Aesthetic Without Killing Your Feet",
+        "description": "Master the clean girl aesthetic with Singapore’s most comfortable walking shoes. Stylish, neutral, and made for all-day movement.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/20250403-sunnystep0638-1.jpeg?w=3750&h=2500",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/from-coffee-grounds-to-comfy-soles-the-science-behind-sunnystep%E2%80%99s-sustainable-shoes",
+      "title": "From Coffee Grounds to Comfy Soles: The Science Behind Sunnystep’s Sus",
+      "blog": {
+        "headline": "From Coffee Grounds to Comfy Soles: The Science Behind Sunnystep’s Sustainable Shoes",
+        "description": "Yes, you read that rightyour next step could be powered by yesterdays coffee! At Sunnystep, were passionate about reducing waste, so weve partnered with the world's best material scientists to transform used coffee grounds into the fabric for the uppers of our Dream Sneakers, Dream Oxford, and Dream Mules. Its all abou",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/ZXT-5010(1).jpeg?w=3936&h=2624",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-science-of-comfort-sunnystep-x-mit-sports-lab-collaboration",
+      "title": "The Science of Comfort: Sunnystep x MIT Sports Lab Collaboration",
+      "blog": {
+        "headline": "The Science of Comfort: Sunnystep x MIT Sports Lab Collaboration",
+        "description": "At Sunnystep, we believe that comfort is an art and a science. To push the boundaries of what a shoe can do, we knew we needed to think beyond traditional design. Thats why we teamed up with one of the brightest minds in research and innovationtheMIT Sports Lab. Together, were not just making shoes; were redefining the",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/MIT-Dome-WP.jpeg?w=1290&h=505",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/should-you-go-barefoot-at-home",
+      "title": "Should You Go Barefoot at Home?",
+      "blog": {
+        "headline": "Should You Go Barefoot at Home?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/20bb6b5f5a3542a0b4a8caece129c3b9.png?w=520&h=347",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/memory-foam-shoes-are-they-really-the-best-for-your-feet",
+      "title": "Memory Foam Shoes - Are They Really the Best for Your Feet?",
+      "blog": {
+        "headline": "Memory Foam Shoes - Are They Really the Best for Your Feet?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/5b7dff86e0d74e0ab301aff55fc48f48.png?w=520&h=347",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/women-deserve-way-better-information-about-pregnancy-spine-health",
+      "title": "Women Deserve Way Better Information About Pregnancy Spine Health",
+      "blog": {
+        "headline": "Women Deserve Way Better Information About Pregnancy Spine Health",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2020-04-27-at-7-47-47-AM.png?w=1312&h=686",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-my-yoga-instructor-caused-an-injury-that-i-had-to-get-surgery-for",
+      "title": "How my yoga instructor caused an injury that I had to get surgery for",
+      "blog": {
+        "headline": "How my yoga instructor caused an injury that I had to get surgery for",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Motoko-3.jpg?w=4032&h=3024",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/why-you-shouldn-t-rush-back-into-exercise-after-giving-birth",
+      "title": "Why you shouldn’t rush back into exercise after giving birth",
+      "blog": {
+        "headline": "Why you shouldn’t rush back into exercise after giving birth",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/parent-holding-infant-hand-f386d74a-f1fb-4ac4-bb61-e1f0dbe9b942.jpg?w=4460&h=2974",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/is-it-safe-for-me-to-exercise-while-pregnant",
+      "title": "Is It Safe For Me To Exercise While Pregnant?",
+      "blog": {
+        "headline": "Is It Safe For Me To Exercise While Pregnant?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-09-25-PM.png?w=1634&h=1092",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/one-step-at-a-time",
+      "title": "One Step At A Time",
+      "blog": {
+        "headline": "One Step At A Time",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-27-03-PM.png?w=1238&h=754",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/everything-you-need-to-know-about-slipped-discs",
+      "title": "Everything You Need To Know About Slipped Discs",
+      "blog": {
+        "headline": "Everything You Need To Know About Slipped Discs",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-39-55-PM.png?w=1052&h=718",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-fall-safely",
+      "title": "How To Fall Safely",
+      "blog": {
+        "headline": "How To Fall Safely",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-06-43-PM.png?w=1166&h=776",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=2&page_size=12",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=3&page_size=12",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=4&page_size=12",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=5&page_size=12",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/three-easy-tips-to-relieve-bunion-pain",
+      "title": "Three Easy Tips to Relieve Bunion Pain",
+      "blog": {
+        "headline": "Three Easy Tips to Relieve Bunion Pain",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Untitled-design-16.png?w=4896&h=3264",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/death-by-the-desk-how-to-prevent-back-pain-associated-with-sitting-all-day",
+      "title": "Death By The Desk: How To Prevent Back Pain Associated With Sitting All Day",
+      "blog": {
+        "headline": "Death By The Desk: How To Prevent Back Pain Associated With Sitting All Day",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-45-49-PM.png?w=1636&h=1090",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/daily-posture-tips",
+      "title": "Daily Tips For Better Postures",
+      "blog": {
+        "headline": "Daily Tips For Better Postures",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-25-at-2-59-42-PM.png?w=650&h=806",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/when-psychological-pain-becomes-physical",
+      "title": "When psychological pain becomes physical",
+      "blog": {
+        "headline": "When psychological pain becomes physical",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/IMG-3397.jpg?w=1080&h=1349",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/can-you-trust-your-favourite-fitness-guru",
+      "title": "Can You Trust Your Favourite Fitness Guru?",
+      "blog": {
+        "headline": "Can You Trust Your Favourite Fitness Guru?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/WhatsApp-Image-2020-12-02-at-6-34-09-PM.jpg?w=1242&h=907",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-dark-side-of-being-an-instagram-yoga-influencer",
+      "title": "The Dark Side Of Being An Instagram Yoga Influencer",
+      "blog": {
+        "headline": "The Dark Side Of Being An Instagram Yoga Influencer",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2020-11-02-at-4-14-05-PM.png?w=942&h=938",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-start-a-business-fail-and-then-come-back-stronger",
+      "title": "How To Start A Business, Fail, And Then Come Back Stronger",
+      "blog": {
+        "headline": "How To Start A Business, Fail, And Then Come Back Stronger",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2020-12-18-at-3-14-07-PM.png?w=884&h=712",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-truth-about-crossfit",
+      "title": "The Truth About Crossfit",
+      "blog": {
+        "headline": "The Truth About Crossfit",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-23-32-PM.png?w=732&h=472",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/its-not-always-about-winning",
+      "title": "It's Not Always About Winning",
+      "blog": {
+        "headline": "It's Not Always About Winning",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-36-20-PM.png?w=818&h=528",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-to-look-out-for-when-choosing-a-pilates-instructor",
+      "title": "What To Look Out For When Choosing A Pilates Instructor",
+      "blog": {
+        "headline": "What To Look Out For When Choosing A Pilates Instructor",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-11-45-PM.png?w=1166&h=728",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-breathe-better-the-lost-art-of-breathing-right",
+      "title": "How To Breathe Better: The Lost Art Of Breathing Right",
+      "blog": {
+        "headline": "How To Breathe Better: The Lost Art Of Breathing Right",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-49-04-PM.png?w=1164&h=876",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/introducing-barre",
+      "title": "Introducing: BARRE",
+      "blog": {
+        "headline": "Introducing: BARRE",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-18-at-7-07-29-PM.png?w=1272&h=792",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/debunking-common-weight-loss-misconception-with-twain-teo",
+      "title": "Debunking Common Weight Loss Misconception With Twain Teo",
+      "blog": {
+        "headline": "Debunking Common Weight Loss Misconception With Twain Teo",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-18-at-6-24-53-PM.png?w=1710&h=1146",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/woman-for-the-women",
+      "title": "A Woman For The Women",
+      "blog": {
+        "headline": "A Woman For The Women",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-9-12-49-AM.png?w=862&h=712",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/don-t-lose-your-mind-for-the-perfect-body",
+      "title": "Don’t lose your mind for the perfect body",
+      "blog": {
+        "headline": "Don’t lose your mind for the perfect body",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/WhatsApp-Image-2020-12-02-at-6-15-04-PM.jpg?w=1242&h=1544",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/explore-the-core-it-ain-t-just-your-abs",
+      "title": "Explore The Core: It Ain’t Just Your Abs",
+      "blog": {
+        "headline": "Explore The Core: It Ain’t Just Your Abs",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-10-48-52-AM.png?w=1098&h=610",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/things-people-wished-they-knew-before-strength-training-1",
+      "title": "5 Things People Wished They Knew Before Doing Strength Training",
+      "blog": {
+        "headline": "5 Things People Wished They Knew Before Doing Strength Training",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-11-07-12-AM.png?w=1164&h=624",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/stretching-not-something-you-should-skip-1",
+      "title": "Stretching: Something You Should Not Skip",
+      "blog": {
+        "headline": "Stretching: Something You Should Not Skip",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-11-19-02-AM.png?w=1272&h=1022",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/stretch-with-ain-to-counteract-acute-neck-pain-from-sitting-all-day",
+      "title": "Stretch With Ain To Counteract Acute Neck Pain From Sitting All Day",
+      "blog": {
+        "headline": "Stretch With Ain To Counteract Acute Neck Pain From Sitting All Day",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-12-19-45-PM.png?w=1346&h=880",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-ive-become-a-better-runner",
+      "title": "How I Became A Better Runner",
+      "blog": {
+        "headline": "How I Became A Better Runner",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-14-36-PM.png?w=878&h=616",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=1&page_size=12",
+      "title": "Sunnystep Blog",
+      "blog": {
+        "headline": "Sunnystep Blog",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/1679305542267/Website-logo.png?w=400&h=70",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/making-sacrifices-without-sacrificing-yourself",
+      "title": "Making Sacrifices Without Sacrificing Yourself",
+      "blog": {
+        "headline": "Making Sacrifices Without Sacrificing Yourself",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-1-21-33-PM.png?w=730&h=484",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/practical-posture-tips-for-new-parents",
+      "title": "Practical Posture Tips For New Parents",
+      "blog": {
+        "headline": "Practical Posture Tips For New Parents",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-25-at-3-04-05-PM.png?w=824&h=578",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/team-strong-silvers-age-is-just-a-number",
+      "title": "Team Strong Silvers : Age Is Just A Number",
+      "blog": {
+        "headline": "Team Strong Silvers : Age Is Just A Number",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/WhatsApp-Image-2020-12-02-at-7-29-01-PM.jpg?w=1242&h=791",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-weight-loss-journey-what-worked-what-didn-t-and-how-it-s-changed-me",
+      "title": "My Weight Loss Journey: What Worked, What Didn’t, And How It’s Changed Me",
+      "blog": {
+        "headline": "My Weight Loss Journey: What Worked, What Didn’t, And How It’s Changed Me",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-13-21-PM.png?w=1162&h=780",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/an-introduction-to-correcting-muscular-imbalances-using-strength-and-conditioning",
+      "title": "An Introduction To Correcting Muscular Imbalances Using Strength And Conditioning",
+      "blog": {
+        "headline": "An Introduction To Correcting Muscular Imbalances Using Strength And Conditioning",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-21-12-PM.png?w=1178&h=710",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/not-sitting-down-for-a-year",
+      "title": "Not Sitting Down For A Year",
+      "blog": {
+        "headline": "Not Sitting Down For A Year",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-23-52-PM.png?w=1170&h=780",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-are-bunions-and-why-should-you-care",
+      "title": "What are Bunions and Why Should You Care?",
+      "blog": {
+        "headline": "What are Bunions and Why Should You Care?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Untitled-design-7.png?w=4896&h=3264",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/introducing-aerial-arts",
+      "title": "Introducing: AERIAL ARTS",
+      "blog": {
+        "headline": "Introducing: AERIAL ARTS",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-17-at-2-25-29-PM.png?w=1172&h=714",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-psychology-behind-weight-loss",
+      "title": "The Psychology Behind Weight Loss",
+      "blog": {
+        "headline": "The Psychology Behind Weight Loss",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Twain-2.jpg?w=5184&h=3456",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-pregnancy-changes-the-way-you-stand-and-how-to-fix-it",
+      "title": "How Pregnancy Changes the Way You Stand and How to Fix it",
+      "blog": {
+        "headline": "How Pregnancy Changes the Way You Stand and How to Fix it",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/momhunch.png?w=2366&h=1579",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/feet-pain-when-you-run-your-old-running-shoes-might-have-the-answer-to-why",
+      "title": "Feet Pain when You Run? Your Old Running Shoes Might Have the Answer to Why",
+      "blog": {
+        "headline": "Feet Pain when You Run? Your Old Running Shoes Might Have the Answer to Why",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/run.png?w=2387&h=1560",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-first-time-rock-wall-climbing-at-climb-central-funan",
+      "title": "My First Time…Rock Climbing At Climb Central, Funan",
+      "blog": {
+        "headline": "My First Time…Rock Climbing At Climb Central, Funan",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-18-at-9-26-34-PM.png?w=1466&h=970",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-first-time-doing-prenatal-aqua-pregnancy-at-inspire-mum-baby",
+      "title": "My First Time… Doing Prenatal Aqua Pregnancy At Inspire Mum & Baby",
+      "blog": {
+        "headline": "My First Time… Doing Prenatal Aqua Pregnancy At Inspire Mum & Baby",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-18-at-9-11-40-PM.png?w=1472&h=978",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/dont-cross-your-legs-heres-why",
+      "title": "Don't Cross Your Legs, Here's Why",
+      "blog": {
+        "headline": "Don't Cross Your Legs, Here's Why",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/leg-cross.png?w=2382&h=1571",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/watch-your-back-literally-if-you-work-one-of-these-jobs",
+      "title": "Watch Your Back (Literally) If You Work One of These Jobs",
+      "blog": {
+        "headline": "Watch Your Back (Literally) If You Work One of These Jobs",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Untitled-design-15.png?w=4896&h=3264",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-does-it-take-to-become-a-personal-trainer-1",
+      "title": "What Does It Take To Become A Personal Trainer?",
+      "blog": {
+        "headline": "What Does It Take To Become A Personal Trainer?",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-9-45-42-AM.png?w=1170&h=732",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/no-equipment-workout-from-home-with-personal-trainer-sharlynn-ooi",
+      "title": "No Equipment Workout From Home With Personal Trainer, Sharlynn Ooi",
+      "blog": {
+        "headline": "No Equipment Workout From Home With Personal Trainer, Sharlynn Ooi",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/Screen-Shot-2021-02-24-at-12-07-00-PM.png?w=1166&h=874",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/we-can-do-better-for-mothers",
+      "title": "We Can Do Better For Mothers",
+      "blog": {
+        "headline": "We Can Do Better For Mothers",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/PS-Mothers-day-1.jpg?w=4320&h=3200",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-choose-the-best-walking-shoes-so-you-can-walk-10000-steps-effortlessly",
+      "title": "How To Choose The Best Walking Shoes So You Can Walk 10,000 Steps Effortlessly",
+      "blog": {
+        "headline": "How To Choose The Best Walking Shoes So You Can Walk 10,000 Steps Effortlessly",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/8A10A545-2B45-428B-B18C-9C368F84124B.png?w=1800&h=1800",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-unexpected-health-benefits-of-walking",
+      "title": "5 Unexpected Health Benefits Of Walking",
+      "blog": {
+        "headline": "5 Unexpected Health Benefits Of Walking",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/163F2550-3D15-4276-A677-AB959CA124C0.jpg?w=1200&h=800",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/walk-with-ease-kickstarting-a-walking-routine",
+      "title": "Walk With Ease: Kickstarting A Walking Routine",
+      "blog": {
+        "headline": "Walk With Ease: Kickstarting A Walking Routine",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/16B790D4-46B5-4748-B461-5878F0F2B73B.jpg?w=1200&h=800",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-stretches-to-do-if-you-re-on-your-feet-for-long-hours",
+      "title": "5 Stretches To Do If You’re On Your Feet For Long Hours",
+      "blog": {
+        "headline": "5 Stretches To Do If You’re On Your Feet For Long Hours",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/5FFF6E5B-56CF-4496-A42D-0AA84DC3F149.jpg?w=1200&h=960",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-tips-to-prevent-walking-injuries",
+      "title": "5 Tips To Prevent Walking Injuries",
+      "blog": {
+        "headline": "5 Tips To Prevent Walking Injuries",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/601FCF64-9AF8-4280-89BC-AD81D35349FC.jpg?w=1200&h=800",
+        "detectedBy": "url/meta"
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-hiking-trails-in-singapore-to-visit-if-you-love-nature",
+      "title": "5 Hiking Trails In Singapore To Visit If You Love Nature",
+      "blog": {
+        "headline": "5 Hiking Trails In Singapore To Visit If You Love Nature",
+        "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+        "datePublished": null,
+        "dateModified": null,
+        "author": null,
+        "image": "https://img.myshopline.com/image/store/2005390899/1679305542267/A283D1EC-2719-4B8D-B38E-0CC861E4DABE.jpg?w=1504&h=1000",
+        "detectedBy": "url/meta"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://sunnystep.com/",
+      "canonical": "https://www.sunnystep.com",
+      "title": "Sunnystep | Comfortable Walking Shoes",
+      "description": "Sunnystep walking shoes for all-day comfort with stable arch support, blister-free design and light weight feel. Shop men and women styles online or in store.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/frequently-asked-questions",
+      "canonical": "https://www.sunnystep.com/pages/frequently-asked-questions",
+      "title": "Frequently Asked Questions - Sunnystep",
+      "description": "Find answers to all your questions about Sunnystep shoes, shipping, returns, sizing, and more. Explore our FAQ page for quick solutions and helpful tips to make your shopping experience effortless!",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/user/signIn",
+      "canonical": "https://www.sunnystep.com/user/signIn",
+      "title": "Sunnystep | Comfortable Walking Shoes",
+      "description": "Sunnystep walking shoes for all-day comfort with stable arch support, blister-free design and light weight feel. Shop men and women styles online or in store.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-satin-sneaker-cny",
+      "canonical": "https://www.sunnystep.com/products/dream-satin-sneaker-cny",
+      "title": "Dream Satin Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Satin Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-knit-dual-tone-ballerina",
+      "canonical": "https://www.sunnystep.com/products/dream-knit-dual-tone-ballerina",
+      "title": "Dream Knit Dual Tone Ballerina-Sunnystep-The most comfortable walking shoes",
+      "description": "Dream Knit Dual Tone Ballerina-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-satin-sneaker",
+      "canonical": "https://www.sunnystep.com/products/dream-satin-sneaker",
+      "title": "Dream Satin Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Satin Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-knit-sneaker",
+      "canonical": "https://www.sunnystep.com/products/dream-knit-sneaker",
+      "title": "Dream Knit Sneaker - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Knit Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-lace-up-mules",
+      "canonical": "https://www.sunnystep.com/products/dream-lace-up-mules",
+      "title": "Dream Lace-up Mules - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Lace-up Mules-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-satin-flats",
+      "canonical": "https://www.sunnystep.com/products/dream-satin-flats",
+      "title": "Dream Satin Flats-Sunnystep-The most comfortable walking shoes",
+      "description": "Dream Satin Flats-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-mesh-ballerina",
+      "canonical": "https://www.sunnystep.com/products/dream-mesh-ballerina",
+      "title": "Dream Mesh Ballerina-Sunnystep-The most comfortable walking shoes",
+      "description": "Dream Mesh Ballerina-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-zip-martin-boots",
+      "canonical": "https://www.sunnystep.com/products/balance-zip-martin-boots",
+      "title": "Balance Zip Martin Boots - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Balance Zip Martin Boots-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/collections/new-arrivals",
+      "canonical": "https://www.sunnystep.com/collections/new-arrivals",
+      "title": "New Arrivals-Sunnystep-The most comfortable walking shoes – Sunnystep Singapore",
+      "description": "New Arrivals",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-boat-shoe",
+      "canonical": "https://www.sunnystep.com/products/balance-boat-shoe",
+      "title": "Balance Penny Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-dress-derby",
+      "canonical": "https://www.sunnystep.com/products/balance-dress-derby",
+      "title": "Balance Dress Derby",
+      "description": "Benefits Velvet cushioning at the heel collar for blister-free wear. Stable long-lasting arch support that will not sink overtime. Our specially formulated outsole gives you slip-resistance and durable traction. A wider anti-shock outsole for natural shock absorption. Buttery soft and flexible uppers that adapt to different foot shapes so theres no break-in period. Wider room at toe box for more relaxed toes.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-penny-loafer",
+      "canonical": "https://www.sunnystep.com/products/balance-penny-loafer",
+      "title": "Balance Penny Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-mary-jane",
+      "canonical": "https://www.sunnystep.com/products/dream-mary-jane",
+      "title": "Dream Mary Jane-The most comfortable walking shoes",
+      "description": "Dream Mary Jane - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/collections/office",
+      "canonical": "https://www.sunnystep.com/collections/office",
+      "title": "Office – Sunnystep Singapore",
+      "description": "Sunnystep Singapore",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/request-for-reviews",
+      "canonical": "https://www.sunnystep.com/pages/request-for-reviews",
+      "title": "Customer Reviews",
+      "description": "Sunnystep Singapore",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/store-locations",
+      "canonical": "https://www.sunnystep.com/pages/store-locations",
+      "title": "Store Locations-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/technology",
+      "canonical": "https://www.sunnystep.com/pages/technology",
+      "title": "Our Proprietary Technology-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/community-walkathon-singapore",
+      "canonical": "https://www.sunnystep.com/pages/community-walkathon-singapore",
+      "title": "Sunnystep Monthly Walkathon – Explore Singapore on Foot",
+      "description": "Join Sunnystep monthly community walkathon in Singapore and explore beautiful neighborhoods while staying active. Held every last Saturday of the month, this free event includes wellness perks, social connection, and exclusive giveaways for participants.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/shipping-policy",
+      "canonical": "https://www.sunnystep.com/pages/shipping-policy",
+      "title": "Shipping Policy",
+      "description": "At Sunnystep, we aim to deliver your orders efficiently and reliably, whether youre shopping from Singapore or abroad. Singapore Orders Shipping Fees: Calculated at checkout based on the delivery address. Processing Time: Orders are processed and dispatched within 3 business days from the date of purchase. Delivery Tim",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/returns-exchanges-policy",
+      "canonical": "https://www.sunnystep.com/pages/returns-exchanges-policy",
+      "title": "Returns & Exchanges Policy",
+      "description": "Return Policy Returns are accepted only for defective products. All return requests are handled on a case-by-case basis to ensure fairness and quality control. If you receive a defective product: Contact us via WhatsApp at +65 93729406 or email care@mysunnystep.com. Provide clear photos of the defect and your order num",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/terms-and-conditions",
+      "canonical": "https://www.sunnystep.com/pages/terms-and-conditions",
+      "title": "Terms and Conditions-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/privacy-policy",
+      "canonical": "https://www.sunnystep.com/pages/privacy-policy",
+      "title": "Privacy Policy",
+      "description": "Privacy Policy Date: 29 May 2025 1. Information on the Collection of Personal Data 1.1 Personal Data This policy explains how Sunnystep (SUNNYSTEP PTE. LTD.) collects, uses, discloses, and protects your personal data when you visit our website (www.mysunnystep.com). Personal data refers to any information that can iden",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/contact-us",
+      "canonical": "https://www.sunnystep.com/pages/contact-us",
+      "title": "Contact Us",
+      "description": "Got a Question? Were Here to Help. Whether youre wondering about fit, tracking your order, or just want to say hi were all ears (and happy feet). Our team is here to support you every step of the way. 📬 Email Us Drop us a message at [insert email] and well get back to you within 12 business days. 🛍 Visit Us In-Store",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/sunnystep-affiliate",
+      "canonical": "https://www.sunnystep.com/pages/sunnystep-affiliate",
+      "title": "Sunnystep Affiliate-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/ambassador-program",
+      "canonical": "https://www.sunnystep.com/pages/ambassador-program",
+      "title": "Ambassador Program-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/pages/workplace-mobility-program",
+      "canonical": "https://www.sunnystep.com/pages/workplace-mobility-program",
+      "title": "Workplace Mobility Program-Sunnystep-The most comfortable walking shoes",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-nail-the-clean-girl-aesthetic-without-killing-your-feet",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-to-nail-the-clean-girl-aesthetic-without-killing-your-feet",
+      "title": "How to Nail the Clean Girl Aesthetic Without Killing Your Feet",
+      "description": "Master the clean girl aesthetic with Singapore’s most comfortable walking shoes. Stylish, neutral, and made for all-day movement.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/from-coffee-grounds-to-comfy-soles-the-science-behind-sunnystep%E2%80%99s-sustainable-shoes",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/from-coffee-grounds-to-comfy-soles-the-science-behind-sunnystep’s-sustainable-shoes",
+      "title": "From Coffee Grounds to Comfy Soles: The Science Behind Sunnystep’s Sus",
+      "description": "Yes, you read that rightyour next step could be powered by yesterdays coffee! At Sunnystep, were passionate about reducing waste, so weve partnered with the world's best material scientists to transform used coffee grounds into the fabric for the uppers of our Dream Sneakers, Dream Oxford, and Dream Mules. Its all abou",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-science-of-comfort-sunnystep-x-mit-sports-lab-collaboration",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/the-science-of-comfort-sunnystep-x-mit-sports-lab-collaboration",
+      "title": "The Science of Comfort: Sunnystep x MIT Sports Lab Collaboration",
+      "description": "At Sunnystep, we believe that comfort is an art and a science. To push the boundaries of what a shoe can do, we knew we needed to think beyond traditional design. Thats why we teamed up with one of the brightest minds in research and innovationtheMIT Sports Lab. Together, were not just making shoes; were redefining the",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/should-you-go-barefoot-at-home",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/should-you-go-barefoot-at-home",
+      "title": "Should You Go Barefoot at Home?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/memory-foam-shoes-are-they-really-the-best-for-your-feet",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/memory-foam-shoes-are-they-really-the-best-for-your-feet",
+      "title": "Memory Foam Shoes - Are They Really the Best for Your Feet?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/women-deserve-way-better-information-about-pregnancy-spine-health",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/women-deserve-way-better-information-about-pregnancy-spine-health",
+      "title": "Women Deserve Way Better Information About Pregnancy Spine Health",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-my-yoga-instructor-caused-an-injury-that-i-had-to-get-surgery-for",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-my-yoga-instructor-caused-an-injury-that-i-had-to-get-surgery-for",
+      "title": "How my yoga instructor caused an injury that I had to get surgery for",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/why-you-shouldn-t-rush-back-into-exercise-after-giving-birth",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/why-you-shouldn-t-rush-back-into-exercise-after-giving-birth",
+      "title": "Why you shouldn’t rush back into exercise after giving birth",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/is-it-safe-for-me-to-exercise-while-pregnant",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/is-it-safe-for-me-to-exercise-while-pregnant",
+      "title": "Is It Safe For Me To Exercise While Pregnant?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/one-step-at-a-time",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/one-step-at-a-time",
+      "title": "One Step At A Time",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/everything-you-need-to-know-about-slipped-discs",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/everything-you-need-to-know-about-slipped-discs",
+      "title": "Everything You Need To Know About Slipped Discs",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-fall-safely",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-to-fall-safely",
+      "title": "How To Fall Safely",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=2&page_size=12",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory?page_num=2&page_size=12",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=3&page_size=12",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory?page_num=3&page_size=12",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=4&page_size=12",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory?page_num=4&page_size=12",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=5&page_size=12",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory?page_num=5&page_size=12",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/user/passwordNew",
+      "canonical": "https://www.sunnystep.com/user/passwordNew",
+      "title": "Sunnystep | Comfortable Walking Shoes",
+      "description": "Sunnystep walking shoes for all-day comfort with stable arch support, blister-free design and light weight feel. Shop men and women styles online or in store.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/user/signUp",
+      "canonical": "https://www.sunnystep.com/user/signUp",
+      "title": "Sunnystep | Comfortable Walking Shoes",
+      "description": "Sunnystep walking shoes for all-day comfort with stable arch support, blister-free design and light weight feel. Shop men and women styles online or in store.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-buckle-loafer",
+      "canonical": "https://www.sunnystep.com/products/dream-buckle-loafer",
+      "title": "Dream Buckle Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-flex-walker",
+      "canonical": "https://www.sunnystep.com/products/dream-flex-walker",
+      "title": "Dream Flex Walker - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Flex Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-sport-trainer",
+      "canonical": "https://www.sunnystep.com/products/dream-sport-trainer",
+      "title": "Dream Sport Trainer - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-mary-jane-mules",
+      "canonical": "https://www.sunnystep.com/products/balance-mary-jane-mules",
+      "title": "Balance Mary Jane Mules",
+      "description": "Balance Mary Jane Mules bring thoughtful design and all-day comfort to a classic silhouette. The adjustable buckle and wide, accommodating toe box provide a gentle, adaptive fit that moves with your foot, while soft edges and skin-friendly vegan suede ensure a smooth, blister-free experience from the very first wear. E",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-joy-buckle-walker",
+      "canonical": "https://www.sunnystep.com/products/balance-joy-buckle-walker",
+      "title": "Balance Joy Buckle Walker",
+      "description": "Sunnystep Balance Joy Buckle Walker brings a playful and modern twist to everyday walking shoes. The perforated front allows for customizable shoe charms, adding a fun, personal touch to every pair, while the cushioned sole and supportive design keep every step gentle and balanced. With its lightweight construction and",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-smiley-hazel-loafer",
+      "canonical": "https://www.sunnystep.com/products/balance-smiley-hazel-loafer",
+      "title": "Balance Smiley Hazel Loafer",
+      "description": "Balance Smiley Hazel Loafer combines timeless sophistication with a playful twist. Featuring a classic horsebit ornament and Sunnysteps signature smiley emblem, it adds charm and personality to a refined silhouette. The elasticized collar provides a flexible fit that comfortably accommodates higher insteps, while the s",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-trainer",
+      "canonical": "https://www.sunnystep.com/products/balance-trainer",
+      "title": "Balance Trainer",
+      "description": "Balance Trainer brings a refined edge to our classic Balance Runner. Designed with a convenient spin buckle closure, it allows for quick, precise adjustment and a secure, custom fit in one effortless twist. The clean all-black silhouette offers versatile, modern style, while the cushioned sole and supportive arch desig",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-buckle-walker",
+      "canonical": "https://www.sunnystep.com/products/balance-buckle-walker",
+      "title": "Balance Buckle Walker",
+      "description": "Sunnystep Balance Buckle Walker is thoughtfully designed for sensitive feet and those who spend long hours on their feet. Its spacious toe box and gentle cushioning make every step feel light, supported, and soothing. Crafted in smooth leather or soft vegan suede, it combines easy elegance with lasting comfort. Lightwe",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-oxford",
+      "canonical": "https://www.sunnystep.com/products/dream-oxford",
+      "title": "Dream Oxford - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Oxford-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-oxford",
+      "canonical": "https://www.sunnystep.com/products/balance-oxford",
+      "title": "Balance Oxford-Sunnystep-The most comfortable walking shoes",
+      "description": "Balance Oxford-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-monk-strap",
+      "canonical": "https://www.sunnystep.com/products/balance-monk-strap",
+      "title": "Balance Monk Strap - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Balance Monk Strap-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-wallabee-walker",
+      "canonical": "https://www.sunnystep.com/products/balance-wallabee-walker",
+      "title": "Balance Wallabee Walker - Sunnystep-The most comfortable walking shoes",
+      "description": "Balance Wallabee Walker - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-solo-monk-strap",
+      "canonical": "https://www.sunnystep.com/products/balance-solo-monk-strap",
+      "title": "Balance Solo Monk Strap - Sunnystep-The most comfortable walking shoes",
+      "description": "Balance Solo Monk Strap - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-derby-2",
+      "canonical": "https://www.sunnystep.com/products/balance-derby-2",
+      "title": "Balance Derby-Sunnystep-The most comfortable walking shoes",
+      "description": "Balance Derby-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-mules-men",
+      "canonical": "https://www.sunnystep.com/products/balance-mules-men",
+      "title": "Balance Mules (Men)-Sunnystep-The most comfortable walking shoes",
+      "description": "Balance Mules (Men)-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-walker",
+      "canonical": "https://www.sunnystep.com/products/balance-walker",
+      "title": "Balance Walker - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Balance Walker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/balance-ease-trainer",
+      "canonical": "https://www.sunnystep.com/products/balance-ease-trainer",
+      "title": "Balance Ease Trainer-Sunnystep-The most comfortable walking shoes",
+      "description": "The Balance Ease Trainer is our first step into activewear perfect for exercise and golf. With a spin buckle closure there's no need to tie laces reducing the risk of tripping. While the higher heel pull tab offers added stability and makes it easy to slip on.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-loafer",
+      "canonical": "https://www.sunnystep.com/products/dream-loafer",
+      "title": "Dream Loafer - Sunnystep - The Most Comfortable Walking Shoes",
+      "description": "Dream Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-sneaker-1",
+      "canonical": "https://www.sunnystep.com/products/dream-sneaker-1",
+      "title": "Dream Sneaker-Sunnystep-The most comfortable walking shoes",
+      "description": "Dream Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/products/dream-elastic-slip-on",
+      "canonical": "https://www.sunnystep.com/products/dream-elastic-slip-on",
+      "title": "Dream Sneaker-Sunnystep-The most comfortable walking shoes",
+      "description": "Dream Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": true,
+        "blog": false
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/three-easy-tips-to-relieve-bunion-pain",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/three-easy-tips-to-relieve-bunion-pain",
+      "title": "Three Easy Tips to Relieve Bunion Pain",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/death-by-the-desk-how-to-prevent-back-pain-associated-with-sitting-all-day",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/death-by-the-desk-how-to-prevent-back-pain-associated-with-sitting-all-day",
+      "title": "Death By The Desk: How To Prevent Back Pain Associated With Sitting All Day",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/daily-posture-tips",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/daily-posture-tips",
+      "title": "Daily Tips For Better Postures",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/when-psychological-pain-becomes-physical",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/when-psychological-pain-becomes-physical",
+      "title": "When psychological pain becomes physical",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/can-you-trust-your-favourite-fitness-guru",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/can-you-trust-your-favourite-fitness-guru",
+      "title": "Can You Trust Your Favourite Fitness Guru?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-dark-side-of-being-an-instagram-yoga-influencer",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/the-dark-side-of-being-an-instagram-yoga-influencer",
+      "title": "The Dark Side Of Being An Instagram Yoga Influencer",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-start-a-business-fail-and-then-come-back-stronger",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-to-start-a-business-fail-and-then-come-back-stronger",
+      "title": "How To Start A Business, Fail, And Then Come Back Stronger",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-truth-about-crossfit",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/the-truth-about-crossfit",
+      "title": "The Truth About Crossfit",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/its-not-always-about-winning",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/its-not-always-about-winning",
+      "title": "It's Not Always About Winning",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-to-look-out-for-when-choosing-a-pilates-instructor",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/what-to-look-out-for-when-choosing-a-pilates-instructor",
+      "title": "What To Look Out For When Choosing A Pilates Instructor",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-breathe-better-the-lost-art-of-breathing-right",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-to-breathe-better-the-lost-art-of-breathing-right",
+      "title": "How To Breathe Better: The Lost Art Of Breathing Right",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/introducing-barre",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/introducing-barre",
+      "title": "Introducing: BARRE",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/debunking-common-weight-loss-misconception-with-twain-teo",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/debunking-common-weight-loss-misconception-with-twain-teo",
+      "title": "Debunking Common Weight Loss Misconception With Twain Teo",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/woman-for-the-women",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/woman-for-the-women",
+      "title": "A Woman For The Women",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/don-t-lose-your-mind-for-the-perfect-body",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/don-t-lose-your-mind-for-the-perfect-body",
+      "title": "Don’t lose your mind for the perfect body",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/explore-the-core-it-ain-t-just-your-abs",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/explore-the-core-it-ain-t-just-your-abs",
+      "title": "Explore The Core: It Ain’t Just Your Abs",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/things-people-wished-they-knew-before-strength-training-1",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/things-people-wished-they-knew-before-strength-training-1",
+      "title": "5 Things People Wished They Knew Before Doing Strength Training",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/stretching-not-something-you-should-skip-1",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/stretching-not-something-you-should-skip-1",
+      "title": "Stretching: Something You Should Not Skip",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/stretch-with-ain-to-counteract-acute-neck-pain-from-sitting-all-day",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/stretch-with-ain-to-counteract-acute-neck-pain-from-sitting-all-day",
+      "title": "Stretch With Ain To Counteract Acute Neck Pain From Sitting All Day",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-ive-become-a-better-runner",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-ive-become-a-better-runner",
+      "title": "How I Became A Better Runner",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory?page_num=1&page_size=12",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory",
+      "title": "Sunnystep Blog",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/making-sacrifices-without-sacrificing-yourself",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/making-sacrifices-without-sacrificing-yourself",
+      "title": "Making Sacrifices Without Sacrificing Yourself",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/practical-posture-tips-for-new-parents",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/practical-posture-tips-for-new-parents",
+      "title": "Practical Posture Tips For New Parents",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/team-strong-silvers-age-is-just-a-number",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/team-strong-silvers-age-is-just-a-number",
+      "title": "Team Strong Silvers : Age Is Just A Number",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-weight-loss-journey-what-worked-what-didn-t-and-how-it-s-changed-me",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/my-weight-loss-journey-what-worked-what-didn-t-and-how-it-s-changed-me",
+      "title": "My Weight Loss Journey: What Worked, What Didn’t, And How It’s Changed Me",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/an-introduction-to-correcting-muscular-imbalances-using-strength-and-conditioning",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/an-introduction-to-correcting-muscular-imbalances-using-strength-and-conditioning",
+      "title": "An Introduction To Correcting Muscular Imbalances Using Strength And Conditioning",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/not-sitting-down-for-a-year",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/not-sitting-down-for-a-year",
+      "title": "Not Sitting Down For A Year",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-are-bunions-and-why-should-you-care",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/what-are-bunions-and-why-should-you-care",
+      "title": "What are Bunions and Why Should You Care?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/introducing-aerial-arts",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/introducing-aerial-arts",
+      "title": "Introducing: AERIAL ARTS",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/the-psychology-behind-weight-loss",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/the-psychology-behind-weight-loss",
+      "title": "The Psychology Behind Weight Loss",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-pregnancy-changes-the-way-you-stand-and-how-to-fix-it",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-pregnancy-changes-the-way-you-stand-and-how-to-fix-it",
+      "title": "How Pregnancy Changes the Way You Stand and How to Fix it",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/feet-pain-when-you-run-your-old-running-shoes-might-have-the-answer-to-why",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/feet-pain-when-you-run-your-old-running-shoes-might-have-the-answer-to-why",
+      "title": "Feet Pain when You Run? Your Old Running Shoes Might Have the Answer to Why",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-first-time-rock-wall-climbing-at-climb-central-funan",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/my-first-time-rock-wall-climbing-at-climb-central-funan",
+      "title": "My First Time…Rock Climbing At Climb Central, Funan",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/my-first-time-doing-prenatal-aqua-pregnancy-at-inspire-mum-baby",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/my-first-time-doing-prenatal-aqua-pregnancy-at-inspire-mum-baby",
+      "title": "My First Time… Doing Prenatal Aqua Pregnancy At Inspire Mum & Baby",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/dont-cross-your-legs-heres-why",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/dont-cross-your-legs-heres-why",
+      "title": "Don't Cross Your Legs, Here's Why",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/watch-your-back-literally-if-you-work-one-of-these-jobs",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/watch-your-back-literally-if-you-work-one-of-these-jobs",
+      "title": "Watch Your Back (Literally) If You Work One of These Jobs",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/what-does-it-take-to-become-a-personal-trainer-1",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/what-does-it-take-to-become-a-personal-trainer-1",
+      "title": "What Does It Take To Become A Personal Trainer?",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/no-equipment-workout-from-home-with-personal-trainer-sharlynn-ooi",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/no-equipment-workout-from-home-with-personal-trainer-sharlynn-ooi",
+      "title": "No Equipment Workout From Home With Personal Trainer, Sharlynn Ooi",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/we-can-do-better-for-mothers",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/we-can-do-better-for-mothers",
+      "title": "We Can Do Better For Mothers",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/how-to-choose-the-best-walking-shoes-so-you-can-walk-10000-steps-effortlessly",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/how-to-choose-the-best-walking-shoes-so-you-can-walk-10000-steps-effortlessly",
+      "title": "How To Choose The Best Walking Shoes So You Can Walk 10,000 Steps Effortlessly",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-unexpected-health-benefits-of-walking",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/5-unexpected-health-benefits-of-walking",
+      "title": "5 Unexpected Health Benefits Of Walking",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/walk-with-ease-kickstarting-a-walking-routine",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/walk-with-ease-kickstarting-a-walking-routine",
+      "title": "Walk With Ease: Kickstarting A Walking Routine",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-stretches-to-do-if-you-re-on-your-feet-for-long-hours",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/5-stretches-to-do-if-you-re-on-your-feet-for-long-hours",
+      "title": "5 Stretches To Do If You’re On Your Feet For Long Hours",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-tips-to-prevent-walking-injuries",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/5-tips-to-prevent-walking-injuries",
+      "title": "5 Tips To Prevent Walking Injuries",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/blogs/communitystory/5-hiking-trails-in-singapore-to-visit-if-you-love-nature",
+      "canonical": "https://www.sunnystep.com/blogs/communitystory/5-hiking-trails-in-singapore-to-visit-if-you-love-nature",
+      "title": "5 Hiking Trails In Singapore To Visit If You Love Nature",
+      "description": "Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": true
+      }
+    },
+    {
+      "url": "https://sunnystep.com/_%20If%20you%20are%20looking%20for%20the%20most%20comfortable%20shoes%20when%20you%20go%20for%20your%20walk,%20try%20Sunnystep%20Balance%20Walker%20&%20Balance%20Runner.%20With%20insoles%20to%20support%20the%20arches%20of%20your%20feet,%20velvet%20cushioning%20and%20wider%20front%20for%20more%20wriggle%20room%20for%20wide%20feet,%20this%20shoe%20will%20give%20you%20less%20pain%20and%20alleviate%20any%20strains%20on%20your%20feet.%20",
+      "canonical": "https://www.sunnystep.com",
+      "title": "Sunnystep | Comfortable Walking Shoes",
+      "description": "Sunnystep walking shoes for all-day comfort with stable arch support, blister-free design and light weight feel. Shop men and women styles online or in store.",
+      "detected": {
+        "faq": false,
+        "product": false,
+        "blog": false
+      }
+    }
+  ]
+}

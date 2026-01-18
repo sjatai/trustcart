@@ -56,6 +56,12 @@ enum AssetStatus {
   ARCHIVED
 }
 
+enum PublishTarget {
+  FAQ
+  BLOG
+  PRODUCT
+}
+
 enum Provider {
   OPENAI
   GEMINI
@@ -117,6 +123,9 @@ model Customer {
   segmentSnapshots SegmentSnapshot[]
   receipts Receipt[]
   endCustomers EndCustomer[]
+  contentRecommendations ContentRecommendation[]
+  products Product[]
+  productPatches ProductPatch[]
 }
 
 model Location {
@@ -229,6 +238,7 @@ model QuestionNeed {
   claim      Claim?   @relation(fields: [claimId], references: [id], onDelete: SetNull)
 
   @@index([questionId])
+  @@unique([questionId, claimKey])
 }
 
 model QuestionGap {
@@ -365,6 +375,49 @@ model AssetEvidence {
   asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@index([assetId])
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  customerId     String
+  handle         String
+  title          String
+  vendor         String?
+  productType    String?
+  tags           String?
+  priceMin       Int?
+  priceMax       Int?
+  currency       String?  @default("USD")
+  images         Json?
+  descriptionHtml String?
+  specs          Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  patches  ProductPatch[]
+
+  @@unique([customerId, handle])
+  @@index([customerId, updatedAt])
+}
+
+model ProductPatch {
+  id          String      @id @default(cuid())
+  customerId  String
+  productId   String
+  status      AssetStatus @default(DRAFT)
+  title       String?
+  bodyMd      String
+  evidence    Json?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  publishedAt DateTime?
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, updatedAt])
+  @@index([productId, updatedAt])
 }
 
 model Campaign {
@@ -519,4 +572,91 @@ model EndCustomer {
 
   @@index([customerId])
   @@unique([customerId, email])
+}
+enum RecommendationKind {
+  ENRICH
+  CREATE
+  PRODUCT_UPDATE
+}
+
+enum RecommendationStatus {
+  PROPOSED
+  DRAFTED
+  APPROVED
+  PUBLISHED
+}
+
+model IntentDomain {
+  id        String   @id @default(cuid())
+  industry  String
+  geo       String
+  language  String   @default("en")
+  persona   String   @default("consumer")
+  meta      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bankEntries QuestionBankEntry[]
+  questionSignalSnapshots QuestionSignalSnapshot[]
+
+  @@unique([industry, geo, language, persona])
+  @@index([industry, geo])
+}
+
+model QuestionBankEntry {
+  id            String   @id @default(cuid())
+  intentDomainId String
+  questionText  String
+  taxonomy      QuestionTaxonomy
+  weight        Int      @default(50)
+  sourceMeta    Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  intentDomain  IntentDomain @relation(fields: [intentDomainId], references: [id], onDelete: Cascade)
+
+  @@unique([intentDomainId, questionText])
+  @@index([intentDomainId, weight])
+}
+
+model QuestionSignalSnapshot {
+  id            String   @id @default(cuid())
+  intentDomainId String
+  questionText  String
+  signalType    String   // "PROBE" | "REVIEWS" | "SEARCH" etc.
+  deltaWeight   Int
+  payload       Json?
+  createdAt     DateTime @default(now())
+
+  intentDomain  IntentDomain @relation(fields: [intentDomainId], references: [id], onDelete: Cascade)
+
+  @@index([intentDomainId, createdAt])
+}
+
+model ContentRecommendation {
+  id            String   @id @default(cuid())
+  customerId    String
+  kind          RecommendationKind
+  status        RecommendationStatus @default(PROPOSED)
+  title         String
+  why           String
+  targetUrl     String
+  suggestedContent String
+  claimKey      String?
+  questionId    String?
+  recommendedAssetType AssetType @default(FAQ)
+  llmEvidence   Json?
+  questionText  String?
+  publishTarget PublishTarget @default(FAQ)
+  productHandle String?
+  productTitle  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  approvedBy    String?
+  approvedAt    DateTime?
+
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, updatedAt])
+  @@index([status])
 }

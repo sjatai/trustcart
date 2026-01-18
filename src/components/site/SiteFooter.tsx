@@ -1,24 +1,42 @@
 import Link from "next/link";
+import { buildDomainQuery } from "@/lib/siteHelpers";
 
-export function SiteFooter() {
+export function SiteFooter({
+  domain,
+  customerName,
+  showProducts,
+}: {
+  domain: string;
+  customerName: string;
+  showProducts: boolean;
+}) {
+  const q = buildDomainQuery(domain);
   return (
     <footer className="rn-footer">
       <div className="rn-container rn-footerGrid">
         <div>
-          <div style={{ fontWeight: 700 }}>Reliable Nissan</div>
+          <div style={{ fontWeight: 700 }}>{customerName}</div>
           <div className="rn-muted" style={{ marginTop: 6 }}>
-            This is a stable demo mirror for the TrustEye presentation.
+            This is a stable demo mirror for the TrustEye presentation ({domain}).
           </div>
         </div>
         <div className="rn-footerLinks">
-          <Link href="/site/inventory">Inventory</Link>
-          <Link href="/site/service">Service</Link>
-          <Link href="/site/finance">Finance</Link>
-          <Link href="/site/locations">Locations</Link>
+          {showProducts ? (
+            <>
+              <Link href={`/site/products${q}`}>Products</Link>
+              <Link href={`/site/faq${q}`}>FAQ</Link>
+              <Link href={`/site/blog${q}`}>Blog</Link>
+            </>
+          ) : (
+            <>
+              <Link href={`/site/faq${q}`}>FAQ</Link>
+              <Link href={`/site/blog${q}`}>Blog</Link>
+            </>
+          )}
         </div>
         <div className="rn-muted">
-          <div>Hours may vary by department.</div>
-          <div style={{ marginTop: 6 }}>Call before visiting: (505) 000-0000</div>
+          <div>All content is domain-scoped and written with receipts.</div>
+          <div style={{ marginTop: 6 }}>Demo domain: {domain}</div>
         </div>
       </div>
     </footer>

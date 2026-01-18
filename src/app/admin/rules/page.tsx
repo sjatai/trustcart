@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
-import { env } from "@/lib/env";
 import { RulesEditorClient } from "@/components/admin/RulesEditorClient";
+import { getDomainFromSearchParams } from "@/lib/domain";
 
-export default async function RulesPage() {
-  const domain = env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+export default async function RulesPage({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  const domain = getDomainFromSearchParams(searchParams);
   const customer = await prisma.customer.findUnique({ where: { domain } });
   const rules = customer
     ? await prisma.ruleSet.findMany({ where: { customerId: customer.id }, orderBy: { updatedAt: "desc" } })

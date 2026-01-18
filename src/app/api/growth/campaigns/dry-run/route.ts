@@ -1,14 +1,16 @@
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
 import { allowedActionsForTrust } from "@/lib/policy";
+import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
-  const domain = body?.domain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+  const url = new URL(req.url);
+  const domain = url.searchParams.get("domain") || body?.domain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
   const ruleSetId: string = body?.ruleSetId;
   if (!ruleSetId) return Response.json({ ok: false, error: "missing_ruleSetId" }, { status: 400 });
 
-  const customer = await prisma.customer.findUnique({ where: { domain } });
+  const customer = await getCustomerByDomain(domain).catch(() => null);
   if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });
 
   const ruleSet = await prisma.ruleSet.findUnique({ where: { id: ruleSetId } });
@@ -27,11 +29,41 @@ export async function POST(req: Request) {
     },
   });
 
-  const requiresApproval = ruleSet.name.toLowerCase().includes("review request");
+  // Real segmentation using EndCustomer attributes.
+  const cfg = (ruleSet.json || {}) as any;
+  const conditions = cfg?.conditions || {};
+  const ratingGte = Number(conditions?.ratingGte ?? 0);
+  const sentimentEq = String(conditions?.sentiment ?? "").toLowerCase();
+  const referralSentMustBe = conditions?.referralSent;
 
-  // Deterministic sizes (align with preview logic)
-  const segmentSize = ruleSet.name.toLowerCase().includes("referral") ? 42 : 120;
-  const suppressedSize = ruleSet.name.toLowerCase().includes("review request") ? 18 : 6;
+  const endCustomers = await prisma.endCustomer.findMany({ where: { customerId: customer.id } });
+  const eligible: string[] = [];
+  const suppressed: Array<{ email: string; reason: string }> = [];
+  const reasons: Record<string, number> = {};
+
+  for (const ec of endCustomers) {
+    const attrs = (ec.attributes || {}) as any;
+    const rating = Number(attrs?.rating);
+    const sentiment = String(attrs?.sentiment || "").toLowerCase();
+    const referralSent = Boolean(attrs?.referralSent);
+
+    let reason: string | null = null;
+    if (!Number.isFinite(rating)) reason = "missing_rating";
+    else if (ratingGte && rating < ratingGte) reason = `rating_below_${ratingGte}`;
+    else if (sentimentEq && sentiment !== sentimentEq) reason = "non_matching_sentiment";
+    else if (typeof referralSentMustBe === "boolean" && referralSent !== referralSentMustBe) reason = "referral_state_mismatch";
+
+    if (reason) {
+      suppressed.push({ email: ec.email, reason });
+      reasons[reason] = (reasons[reason] || 0) + 1;
+    } else {
+      eligible.push(ec.email);
+    }
+  }
+
+  const requiresApproval = false;
+  const segmentSize = eligible.length;
+  const suppressedSize = suppressed.length;
 
   const campaign = await prisma.campaign.create({
     data: {
@@ -44,7 +76,7 @@ export async function POST(req: Request) {
       requiresApproval,
       segmentSize,
       suppressedSize,
-      gatingSummary: { policy, trustTotal, requiresApproval } as any,
+      gatingSummary: { policy, trustTotal, requiresApproval, reasons, dryRun: true } as any,
       messages: {
         create: {
           channel: "email",
@@ -55,7 +87,7 @@ export async function POST(req: Request) {
     },
   });
 
-  const to = Array.from({ length: Math.min(5, segmentSize) }).map((_, i) => `demo.segment+${i + 1}@example.com`);
+  const to = eligible.slice(0, 50);
   for (const recipient of to) {
     await prisma.sendReceipt.create({
       data: {
@@ -63,8 +95,21 @@ export async function POST(req: Request) {
         status: "DRY_RUN",
         to: recipient,
         channel: "email",
-        provider: "simulated",
-        payload: { ruleSetId: ruleSet.id } as any,
+        provider: "dry_run",
+        payload: { ruleSetId: ruleSet.id, dryRun: true } as any,
+      },
+    });
+  }
+
+  for (const s of suppressed.slice(0, 200)) {
+    await prisma.sendReceipt.create({
+      data: {
+        campaignId: campaign.id,
+        status: "SUPPRESSED",
+        to: s.email,
+        channel: "email",
+        provider: "dry_run",
+        payload: { ruleSetId: ruleSet.id, suppressed: true, reason: s.reason } as any,
       },
     });
   }

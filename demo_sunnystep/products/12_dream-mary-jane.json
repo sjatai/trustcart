@@ -1,0 +1,18 @@
+{
+  "url": "https://sunnystep.com/products/dream-mary-jane",
+  "name": "Dream Mary Jane",
+  "brand": "Sunnystep",
+  "sku": "8886484514231",
+  "price": "145",
+  "priceCurrency": "SGD",
+  "availability": "https://schema.org/InStock",
+  "description": "Dream Mary Jane - Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+  "images": [
+    "images/products/12_dream-mary-jane_1.jpg",
+    "images/products/12_dream-mary-jane_2.jpeg"
+  ],
+  "sourceImageUrls": [
+    "https://img.myshopline.com/image/store/1679305542267/E-commerce-pic-(2).jpg?w&#x3D;3240&amp;h&#x3D;3240",
+    "https://img.myshopline.com/image/store/1679305542267/4048BLK-1.jpeg?w&#x3D;2160&amp;h&#x3D;2160"
+  ]
+}

@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 export type RailState = "collapsed" | "normal";
 export type DrawerState = "normal";
 
-const RAIL_WIDTH = 520;
-
 export function MissionControlShell({
   hero,
   rail,
@@ -40,7 +38,7 @@ export function MissionControlShell({
   }, []);
 
   return (
-    <div className="mx-auto h-[100vh] max-h-[100vh] max-w-[1280px] bg-[var(--te-bg)] p-2 md:p-3">
+    <div className="mx-auto h-[100vh] max-h-[100vh] w-full max-w-none bg-[var(--te-bg)] p-2 md:p-3">
       <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] gap-3">
         {/* Header */}
         <div className="rounded-2xl border border-[var(--te-border)] bg-white px-3 py-2">
@@ -77,7 +75,7 @@ export function MissionControlShell({
           className={
             railState === "collapsed"
               ? "min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
-              : "grid min-h-0 grid-cols-[1fr_auto] gap-4"
+              : "grid min-h-0 grid-cols-2 gap-4"
           }
         >
           <div
@@ -93,7 +91,7 @@ export function MissionControlShell({
           {railState === "normal" ? (
             <div
               className="min-h-0 overflow-hidden rounded-2xl border border-[var(--te-border)] bg-white"
-              style={{ width: RAIL_WIDTH }}
+              style={{ width: "100%" }}
             >
               <div className="flex h-12 items-center justify-between gap-2 border-b border-[var(--te-border)] px-3">
                 <div className="truncate text-[14px] font-semibold text-[var(--te-text)]">Inspect</div>

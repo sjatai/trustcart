@@ -1,0 +1,53 @@
+{
+    "industry": "ecommerce_footwear",
+    "geo": "SG-SG-Orchard-MBS",
+    "language": "en",
+    "persona": "consumer",
+    "questions": [
+      { "taxonomy": "AVAILABILITY", "weight": 92, "text": "Where can I find SunnyStep shoes in Singapore?" },
+      { "taxonomy": "AVAILABILITY", "weight": 94, "text": "Is there a SunnyStep store near Orchard Road?" },
+      { "taxonomy": "AVAILABILITY", "weight": 96, "text": "Can I buy SunnyStep shoes near Marina Bay Sands?" },
+      { "taxonomy": "AVAILABILITY", "weight": 90, "text": "Do you have a physical store in Orchard?" },
+      { "taxonomy": "AVAILABILITY", "weight": 88, "text": "Can I try SunnyStep shoes in-store before buying?" },
+      { "taxonomy": "NEXT_STEP", "weight": 86, "text": "Do you offer buy online and pick up in store in Singapore?" },
+  
+      { "taxonomy": "COST_VALUE", "weight": 92, "text": "How long does delivery take in Singapore?" },
+      { "taxonomy": "COST_VALUE", "weight": 88, "text": "Do you offer same-day or next-day delivery in SG?" },
+      { "taxonomy": "COST_VALUE", "weight": 82, "text": "Is free shipping available in Singapore?" },
+      { "taxonomy": "COST_VALUE", "weight": 80, "text": "How much does shipping cost in Singapore?" },
+      { "taxonomy": "RISK", "weight": 74, "text": "Which courier do you use for deliveries?" },
+  
+      { "taxonomy": "RISK", "weight": 95, "text": "What is SunnyStep’s return policy?" },
+      { "taxonomy": "RISK", "weight": 92, "text": "How many days do I have to return my shoes?" },
+      { "taxonomy": "RISK", "weight": 86, "text": "Can I return worn shoes?" },
+      { "taxonomy": "RISK", "weight": 84, "text": "Who pays for return shipping?" },
+      { "taxonomy": "NEXT_STEP", "weight": 82, "text": "Can I exchange shoes for a different size?" },
+  
+      { "taxonomy": "SUITABILITY", "weight": 90, "text": "Are SunnyStep shoes true to size?" },
+      { "taxonomy": "SUITABILITY", "weight": 86, "text": "How do I choose the right size?" },
+      { "taxonomy": "SUITABILITY", "weight": 84, "text": "Are SunnyStep shoes comfortable for walking all day?" },
+      { "taxonomy": "SUITABILITY", "weight": 80, "text": "What materials are used in SunnyStep shoes?" },
+      { "taxonomy": "SUITABILITY", "weight": 78, "text": "Are SunnyStep shoes breathable in hot weather?" },
+  
+      { "taxonomy": "SUITABILITY", "weight": 88, "text": "What SunnyStep shoes are good for a party?" },
+      { "taxonomy": "SUITABILITY", "weight": 84, "text": "What shoes should I wear for work or office?" },
+      { "taxonomy": "SUITABILITY", "weight": 82, "text": "What SunnyStep shoes are good for travel?" },
+      { "taxonomy": "SUITABILITY", "weight": 78, "text": "What shoes go well with a casual outfit?" },
+      { "taxonomy": "SUITABILITY", "weight": 76, "text": "Are SunnyStep shoes suitable for weddings?" },
+  
+      { "taxonomy": "SUITABILITY", "weight": 86, "text": "What SunnyStep shoes are trending right now?" },
+      { "taxonomy": "SUITABILITY", "weight": 84, "text": "What are the most popular SunnyStep shoes?" },
+      { "taxonomy": "SUITABILITY", "weight": 82, "text": "Which SunnyStep shoes do customers recommend most?" },
+      { "taxonomy": "SUITABILITY", "weight": 80, "text": "What are the best-selling SunnyStep shoes in Singapore?" },
+  
+      { "taxonomy": "RISK", "weight": 78, "text": "What payment methods do you accept?" },
+      { "taxonomy": "RISK", "weight": 74, "text": "Do you accept Apple Pay or Google Pay?" },
+      { "taxonomy": "RISK", "weight": 72, "text": "Is cash on delivery available in Singapore?" },
+      { "taxonomy": "RISK", "weight": 70, "text": "Is my payment information secure?" },
+  
+      { "taxonomy": "NEXT_STEP", "weight": 86, "text": "How do I buy SunnyStep shoes online?" },
+      { "taxonomy": "NEXT_STEP", "weight": 74, "text": "Can I contact SunnyStep support in Singapore?" },
+      { "taxonomy": "NEXT_STEP", "weight": 72, "text": "Is there a phone number I can call?" },
+      { "taxonomy": "NEXT_STEP", "weight": 70, "text": "How do I track my order?" }
+    ]
+  }

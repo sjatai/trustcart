@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/db";
+import { normalizeDemoDomain } from "@/lib/domain";
 
-export async function getOrCreateCustomerByDomain(domain: string) {
+function normalizeDomain(domainOrUrl: string): string {
+  return normalizeDemoDomain(domainOrUrl);
+}
+
+export async function getOrCreateCustomerByDomain(domainOrUrl: string) {
+  const domain = normalizeDomain(domainOrUrl);
   return prisma.customer.upsert({
     where: { domain },
     update: {},
-    create: { name: "Reliable Nissan", domain },
+    create: { name: domain, domain },
   });
 }
 

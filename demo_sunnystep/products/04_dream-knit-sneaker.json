@@ -1,0 +1,18 @@
+{
+  "url": "https://sunnystep.com/products/dream-knit-sneaker",
+  "name": "Dream Knit Sneaker",
+  "brand": "Sunnystep",
+  "sku": "8886484534758",
+  "price": "165",
+  "priceCurrency": "SGD",
+  "availability": "https://schema.org/InStock",
+  "description": "Dream Knit Sneaker-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+  "images": [
+    "images/products/04_dream-knit-sneaker_1.png",
+    "images/products/04_dream-knit-sneaker_2.jpg"
+  ],
+  "sourceImageUrls": [
+    "https://img.myshopline.com/image/store/1679305542267/7-28.png?w&#x3D;1024&amp;h&#x3D;1024",
+    "https://img.myshopline.com/image/store/1679305542267/ST08-139.jpg?w&#x3D;3000&amp;h&#x3D;3000"
+  ]
+}

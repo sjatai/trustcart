@@ -52,7 +52,7 @@ export async function runReporter(state: GraphState): Promise<{ step: AgentStep;
 
   const assistantMessage =
     state.command === "onboard"
-      ? `Onboard complete for ${domain}.\n\nWhat happened:\n- Crawl: ${crawlRun?.status || "—"} (max 25 pages)\n- Knowledge: ${claimCount} claims with evidence links\n\nNext:\n- “Generate intent graph for Reliable Nissan (top 20)”\n- “Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score.”`
+      ? `Onboard complete for ${domain}.\n\nWhat happened:\n- Crawl: ${crawlRun?.status || "—"} (max ${crawlRun?.maxPages ?? "—"} pages)\n- Knowledge: ${claimCount} claims with evidence links\n\nNext:\n- “Generate intent graph for Reliable Nissan (top 20)”\n- “Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score.”`
       : state.command === "intent_graph"
       ? `Intent graph updated for ${domain}.\n\nTop demand blockers:\n${topQ}\n\nNext:\n- “Probe ChatGPT + Gemini for top 8 questions and compute AI visibility score.”`
       : state.command === "probe"

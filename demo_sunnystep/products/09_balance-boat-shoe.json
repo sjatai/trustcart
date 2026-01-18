@@ -1,0 +1,18 @@
+{
+  "url": "https://sunnystep.com/products/balance-boat-shoe",
+  "name": "Balance Boat Shoe",
+  "brand": "Sunnystep",
+  "sku": "8886484532730",
+  "price": "165",
+  "priceCurrency": "SGD",
+  "availability": "https://schema.org/InStock",
+  "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+  "images": [
+    "images/products/09_balance-boat-shoe_1.gif",
+    "images/products/09_balance-boat-shoe_2.jpeg"
+  ],
+  "sourceImageUrls": [
+    "https://img.myshopline.com/image/store/1679305542267/Balance-Runner-11-(36).gif?w&#x3D;1080&amp;h&#x3D;1080",
+    "https://img.myshopline.com/image/store/1679305542267/ST07-14.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+  ]
+}

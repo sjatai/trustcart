@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/db";
 import { env } from "@/lib/env";
+import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const domain = url.searchParams.get("domain") || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
-  const customer = await prisma.customer.findUnique({ where: { domain } });
+  const domain = url.searchParams.get("domain") || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
+  const customer = await getCustomerByDomain(domain).catch(() => null);
   if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });
 
   const ruleSets = await prisma.ruleSet.findMany({
@@ -17,8 +18,14 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
-  const domain = body?.domain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
-  const customer = await prisma.customer.findUnique({ where: { domain } });
+  const url = new URL(req.url);
+  const domain =
+    url.searchParams.get("domain") ||
+    body?.domain ||
+    getDomainFromRequest(req) ||
+    env.NEXT_PUBLIC_DEMO_DOMAIN ||
+    "sunnysteps.com";
+  const customer = await getCustomerByDomain(domain).catch(() => null);
   if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });
 
   const name: string = body?.name || "";

@@ -1,0 +1,8 @@
+{
+  "createdAt": "2026-01-16T19:31:29.325Z",
+  "baseUrl": "https://sunnystep.com/",
+  "products": 15,
+  "blogs": 12,
+  "faqs": 6,
+  "note": "FAQ page appears Cloudflare-protected in headless mode; FAQs were derived from accessible policy pages for demo."
+}

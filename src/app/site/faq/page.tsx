@@ -1,7 +1,6 @@
 import { Hero } from "@/components/site/Hero";
-import { DEMO_FAQ } from "@/lib/siteData";
 import { prisma } from "@/lib/db";
-import { env } from "@/lib/env";
+import { getDomainFromSearchParams } from "@/lib/domain";
 
 function parseFaq(content: string): { q: string; a: string } | null {
   const q = content.match(/Q:\s*(.+)/i)?.[1]?.trim();
@@ -10,8 +9,14 @@ function parseFaq(content: string): { q: string; a: string } | null {
   return { q, a };
 }
 
-export default async function Page() {
-  const domain = env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+export const dynamic = "force-dynamic";
+
+type FaqPageProps = {
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+export default async function FaqPage({ searchParams }: FaqPageProps = {}) {
+  const domain = getDomainFromSearchParams(searchParams);
   const customer = await prisma.customer.findUnique({ where: { domain } });
   const publishedFaqAssets = customer
     ? await prisma.asset.findMany({
@@ -28,12 +33,10 @@ export default async function Page() {
 
   return (
     <>
-      <Hero title="FAQ — clear answers, fewer surprises." />
+      <Hero title={`FAQ — ${domain} answers, fewer surprises.`} domain={domain} />
       <main className="rn-main">
         <div className="rn-container" style={{ maxWidth: 980 }}>
-          <div className="rn-muted">
-            These answers include baseline + any published Trust Pack FAQs.
-          </div>
+          <div className="rn-muted">Published FAQs for <span className="font-medium">{domain}</span>.</div>
 
           <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 12 }}>
             {publishedFaq.map((f, idx) => (
@@ -47,14 +50,14 @@ export default async function Page() {
                 </div>
               </section>
             ))}
-            {DEMO_FAQ.map((f, idx) => (
-              <section key={idx} className="rn-card">
-                <h2 className="rn-cardTitle">{f.q}</h2>
-                <div className="rn-cardMeta" style={{ marginTop: 8, fontSize: 13, color: "rgba(11, 18, 32, 0.82)" }}>
-                  {f.a}
+            {customer && publishedFaq.length === 0 ? (
+              <section className="rn-card">
+                <h2 className="rn-cardTitle">No published FAQs yet</h2>
+                <div className="rn-cardMeta" style={{ marginTop: 8 }}>
+                  Generate a draft from Recommendations, then Approve & Publish to make it appear here.
                 </div>
               </section>
-            ))}
+            ) : null}
           </div>
         </div>
       </main>

@@ -22,24 +22,42 @@ export async function runTrust(state: GraphState): Promise<{ step: AgentStep; pa
   const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
   const customer = await getOrCreateCustomerByDomain(domain);
 
-  const latest = await prisma.trustScoreSnapshot.findFirst({
-    where: { customerId: customer.id },
-    orderBy: { createdAt: "desc" },
-  });
+  // Real (non-fake) trust signals derived from persisted system activity.
+  const [lastCrawl, evidenceCount, receiptCount, publishedAssets, latestClaim] = await Promise.all([
+    prisma.crawlRun.findFirst({ where: { customerId: customer.id }, orderBy: { createdAt: "desc" } }),
+    prisma.evidence.count({ where: { claim: { customerId: customer.id } } }),
+    prisma.receipt.count({ where: { customerId: customer.id } }),
+    prisma.asset.count({ where: { customerId: customer.id, status: "PUBLISHED" } }),
+    prisma.claim.findFirst({ where: { customerId: customer.id, freshnessAt: { not: null } }, orderBy: { freshnessAt: "desc" } }),
+  ]);
 
-  const snapshot =
-    latest ||
-    (await prisma.trustScoreSnapshot.create({
-      data: {
-        customerId: customer.id,
-        total: 70,
-        experience: 70,
-        responsiveness: 70,
-        stability: 70,
-        recency: 70,
-        risk: 70,
-      },
-    }));
+  const clamp = (n: number) => Math.max(0, Math.min(100, Math.round(n)));
+  const recencyDays = latestClaim?.freshnessAt ? (Date.now() - latestClaim.freshnessAt.getTime()) / (24 * 60 * 60 * 1000) : null;
+  const recency =
+    recencyDays == null ? 30 : recencyDays <= 7 ? 90 : recencyDays <= 30 ? 75 : recencyDays <= 90 ? 55 : 35;
+
+  const stability = clamp(
+    35 +
+      (lastCrawl?.status === "COMPLETED" ? 35 : 0) +
+      (lastCrawl?.status === "FAILED" ? -10 : 0) +
+      (lastCrawl?.error ? -5 : 0)
+  );
+  const experience = clamp(35 + Math.min(45, (evidenceCount / 60) * 45) + (publishedAssets > 0 ? 10 : 0));
+  const responsiveness = clamp(30 + Math.min(60, (receiptCount / 80) * 60));
+  const risk = clamp(40 + (publishedAssets > 0 ? 10 : 0) + Math.min(30, (evidenceCount / 80) * 30));
+  const total = clamp((experience + responsiveness + stability + recency + risk) / 5);
+
+  const snapshot = await prisma.trustScoreSnapshot.create({
+    data: {
+      customerId: customer.id,
+      total,
+      experience,
+      responsiveness,
+      stability,
+      recency,
+      risk,
+    },
+  });
 
   const policy = allowedActionsForTrust(snapshot.total);
 

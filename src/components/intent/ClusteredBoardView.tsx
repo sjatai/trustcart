@@ -38,7 +38,7 @@ function statePill(state: Question["state"]) {
   );
 }
 
-export function ClusteredBoardView({ domain = "reliablenissan.com" }: { domain?: string }) {
+export function ClusteredBoardView({ domain = "sunnystep.com" }: { domain?: string }) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);

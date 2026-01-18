@@ -1,0 +1,88 @@
+{
+  "domain": "sunnysteps.com",
+  "products": [
+    {
+      "handle": "orchard-walk-heel",
+      "title": "Orchard Walk Heel",
+      "vendor": "SunnyStep",
+      "productType": "Heels",
+      "tags": ["sg", "orchard", "walking", "party"],
+      "descriptionHtml": "<p>A comfortable heel designed for long walks and dressy evenings. Lightweight, breathable, and stable.</p>",
+      "specs": {
+        "materials": "Vegan leather upper, rubber outsole",
+        "fit": "True to size; if between sizes, size up",
+        "care": "Wipe with damp cloth; air dry",
+        "bestFor": ["work", "events", "city walking"],
+        "shipping": "Singapore: 2–4 business days (express available)",
+        "returns": "30-day returns for unworn items in original packaging"
+      }
+    },
+    {
+      "handle": "marina-bay-sneaker",
+      "title": "Marina Bay Sneaker",
+      "vendor": "SunnyStep",
+      "productType": "Sneakers",
+      "tags": ["sg", "marina-bay-sands", "travel", "breathable"],
+      "descriptionHtml": "<p>Everyday sneaker for travel and all-day comfort in hot weather. Breathable lining and cushioned insole.</p>",
+      "specs": {
+        "materials": "Mesh upper, EVA midsole",
+        "fit": "Runs slightly narrow; wide feet may size up",
+        "care": "Spot clean; do not machine wash",
+        "bestFor": ["travel", "walking", "casual"],
+        "shipping": "Singapore: 2–4 business days",
+        "returns": "30-day returns; exchanges for size (subject to stock)"
+      }
+    },
+    {
+      "handle": "mbs-evening-flat",
+      "title": "MBS Evening Flat",
+      "vendor": "SunnyStep",
+      "productType": "Flats",
+      "tags": ["sg", "mbs", "wedding", "party", "formal"],
+      "descriptionHtml": "<p>Elegant flat designed for weddings and events. Soft insole and flexible outsole for comfort.</p>",
+      "specs": {
+        "materials": "Satin upper, rubber outsole",
+        "fit": "True to size",
+        "care": "Brush gently; avoid soaking",
+        "bestFor": ["weddings", "events", "formal"],
+        "shipping": "Singapore: 2–4 business days",
+        "returns": "30-day returns for unworn items"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How long does delivery take in Singapore?",
+      "answer": "Standard delivery in Singapore typically takes 2–4 business days. Express options may be available depending on your address and stock availability."
+    },
+    {
+      "question": "What is SunnyStep’s return policy?",
+      "answer": "Returns are accepted within 30 days of delivery for unworn items in original packaging. Exchanges for size are supported (subject to stock)."
+    },
+    {
+      "question": "Are SunnyStep shoes true to size?",
+      "answer": "Most styles are true to size. If you’re between sizes, we generally recommend sizing up. Some styles may run narrow—check the product page notes."
+    },
+    {
+      "question": "Which payment methods do you accept?",
+      "answer": "Major credit/debit cards are accepted. Support for Apple Pay / Google Pay depends on checkout availability."
+    },
+    {
+      "question": "Can I contact SunnyStep support in Singapore?",
+      "answer": "Yes—reach out via the support page for the fastest response. If a phone number is available, it will be listed under verified claims."
+    }
+  ],
+  "blogs": [
+    {
+      "slug": "best-sunnystep-shoes-for-office-in-singapore",
+      "title": "Best SunnyStep shoes for office in Singapore",
+      "bodyMarkdown": "In Singapore’s heat and long commutes, office shoes need to balance breathability, stability, and comfort.\n\n## What to look for\n- Breathable uppers\n- Cushioned insole for all-day wear\n- Stable outsole for MRT stairs and long walks\n\n## Top picks\n- Marina Bay Sneaker (travel + all-day comfort)\n- Orchard Walk Heel (dressy but stable)\n\n## Sizing tips\nIf you’re between sizes, consider sizing up—especially for narrow-cut styles.\n"
+    },
+    {
+      "slug": "what-to-wear-to-a-wedding-sunnystep-guide",
+      "title": "What to wear to a wedding: SunnyStep guide",
+      "bodyMarkdown": "Wedding shoes should feel great for hours—standing, walking, and dancing.\n\n## What matters\n- Soft insole\n- Flexible outsole\n- Secure fit\n\n## A simple recommendation\nTry the MBS Evening Flat for an elegant look with comfort.\n"
+    }
+  ]
+}
+

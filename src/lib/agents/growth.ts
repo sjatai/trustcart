@@ -3,6 +3,7 @@ import { env } from "@/lib/env";
 import { getOrCreateCustomerByDomain } from "@/lib/customer";
 import { prisma } from "@/lib/db";
 import { allowedActionsForTrust } from "@/lib/policy";
+import { writeReceipt } from "@/lib/receipts";
 
 function stepBase(agent: AgentStep["agent"]): AgentStep {
   return { agent, read: [], decide: [], do: [], receipts: [] };
@@ -12,35 +13,50 @@ function receipt(kind: string, summary: string, id?: string): ReceiptRef {
   return { kind, summary, id };
 }
 
-type RuleSetLite = { id: string; name: string };
-
 export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; patch: Partial<GraphState> }> {
   const step = stepBase("GrowthAgent");
   step.read.push("Intent graph + trust score + available Trust Pack assets (demo).");
 
   if (state.command === "launch_campaign") {
-    step.decide.push("Create goal-based campaign plan; choose channel; default dry-run; ensure trust gating passes.");
-    step.do.push("Select RuleSet, preview segment, create DRY_RUN campaign, and write receipts.");
+    step.decide.push("Create campaign rule + compute eligible vs suppressed with reasons; default to dry-run; ensure trust gating passes.");
+    step.do.push("Persist RuleSet, SegmentSnapshot, Campaign, SendReceipts; write canonical receipts.");
     const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     const msg = (state.userMessage || "").toLowerCase();
 
-    // Defensive: if Prisma client is out of date in a running dev instance, these models may be missing.
-    const ruleSetModel = (prisma as any).ruleSet;
-    const segmentSnapshotModel = (prisma as any).segmentSnapshot;
+    // Flow 6: “Create campaign rule: rating>=5 + positive sentiment + not received referral; dry-run only”
+    const ruleName = msg.includes("referral") ? "Referral advocates (rating>=5, positive, not yet referred)" : "Campaign rule";
+    const ruleJson =
+      msg.includes("rating") || msg.includes("sentiment") || msg.includes("referral")
+        ? {
+            kind: "referral_advocates",
+            conditions: { ratingGte: 5, sentiment: "positive", referralSent: false },
+            mode: "dry_run",
+          }
+        : { kind: "generic", mode: "dry_run" };
 
-    const ruleSets: RuleSetLite[] = ruleSetModel
-      ? ((await ruleSetModel.findMany({
-          where: { customerId: customer.id, active: true },
-          orderBy: { updatedAt: "desc" },
-        })) as RuleSetLite[])
-      : [];
-    const defaultRule = ruleSets.find((r: RuleSetLite) => r.name.toLowerCase().includes("referral")) || ruleSets[0];
-    const selected =
-      ruleSets.find((r: RuleSetLite) => msg.includes(r.name.toLowerCase())) ||
-      (msg.includes("review") ? ruleSets.find((r: RuleSetLite) => r.name.toLowerCase().includes("review")) : null) ||
-      defaultRule;
+    const ruleSet = await prisma.ruleSet.create({
+      data: {
+        customerId: customer.id,
+        name: ruleName,
+        description: "dry-run only; eligible vs suppressed with reasons",
+        json: ruleJson as any,
+        active: true,
+      },
+    }).catch(async (err) => {
+      // Idempotency: RuleSet has @@unique([customerId, name]). If it already exists, update+reuse it.
+      const existing = await prisma.ruleSet.findFirst({ where: { customerId: customer.id, name: ruleName } });
+      if (!existing) throw err;
+      return prisma.ruleSet.update({
+        where: { id: existing.id },
+        data: {
+          description: "dry-run only; eligible vs suppressed with reasons",
+          json: ruleJson as any,
+          active: true,
+        },
+      });
+    });
 
     const trust = await prisma.trustScoreSnapshot.findFirst({
       where: { customerId: customer.id },
@@ -50,6 +66,14 @@ export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; p
     const policy = allowedActionsForTrust(total);
 
     step.receipts.push(receipt("policy_checked", `Policy checked: trust ${total}/100 (${policy.zone}).`));
+    await writeReceipt({
+      customerId: customer.id,
+      kind: "DECIDE",
+      actor: "TRUST_ENGINE",
+      summary: "Policy checked for growth execution",
+      input: { trustTotal: total },
+      output: { zone: policy.zone, allowed: policy.allowed, blocked: policy.blocked },
+    });
     if (policy.zone === "UNSAFE") {
       step.decide.push("Blocked: trust zone UNSAFE.");
       step.receipts.push(receipt("policy_block", "Campaign creation blocked by trust policy (UNSAFE)."));
@@ -64,61 +88,109 @@ export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; p
       return { step, patch: {} };
     }
 
-    // Preview segment (deterministic demo)
-    const segmentSize = selected?.name?.toLowerCase().includes("referral") ? 42 : 120;
-    const suppressedSize = selected?.name?.toLowerCase().includes("review request") ? 18 : 6;
-    const reasons = selected?.name?.toLowerCase().includes("review request")
-      ? { negative_sentiment: 9, open_case: 9 }
-      : { trust_below_threshold: 4, opted_out: 2 };
+    // Real segmentation against EndCustomer table (no fake sizes).
+    // Demo convenience: if this is a brand-new customer (e.g. test shadow domain), seed a small deterministic set.
+    let endCustomers = await prisma.endCustomer.findMany({
+      where: { customerId: customer.id },
+      orderBy: { createdAt: "asc" },
+    });
+    if (endCustomers.length === 0) {
+      const demo = [
+        { email: "ava.advocate@example.com", rating: 5, sentiment: "positive", referralSent: false },
+        { email: "sam.suppressed@example.com", rating: 4, sentiment: "positive", referralSent: false },
+        { email: "pat.neutral@example.com", rating: 5, sentiment: "neutral", referralSent: false },
+        { email: "riley.referred@example.com", rating: 5, sentiment: "positive", referralSent: true },
+      ];
+      await prisma.endCustomer.createMany({
+        data: demo.map((d) => ({
+          customerId: customer.id,
+          email: d.email,
+          attributes: { rating: d.rating, sentiment: d.sentiment, referralSent: d.referralSent } as any,
+        })),
+        skipDuplicates: true,
+      });
+      endCustomers = await prisma.endCustomer.findMany({
+        where: { customerId: customer.id },
+        orderBy: { createdAt: "asc" },
+      });
+    }
 
-    const segmentSnapshot =
-      selected && segmentSnapshotModel
-        ? await segmentSnapshotModel.create({
-            data: {
-              customerId: customer.id,
-              ruleSetId: selected.id,
-              size: segmentSize,
-              suppressed: suppressedSize,
-              reasons: reasons as any,
-            },
-          })
-        : null;
+    const reasons: Record<string, number> = {};
+    const eligible: Array<{ email: string }> = [];
+    const suppressed: Array<{ email: string; reason: string }> = [];
+
+    for (const ec of endCustomers) {
+      const attrs = (ec.attributes || {}) as any;
+      const rating = Number(attrs?.rating);
+      const sentiment = String(attrs?.sentiment || "").toLowerCase();
+      const referralSent = Boolean(attrs?.referralSent);
+
+      let reason: string | null = null;
+      if (!Number.isFinite(rating)) reason = "missing_rating";
+      else if (rating < 5) reason = "rating_below_5";
+      else if (sentiment !== "positive") reason = "non_positive_sentiment";
+      else if (referralSent) reason = "already_referred";
+
+      if (reason) {
+        suppressed.push({ email: ec.email, reason });
+        reasons[reason] = (reasons[reason] || 0) + 1;
+      } else {
+        eligible.push({ email: ec.email });
+      }
+    }
+
+    const segmentSnapshot = await prisma.segmentSnapshot.create({
+      data: {
+        customerId: customer.id,
+        ruleSetId: ruleSet.id,
+        size: eligible.length,
+        suppressed: suppressed.length,
+        reasons: reasons as any,
+      },
+    });
+
+    await writeReceipt({
+      customerId: customer.id,
+      kind: "DECIDE",
+      actor: "RULE_ENGINE",
+      summary: "Segment computed for campaign rule",
+      input: { ruleSetId: ruleSet.id, rule: ruleSet.json },
+      output: { eligible: eligible.length, suppressed: suppressed.length, reasons },
+    });
 
     step.receipts.push(
       receipt(
         "segment_snapshot_created",
-        `Segment snapshot created${selected ? ` for ${selected.name}` : ""}: size ${segmentSize}, suppressed ${suppressedSize}.`,
+        `Segment snapshot created for ${ruleSet.name}: eligible ${eligible.length}, suppressed ${suppressed.length}.`,
         segmentSnapshot?.id
       )
     );
 
-    const requiresApproval = Boolean(selected?.name?.toLowerCase().includes("review request"));
-
     const campaign = await prisma.campaign.create({
       data: {
         customerId: customer.id,
-        ruleSetId: selected?.id ?? null,
-        name: `Dry-run: ${selected?.name || "Growth RuleSet"}`,
-        goal: "Trust-gated execution (dry-run by default)",
+        ruleSetId: ruleSet.id,
+        name: `Dry-run: ${ruleSet.name}`,
+        goal: "Trust-gated execution (dry-run only)",
         status: "READY",
         dryRun: true,
-        requiresApproval,
-        segmentSize,
-        suppressedSize,
-        gatingSummary: { policy, trustTotal: total, reasons, requiresApproval } as any,
+        requiresApproval: false,
+        segmentSize: eligible.length,
+        suppressedSize: suppressed.length,
+        gatingSummary: { policy, trustTotal: total, reasons, dryRun: true } as any,
         messages: {
           create: {
             channel: "email",
-            subject: `Demo: ${selected?.name || "Growth RuleSet"}`,
+            subject: `Dry-run: ${ruleSet.name}`,
             body: "This is a dry-run campaign generated by TrustEye. No messages were sent.",
-            payload: { kind: "growth", ruleSetId: selected?.id } as any,
+            payload: { kind: "growth", ruleSetId: ruleSet.id, dryRun: true } as any,
           },
         },
       },
       include: { messages: true },
     });
 
-    const to = Array.from({ length: Math.min(5, segmentSize) }).map((_, i) => `demo.segment+${i + 1}@example.com`);
+    const to = eligible.slice(0, 50).map((e) => e.email);
     for (const recipient of to) {
       await prisma.sendReceipt.create({
         data: {
@@ -126,21 +198,43 @@ export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; p
           status: "DRY_RUN",
           to: recipient,
           channel: "email",
-          provider: "simulated",
-          payload: { campaignId: campaign.id, ruleSetId: selected?.id } as any,
+          provider: "dry_run",
+          payload: { campaignId: campaign.id, ruleSetId: ruleSet.id, dryRun: true } as any,
+        },
+      });
+    }
+
+    for (const s of suppressed.slice(0, 200)) {
+      await prisma.sendReceipt.create({
+        data: {
+          campaignId: campaign.id,
+          status: "SUPPRESSED",
+          to: s.email,
+          channel: "email",
+          provider: "dry_run",
+          payload: { campaignId: campaign.id, ruleSetId: ruleSet.id, suppressed: true, reason: s.reason } as any,
         },
       });
     }
 
     step.receipts.push(receipt("campaign_created", `Campaign created (dry-run): ${campaign.name}.`, campaign.id));
-    step.receipts.push(receipt("receipts_written", `Receipts written: ${to.length} (dry-run).`));
+    step.receipts.push(receipt("receipts_written", `SendReceipts written: DRY_RUN=${to.length}, SUPPRESSED=${Math.min(200, suppressed.length)}.`));
+
+    await writeReceipt({
+      customerId: customer.id,
+      kind: "EXECUTE",
+      actor: "DELIVERY",
+      summary: "Dry-run delivery executed (no sends)",
+      input: { campaignId: campaign.id, channel: "email", dryRun: true },
+      output: { dryRunCount: to.length, suppressedCount: suppressed.length },
+    });
 
     await prisma.activityEvent.create({
       data: {
         customerId: customer.id,
         kind: "campaign",
-        summary: `Campaign created (dry-run) from ruleset ${selected?.name || "—"} with ${to.length} simulated recipients.`,
-        payload: { campaignId: campaign.id, ruleSetId: selected?.id, trustTotal: total, policy, segmentSnapshotId: segmentSnapshot?.id },
+        summary: `Campaign created (dry-run) from ruleset ${ruleSet.name}. Eligible ${to.length}, suppressed ${suppressed.length}.`,
+        payload: { campaignId: campaign.id, ruleSetId: ruleSet.id, trustTotal: total, policy, segmentSnapshotId: segmentSnapshot?.id },
       },
     });
   } else {

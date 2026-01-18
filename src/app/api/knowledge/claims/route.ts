@@ -1,11 +1,10 @@
 import { prisma } from "@/lib/db";
-import { env } from "@/lib/env";
 import { dbUnavailablePayload, isDbUnavailableError } from "@/lib/dbUnavailable";
+import { getDomainFromRequest } from "@/lib/domain";
 
 export async function GET(req: Request) {
   try {
-    const url = new URL(req.url);
-    const customerDomain = url.searchParams.get("customerDomain") || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const customerDomain = getDomainFromRequest(req);
 
     const customer = await prisma.customer.findUnique({ where: { domain: customerDomain } });
     if (!customer) {
@@ -34,7 +33,13 @@ export async function GET(req: Request) {
         freshnessAt: c.freshnessAt,
         updatedAt: c.updatedAt,
         location: c.location ? { id: c.location.id, name: c.location.name, slug: c.location.slug } : null,
-        evidence: (c.evidence || []).map((e) => ({ id: e.id, url: e.url, snippet: e.snippet, capturedAt: e.capturedAt })),
+        evidence: (c.evidence || []).map((e) => ({
+          id: e.id,
+          url: e.url,
+          snippet: e.snippet,
+          capturedAt: e.capturedAt,
+          crawlRunId: e.crawlRunId,
+        })),
       })),
     });
   } catch (err) {

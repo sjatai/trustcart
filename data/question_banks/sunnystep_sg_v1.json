@@ -1,0 +1,56 @@
+{
+  "industry": "ecommerce_shoes",
+  "geo": "SG-Orchard-MBS",
+  "language": "en",
+  "persona": "consumer",
+  "questions": [
+    { "taxonomy": "AVAILABILITY", "weight": 95, "text": "Is this shoe available in Singapore right now?" },
+    { "taxonomy": "AVAILABILITY", "weight": 92, "text": "Is it available near Orchard or Marina Bay Sands (MBS) today?" },
+    { "taxonomy": "NEXT_STEP", "weight": 90, "text": "Can I reserve online and pick up in store?" },
+    { "taxonomy": "AVAILABILITY", "weight": 88, "text": "Do you restock sold-out sizes? When?" },
+    { "taxonomy": "AVAILABILITY", "weight": 90, "text": "Do you have a physical store in Singapore? Where?" },
+    { "taxonomy": "NEXT_STEP", "weight": 86, "text": "What are your store hours in Singapore?" },
+
+    { "taxonomy": "NEXT_STEP", "weight": 95, "text": "How long is delivery in Singapore?" },
+    { "taxonomy": "NEXT_STEP", "weight": 92, "text": "Do you offer next-day delivery in Singapore?" },
+    { "taxonomy": "NEXT_STEP", "weight": 90, "text": "Do you offer same-day delivery?" },
+    { "taxonomy": "COST_VALUE", "weight": 92, "text": "What is the delivery fee in Singapore?" },
+    { "taxonomy": "NEXT_STEP", "weight": 88, "text": "Do you deliver to Orchard / Downtown / CBD?" },
+
+    { "taxonomy": "RISK", "weight": 95, "text": "What is your return policy?" },
+    { "taxonomy": "RISK", "weight": 92, "text": "Are returns free in Singapore?" },
+    { "taxonomy": "NEXT_STEP", "weight": 92, "text": "How do exchanges work for size changes?" },
+    { "taxonomy": "RISK", "weight": 88, "text": "How long do refunds take?" },
+    { "taxonomy": "NEXT_STEP", "weight": 86, "text": "Can I return in store (if bought online)?" },
+
+    { "taxonomy": "SUITABILITY", "weight": 88, "text": "Is the fit true-to-size?" },
+    { "taxonomy": "SUITABILITY", "weight": 86, "text": "Does it run narrow or wide?" },
+    { "taxonomy": "SUITABILITY", "weight": 86, "text": "Is it good for wide feet?" },
+    { "taxonomy": "SUITABILITY", "weight": 84, "text": "Do you have a size guide (US/EU/UK conversion)?" },
+    { "taxonomy": "SUITABILITY", "weight": 88, "text": "Is it comfortable for walking all day?" },
+
+    { "taxonomy": "SUITABILITY", "weight": 80, "text": "What materials is it made from?" },
+    { "taxonomy": "SUITABILITY", "weight": 82, "text": "Is it breathable for Singapore weather?" },
+    { "taxonomy": "RISK", "weight": 78, "text": "Is it water-resistant?" },
+    { "taxonomy": "NEXT_STEP", "weight": 78, "text": "How do I clean it?" },
+    { "taxonomy": "NEXT_STEP", "weight": 72, "text": "Can I machine wash it?" },
+
+    { "taxonomy": "SUITABILITY", "weight": 80, "text": "Is this good for office wear?" },
+    { "taxonomy": "SUITABILITY", "weight": 78, "text": "Is this good for parties / weddings?" },
+    { "taxonomy": "SUITABILITY", "weight": 78, "text": "Is this good for travel?" },
+    { "taxonomy": "SUITABILITY", "weight": 84, "text": "Is this good for standing long hours?" },
+
+    { "taxonomy": "RISK", "weight": 78, "text": "What do customers say about comfort and durability?" },
+    { "taxonomy": "RISK", "weight": 74, "text": "Are reviews verified?" },
+    { "taxonomy": "RISK", "weight": 72, "text": "Why should I trust the sizing recommendation?" },
+    { "taxonomy": "RISK", "weight": 70, "text": "What are common complaints about this shoe?" },
+    { "taxonomy": "SUITABILITY", "weight": 72, "text": "What’s the best alternative if my size is out of stock?" },
+
+    { "taxonomy": "SUITABILITY", "weight": 74, "text": "Which sneaker is best for comfort + style?" },
+    { "taxonomy": "SUITABILITY", "weight": 74, "text": "Which shoe is best for all-day walking in Singapore?" },
+    { "taxonomy": "SUITABILITY", "weight": 70, "text": "What shoes go well with smart-casual outfits?" },
+    { "taxonomy": "SUITABILITY", "weight": 70, "text": "What’s the difference between model A and model B?" },
+    { "taxonomy": "COST_VALUE", "weight": 76, "text": "Is there a discount or promotion available?" }
+  ]
+}
+

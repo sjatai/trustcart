@@ -1,8 +1,13 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { getDomainFromSearchParams } from "@/lib/domain";
 
-export default async function AdminReceiptsPage() {
-  const domain = "reliablenissan.com";
+export default async function AdminReceiptsPage({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  const domain = getDomainFromSearchParams(searchParams);
   const customer = await prisma.customer.findUnique({ where: { domain } });
   const receipts = customer
     ? await prisma.receipt.findMany({

@@ -44,7 +44,20 @@ export function colorForState(state: string) {
 }
 
 export async function ensureIntentQuestions(customerId: string) {
-  const existing = await prisma.question.findMany({ where: { customerId } });
+  // IMPORTANT (demo safety):
+  // If a customer already has a domain-specific question bank applied (e.g. ecommerce),
+  // do not seed the legacy default QUESTION_BANK (auto-dealership oriented).
+  const existing = await prisma.question.findMany({ where: { customerId }, take: 5 });
+  if (existing.length > 0) {
+    // Still return a stable list for callers that expect results.
+    return prisma.question.findMany({
+      where: { customerId },
+      include: { needs: true, gaps: true },
+      orderBy: { impactScore: "desc" },
+      take: 20,
+    });
+  }
+
   const existingTexts = new Set(existing.map((q) => q.text));
 
   for (const q of QUESTION_BANK) {
@@ -91,9 +104,9 @@ export async function ensureIntentQuestions(customerId: string) {
       await prisma.questionGap.create({
         data: {
           questionId: q.id,
-          gapType: "missing_proof",
+          gapType: "MISSING_CLAIM",
           severity: Math.min(95, Math.max(40, q.impactScore)),
-          description: `Missing proof for claim key: ${n.claimKey}`,
+          description: `Missing claim: ${n.claimKey}`,
         },
       });
     }

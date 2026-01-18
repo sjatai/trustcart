@@ -1,0 +1,18 @@
+{
+  "url": "https://sunnystep.com/products/balance-penny-loafer",
+  "name": "Balance Penny Loafer",
+  "brand": "Sunnystep",
+  "sku": "8886484524537",
+  "price": "145",
+  "priceCurrency": "SGD",
+  "availability": "https://schema.org/InStock",
+  "description": "Balance Penny Loafer-Sunnystep walking shoes are designed to minimize stress to the feet and the body. The shoes come with structured insoles and are designed for long walking and standing.",
+  "images": [
+    "images/products/11_balance-penny-loafer_1.png",
+    "images/products/11_balance-penny-loafer_2.jpeg"
+  ],
+  "sourceImageUrls": [
+    "https://img.myshopline.com/image/store/1679305542267/13-32.png?w&#x3D;1024&amp;h&#x3D;1024",
+    "https://img.myshopline.com/image/store/1679305542267/Sunnystep-Balance-Penny-Loafer-Fog-01-2.jpeg?w&#x3D;3000&amp;h&#x3D;3000"
+  ]
+}

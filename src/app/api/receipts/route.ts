@@ -1,15 +1,16 @@
 import { prisma } from "@/lib/db";
 import { isDbUnavailableError, dbUnavailablePayload } from "@/lib/dbUnavailable";
+import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const domain = url.searchParams.get("domain") || "reliablenissan.com";
+  const domain = url.searchParams.get("domain") || getDomainFromRequest(req);
   const limit = Number(url.searchParams.get("limit") || 50);
   const kind = url.searchParams.get("kind");
   const actor = url.searchParams.get("actor");
 
   try {
-    const customer = await prisma.customer.findUnique({ where: { domain } });
+    const customer = await getCustomerByDomain(domain).catch(() => null);
     if (!customer) return Response.json({ ok: false, error: "customer_not_found", domain }, { status: 404 });
 
     const receipts = await prisma.receipt.findMany({

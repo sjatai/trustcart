@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TrustEye",
-  description: "TrustEye demo sprint",
+  title: "BET",
+  description: "BET demo app (Mission Control + SunnyStep demo store)",
 };
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });

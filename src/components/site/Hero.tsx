@@ -3,11 +3,15 @@
 import Link from "next/link";
 import { useSiteIntent } from "@/components/site/useSiteIntent";
 import { heroForIntent } from "@/lib/siteIntent";
+import { buildDomainQuery } from "@/lib/siteHelpers";
 
-export function Hero({ title }: { title?: string }) {
+export function Hero({ title, domain }: { title?: string; domain?: string }) {
   const intent = useSiteIntent();
   const hero = heroForIntent(intent);
   const headline = title || hero.headline;
+  const q = buildDomainQuery(domain);
+  const primaryHref = `${hero.primaryCta.href}${q}`;
+  const secondaryHref = `${hero.secondaryCta.href}${q}`;
 
   return (
     <section className="rn-hero">
@@ -16,10 +20,10 @@ export function Hero({ title }: { title?: string }) {
           <h1 className="rn-h1">{headline}</h1>
           <p className="rn-lead">{hero.subhead}</p>
           <div className="rn-ctaRow">
-            <Link className="rn-ctaPrimary" href={hero.primaryCta.href}>
+            <Link className="rn-ctaPrimary" href={primaryHref}>
               {hero.primaryCta.label}
             </Link>
-            <Link className="rn-ctaSecondary" href={hero.secondaryCta.href}>
+            <Link className="rn-ctaSecondary" href={secondaryHref}>
               {hero.secondaryCta.label}
             </Link>
           </div>

@@ -6,7 +6,11 @@ export type DemoCommand =
   | "approve_publish"
   | "reprobe_delta"
   | "launch_campaign"
-  | "summarize";
+  | "summarize"
+  | "recommend_content"
+  | "draft_content"
+  | "approve_content"
+  | "publish_content";
 
 export type AgentName =
   | "AnalyzerAgent"
@@ -14,7 +18,8 @@ export type AgentName =
   | "KnowledgeAgent"
   | "TrustAgent"
   | "GrowthAgent"
-  | "Reporter";
+  | "Reporter"
+  | "ContentRecommendationAgent";
 
 export type OverlayCue = {
   id: string;
@@ -45,6 +50,7 @@ export type GraphState = {
   customerDomain: string;
   command: DemoCommand;
   userMessage: string;
+  sessionId?: string;
 
   // outputs
   overlays: OverlayCue[];

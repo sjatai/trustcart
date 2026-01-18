@@ -10,12 +10,27 @@
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "prisma:seed": "tsx prisma/seed.ts",
+    "demo:audit": "tsx scripts/demo_audit.ts",
+    "demo:audit:test": "DEMO_AUDIT_DOMAIN=reliablenissan.com-test tsx scripts/demo_audit.ts",
+    "demo:audit:present": "DEMO_AUDIT_DOMAIN=reliablenissan.com tsx scripts/demo_audit.ts",
+    "discovery:bank": "tsx scripts/build_question_bank.ts",
+    "discovery:import-bank-json": "tsx scripts/import_question_bank_json.ts",
+    "discovery:apply": "tsx scripts/apply_bank_to_customer.ts",
+    "customer:add": "tsx scripts/add_customer_domain.ts",
+    "smoke:domain-flow": "tsx scripts/smoke_domain_flow.ts",
+    "demo:seed-claims": "tsx scripts/demo_seed_claims.ts",
+    "domain:reset": "tsx scripts/reset_domain_data.ts",
+    "demo:prune-customers": "tsx scripts/prune_customers.ts",
+    "demo:seed-from-crawl": "tsx scripts/seed_from_crawl.ts",
+    "demo:seed-sunnystep": "tsx scripts/seed_demo_sunnystep_snapshot.ts",
+    "e2e": "npm run prisma:migrate && npm run prisma:seed && npm run demo:audit"
   },
   "dependencies": {
     "@langchain/langgraph": "^0.2.34",
     "@prisma/client": "^5.19.0",
     "next": "^14.2.0",
+    "openai": "^4.10.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "reactflow": "^11.11.4",
@@ -25,9 +40,12 @@
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
+    "@typescript-eslint/eslint-plugin": "^8.53.0",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^16.6.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.0",
+    "mini-css-extract-plugin": "2.9.4",
     "postcss": "^8.4.49",
     "prisma": "^5.19.0",
     "tailwindcss": "^3.4.17",
@@ -35,5 +53,3 @@
     "typescript": "^5.4.5"
   }
 }
-
-
