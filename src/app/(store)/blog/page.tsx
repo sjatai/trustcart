@@ -10,6 +10,9 @@ export default async function BlogPage() {
   const assets = await getStoreBlogAssets();
   const recs = await getActiveRecommendations("sunnystep.com");
   const blogRecs = (recs || []).filter((r: any) => String(r.publishTarget) === "BLOG");
+  const featuredRec =
+    blogRecs.find((r: any) => String(r.title || "").toLowerCase().includes("comfort science for walking + running")) || blogRecs[0];
+  const sortedBlogRecs = featuredRec ? [featuredRec, ...blogRecs.filter((r: any) => r?.id !== featuredRec?.id)] : blogRecs;
   const posts = assets.map((a) => {
     const md = getAssetMarkdown(a);
     const { title } = parseMarkdownHeading(md);
@@ -28,9 +31,9 @@ export default async function BlogPage() {
         <div className="te-meta mt-2">Blog inventory seeded from discovery crawl.</div>
       </div>
 
-      <TrustEyeRecommendBar domain="sunnystep.com" label="Blog" recommendations={blogRecs as any} />
+      <TrustEyeRecommendBar domain="sunnystep.com" label="Blog" recommendations={sortedBlogRecs as any} />
 
-      {blogRecs.length ? (
+      {sortedBlogRecs.length ? (
         <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
           <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommended blog</div>
           <div className="mt-2 grid gap-3 md:grid-cols-[180px_minmax(0,1fr)]">
@@ -38,19 +41,24 @@ export default async function BlogPage() {
             <div
               className="rounded-xl border border-[var(--te-border)] bg-[#fbfcff]"
               style={{
-                backgroundImage: "url(/api/assets/images/blogs/00_comfort-science_hero.svg)",
+                // Prefer the demo AVIF if present; fallback to the SVG hero.
+                backgroundImage:
+                  "url(/images/blogs/woman_doing_run_walk_method.avif), url(/api/assets/images/blogs/00_comfort-science_hero.svg)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 aspectRatio: "4 / 3",
               }}
             />
             <div className="min-w-0">
-              <div className="text-[14px] font-semibold text-[var(--te-text)]">{String(blogRecs[0]?.title || "Recommended blog")}</div>
+              <div className="text-[14px] font-semibold text-[var(--te-text)]">{String(sortedBlogRecs[0]?.title || "Recommended blog")}</div>
               <div className="mt-1 text-[12px] text-[var(--te-muted)]">
                 Lifestyle content (comfort science, walking/running, recovery). Add an image + publish when ready.
               </div>
               <div className="mt-3">
-                <Link className="rounded-xl border border-[rgba(27,98,248,0.25)] bg-[rgba(27,98,248,0.06)] px-3 py-2 text-[12px] font-semibold text-slate-900 hover:bg-[rgba(27,98,248,0.09)]" href={`/drafts/${blogRecs[0].id}?domain=sunnystep.com`}>
+                <Link
+                  className="rounded-xl border border-[rgba(27,98,248,0.25)] bg-[rgba(27,98,248,0.06)] px-3 py-2 text-[12px] font-semibold text-slate-900 hover:bg-[rgba(27,98,248,0.09)]"
+                  href={`/drafts/${sortedBlogRecs[0].id}?domain=sunnystep.com`}
+                >
                   Open recommended content
                 </Link>
               </div>
