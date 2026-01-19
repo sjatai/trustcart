@@ -13,7 +13,9 @@ function stripHtml(html?: string | null) {
 export default async function StoreHomePage() {
   const [products, assets] = await Promise.all([getStoreProducts("sunnystep.com", 6), getStoreBlogAssets("sunnystep.com", 3)]);
   const featured = products;
-  const blogPicks = assets.map((a) => {
+  const blogPicks = assets
+    .filter((a: any) => String(a.slug || "") !== "comfort-science-walking-running")
+    .map((a) => {
     const md = getAssetMarkdown(a);
     const { title } = parseMarkdownHeading(md);
     return {

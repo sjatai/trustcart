@@ -33,7 +33,8 @@ export async function GET(req: Request) {
   // regenerate so the UI consistently shows a "Top 10" experience.
   const shouldRegenerate = force || activeCount === 0 || (activeCount < 8 && draftedApprovedCount === 0);
   if (shouldRegenerate) {
-    await generateContentRecommendations(domain);
+    // Only include the demo curated blog recommendation when the presenter explicitly forces regeneration.
+    await generateContentRecommendations(domain, { includeDemoBlog: force });
   }
 
   const recommendations = await prisma.contentRecommendation.findMany({

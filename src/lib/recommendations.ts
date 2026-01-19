@@ -176,7 +176,7 @@ async function faqInventoryTopics(customerId: string) {
   };
 }
 
-export async function generateContentRecommendations(domain: string) {
+export async function generateContentRecommendations(domain: string, opts?: { includeDemoBlog?: boolean }) {
   const customer = await getCustomerByDomain(domain);
 
   const probe = await latestProbeAnswers(customer.id);
@@ -223,12 +223,15 @@ export async function generateContentRecommendations(domain: string) {
   };
 
   if (domain === "sunnystep.com") {
-    // Sunnystep demo: force ONE curated lifestyle blog recommendation (no shipping/returns/occasion noise).
-    const driver =
-      questions.find((q) => /walk|walking|running|exercise|standing|fatigue|comfort|recovery|support/i.test(String(q.text || "")))?.text ||
-      "How do supportive shoes reduce fatigue during walking, running, and standing?";
+    // Sunnystep demo: ONLY surface the curated blog recommendation when explicitly requested
+    // (i.e. after the presenter clicks Recommend). Otherwise keep it hidden from UI.
     blogMissingThemes.splice(0, blogMissingThemes.length);
-    blogMissingThemes.push({ themeKey: "demo_lifestyle", title: DEMO_SUNNY_BLOG_TITLE, driver: String(driver) });
+    if (opts?.includeDemoBlog) {
+      const driver =
+        questions.find((q) => /walk|walking|running|exercise|standing|fatigue|comfort|recovery|support/i.test(String(q.text || "")))?.text ||
+        "How do supportive shoes reduce fatigue during walking, running, and standing?";
+      blogMissingThemes.push({ themeKey: "demo_lifestyle", title: DEMO_SUNNY_BLOG_TITLE, driver: String(driver) });
+    }
   } else if (blogMissingThemes.length === 0) {
     // Identify high-impact demand themes from questions (non-sunnystep domains only).
     for (const q of questions.slice(0, 25)) {

@@ -37,10 +37,9 @@ export default async function BlogPage() {
     : posts;
   const showRecommendedBlogCard = sortedBlogRecs.length > 0;
   const showBlogRecsUi = sortedBlogRecs.length > 0;
-  // Avoid duplicate: if we are showing the recommended blog editor flow for the comfort post,
-  // hide the already-published comfort post card from the list until the rec is published.
-  const sortedPosts =
-    showRecommendedBlogCard && hasComfortPost ? sortedPostsRaw.filter((p) => p.slug !== comfortSlug) : sortedPostsRaw;
+  // Demo requirement: keep the Comfort Science blog in DB but hide it from the storefront UI.
+  // It should only surface via the publish flow (recommendation → drafts editor).
+  const sortedPosts = sortedPostsRaw.filter((p) => p.slug !== comfortSlug);
   return (
     <div className="grid gap-6">
       <div>

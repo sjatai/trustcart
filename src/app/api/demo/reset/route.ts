@@ -155,7 +155,8 @@ export async function POST(req: Request) {
   });
 
   // Regenerate baseline recommendations (PROPOSED).
-  await generateContentRecommendations(domain);
+  // Do NOT surface the demo blog recommendation immediately after reset.
+  await generateContentRecommendations(domain, { includeDemoBlog: false });
 
   // Restore two prefilled demo FAQ drafts as DRAFTED recs + ensure draft assets exist.
   const prefilled = prefilledDemoFaqDrafts();
@@ -264,36 +265,8 @@ export async function POST(req: Request) {
       });
     }
 
-    // Also ensure the blog edit/publish flow is accessible:
-    // keep a single DRAFTED BLOG recommendation that opens the editor even if the post is already published.
-    await prisma.contentRecommendation.deleteMany({
-      where: { customerId: customer.id, publishTarget: "BLOG" as any, title: { contains: curatedTitle } as any } as any,
-    });
-    await prisma.contentRecommendation.create({
-      data: {
-        customerId: customer.id,
-        kind: "CREATE" as any,
-        status: "DRAFTED" as any,
-        title: `Create blog: ${curatedTitle}`,
-        why: "Demo: open the editor/publish flow for the curated comfort-science blog.",
-        targetUrl: "/blog",
-        suggestedContent: curatedExcerpt,
-        recommendedAssetType: "BLOG" as any,
-        publishTarget: "BLOG" as any,
-        llmEvidence: {
-          stableSlug: "blog-comfort-science-walking-running",
-          draft: {
-            type: "BLOG",
-            title: curatedTitle,
-            slug: curatedSlug,
-            targetUrl: "/blog",
-            content: {
-              bodyMarkdown: curatedMd.trim() + "\n",
-            },
-          },
-        } as any,
-      } as any,
-    });
+    // Intentionally do NOT create a BLOG recommendation on reset.
+    // The demo should only surface the blog publish flow after the presenter clicks Recommend.
   } catch {
     // ignore: reset should still succeed even if this fails
   }
