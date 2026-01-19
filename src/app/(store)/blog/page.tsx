@@ -9,7 +9,10 @@ export const dynamic = "force-dynamic";
 export default async function BlogPage() {
   const assets = await getStoreBlogAssets();
   const recs = await getActiveRecommendations("sunnystep.com");
-  const blogRecs = (recs || []).filter((r: any) => String(r.publishTarget) === "BLOG");
+  const blogRecsAll = (recs || []).filter((r: any) => String(r.publishTarget) === "BLOG");
+  // We only want the "recommended blog" UI when there's something to *do* (draft/approve/publish).
+  // If the recommendation is already PUBLISHED, hide the rec UI and show the blog card once in the normal list.
+  const blogRecs = blogRecsAll.filter((r: any) => String(r.status || "").toUpperCase() !== "PUBLISHED");
   const featuredRec =
     blogRecs.find((r: any) => String(r.title || "").toLowerCase().includes("comfort science for walking + running")) || blogRecs[0];
   const sortedBlogRecs = featuredRec ? [featuredRec, ...blogRecs.filter((r: any) => r?.id !== featuredRec?.id)] : blogRecs;
@@ -26,16 +29,18 @@ export default async function BlogPage() {
   });
   const comfortSlug = "comfort-science-walking-running";
   const hasComfortPost = posts.some((p) => p.slug === comfortSlug);
-  const sortedPosts = hasComfortPost
+  const sortedPostsRaw = hasComfortPost
     ? [
         ...posts.filter((p) => p.slug === comfortSlug),
         ...posts.filter((p) => p.slug !== comfortSlug),
       ]
     : posts;
-  // Always show the "recommended blog → open editor/publish flow" UI.
-  // Even if the blog post exists, the demo needs the edit/publish flow accessible.
   const showRecommendedBlogCard = sortedBlogRecs.length > 0;
   const showBlogRecsUi = sortedBlogRecs.length > 0;
+  // Avoid duplicate: if we are showing the recommended blog editor flow for the comfort post,
+  // hide the already-published comfort post card from the list until the rec is published.
+  const sortedPosts =
+    showRecommendedBlogCard && hasComfortPost ? sortedPostsRaw.filter((p) => p.slug !== comfortSlug) : sortedPostsRaw;
   return (
     <div className="grid gap-6">
       <div>

@@ -43,7 +43,6 @@ export function IntentQuestionList({ domain }: { domain: string }) {
   return (
     <div className="space-y-3">
       <div className="text-[14px] font-semibold text-[var(--te-text)]">Intent questions</div>
-      <div className="text-[13px] text-slate-700">Plain list (no blocks).</div>
 
       {isLoading ? <div className="text-[13px] text-slate-700">Loading…</div> : null}
       {error ? <div className="text-[13px] text-red-600">{error}</div> : null}
