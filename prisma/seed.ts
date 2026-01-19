@@ -89,6 +89,84 @@ async function main() {
     createdProducts.push(result);
   }
 
+  // Seed baseline blog posts for SunnyStep from bundled demo snapshot.
+  // The storefront blog list only shows PUBLISHED posts; on fresh deploys we want a non-empty catalog.
+  // To avoid overwriting real content, only seed when there are zero published blog assets.
+  try {
+    const publishedBlogCount = await prisma.asset.count({
+      where: { customerId: sunnyCustomer.id, type: "BLOG" as any, status: "PUBLISHED" as any },
+    });
+
+    if (publishedBlogCount === 0) {
+      const blogsIndexFile = path.join(process.cwd(), "demo_sunnystep", "blogs.json");
+      const rawBlogs = fs.readFileSync(blogsIndexFile, "utf8");
+      const blogIndex = JSON.parse(rawBlogs) as Array<{
+        url?: string;
+        headline?: string;
+        description?: string;
+        image?: string;
+      }>;
+
+      const mkSlug = (url: string, fallback: string) => {
+        const u = String(url || "").trim();
+        if (!u) return slugify(fallback);
+        const cleaned = u.replace(/[?#].*$/, "").replace(/\/+$/, "");
+        const parts = cleaned.split("/").filter(Boolean);
+        const last = parts[parts.length - 1] || "";
+        // "communitystory" is the blog root; use a friendlier slug in that case.
+        if (last === "communitystory") return "sunnystep-blog";
+        return slugify(last || fallback);
+      };
+
+      for (const entry of Array.isArray(blogIndex) ? blogIndex : []) {
+        const title = String(entry?.headline || "").trim() || "Blog";
+        const description = String(entry?.description || "").trim();
+        const image = String(entry?.image || "").trim();
+        const sourceUrl = String(entry?.url || "").trim();
+        const slug = mkSlug(sourceUrl, title);
+
+        const md = [
+          `# ${title}`,
+          "",
+          description ? description : "A short demo blog post (seeded).",
+          "",
+          "## Why this matters",
+          "- Helps shoppers decide faster with clear, grounded guidance.",
+          "- Improves trust + AI readiness by answering common questions in one place.",
+          "",
+          sourceUrl ? `Source: ${sourceUrl}` : "",
+          "",
+        ]
+          .filter((line) => line !== "")
+          .join("\n");
+
+        const asset = await prisma.asset.create({
+          data: {
+            customerId: sunnyCustomer.id,
+            type: "BLOG" as any,
+            status: "PUBLISHED" as any,
+            title,
+            slug,
+            meta: {
+              excerpt: description || null,
+              imageUrl: image || null,
+              sourceUrl: sourceUrl || null,
+              seed: "demo_sunnystep/blogs.json",
+            } as any,
+            versions: {
+              create: [{ version: 1, content: md }],
+            },
+          } as any,
+        });
+
+        // Keep a receipt trail via console for local runs; harmless on Vercel.
+        console.log("Seeded blog:", asset.slug);
+      }
+    }
+  } catch (e) {
+    console.warn("Skipped blog seed (missing/invalid files):", e);
+  }
+
   // Seed demand signals (Questions) for SunnyStep so the Inspect rail has a rich default set.
   // This makes the demo deterministic on fresh deploys (Vercel runs `prisma db seed` in build).
   const bankFile = path.join(process.cwd(), "data", "question_banks", "sunnystep_sg_v1.json");
