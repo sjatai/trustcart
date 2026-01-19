@@ -9,6 +9,9 @@ function resolveImageSrc(img?: string | null) {
   const s = String(img || "").trim();
   if (!s) return "";
   if (s.startsWith("http://") || s.startsWith("https://")) return s;
+  // If the DB stores a public path like `/images/...`, serve it directly (Vercel static).
+  if (s.startsWith("/")) return s;
+  // Otherwise treat as a demo asset path (served by /api/assets).
   return `/api/assets/${s.replace(/^\/+/, "")}`;
 }
 
