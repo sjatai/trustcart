@@ -167,6 +167,62 @@ async function main() {
     console.warn("Skipped blog seed (missing/invalid files):", e);
   }
 
+  // Seed baseline FAQs for SunnyStep from bundled demo snapshot.
+  // The storefront FAQ page pulls PUBLISHED FAQ assets; on fresh deploys we want a non-empty list.
+  // To avoid overwriting real content, only seed when there are zero published FAQ assets.
+  try {
+    const publishedFaqCount = await prisma.asset.count({
+      where: { customerId: sunnyCustomer.id, type: "FAQ" as any, status: "PUBLISHED" as any },
+    });
+
+    if (publishedFaqCount === 0) {
+      const faqsFile = path.join(process.cwd(), "demo_sunnystep", "faqs.json");
+      const rawFaqs = fs.readFileSync(faqsFile, "utf8");
+      const faqs = JSON.parse(rawFaqs) as { items?: Array<{ question?: string; answer?: string; sourceUrl?: string }> };
+      const items = Array.isArray(faqs?.items) ? faqs.items : [];
+
+      // Keep slugs stable/deterministic while avoiding collisions.
+      const usedSlugs = new Set<string>();
+      const uniqueSlug = (base: string, idx: number) => {
+        let s = slugify(base) || `faq-${idx + 1}`;
+        if (!usedSlugs.has(s)) return s;
+        for (let i = 2; i < 50; i++) {
+          const candidate = `${s}-${i}`;
+          if (!usedSlugs.has(candidate)) return candidate;
+        }
+        return `${s}-${Date.now()}`;
+      };
+
+      for (let i = 0; i < items.length; i++) {
+        const q = String(items[i]?.question || "").trim();
+        const a = String(items[i]?.answer || "").trim();
+        const url = String(items[i]?.sourceUrl || "").trim();
+        if (!q || !a) continue;
+
+        const slug = uniqueSlug(q, i);
+        usedSlugs.add(slug);
+
+        const md = [`# ${q}`, "", a, "", url ? `Source: ${url}` : "", ""].filter((line) => line !== "").join("\n");
+
+        const asset = await prisma.asset.create({
+          data: {
+            customerId: sunnyCustomer.id,
+            type: "FAQ" as any,
+            status: "PUBLISHED" as any,
+            title: q,
+            slug,
+            meta: { url: url || null, seed: "demo_sunnystep/faqs.json", derived: true } as any,
+            versions: { create: [{ version: 1, content: md }] },
+          } as any,
+        });
+
+        console.log("Seeded FAQ:", asset.slug);
+      }
+    }
+  } catch (e) {
+    console.warn("Skipped FAQ seed (missing/invalid file):", e);
+  }
+
   // Seed demand signals (Questions) for SunnyStep so the Inspect rail has a rich default set.
   // This makes the demo deterministic on fresh deploys (Vercel runs `prisma db seed` in build).
   const bankFile = path.join(process.cwd(), "data", "question_banks", "sunnystep_sg_v1.json");
