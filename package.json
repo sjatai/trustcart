@@ -5,7 +5,7 @@
   "packageManager": "pnpm@9.0.0",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "sh -c 'if [ -n \"$VERCEL\" ]; then prisma migrate deploy; fi && prisma generate && next build'",
     "start": "next start",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
