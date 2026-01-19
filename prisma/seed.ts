@@ -1,6 +1,22 @@
 import { PrismaClient } from "@prisma/client";
+import fs from "node:fs";
+import path from "node:path";
 
 const prisma = new PrismaClient();
+
+function slugify(input: string) {
+  return String(input || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72);
+}
+
+function priceToCents(price: unknown): number | null {
+  const priceNum = Number(String(price ?? "").trim());
+  return Number.isFinite(priceNum) ? Math.round(priceNum * 100) : null;
+}
 
 async function main() {
   // Controlled multi-domain demo (DB-driven, domain-safe)
@@ -71,69 +87,34 @@ async function main() {
 
   console.log("Seeded customers:", nissanCustomer.domain, sunnyCustomer.domain);
 
-  // Seed products for SunnyStep (real DB rows; no UI mocks). Keep content minimal and non-assertive.
-  const sunnyProducts = [
-    {
-      handle: "sunny-step-classic",
-      title: "SunnyStep Classic",
-      vendor: "SunnyStep",
-      productType: "Footwear",
-      tags: "footwear",
-      priceMin: 9900,
-      priceMax: 9900,
-      currency: "USD",
-      descriptionHtml: "<p>Baseline product seeded for demo. Replace with verified copy when available.</p>",
-      specs: { note: "NEEDS_VERIFICATION" },
-    },
-    {
-      handle: "sunny-step-runner",
-      title: "SunnyStep Runner",
-      vendor: "SunnyStep",
-      productType: "Footwear",
-      tags: "footwear",
-      priceMin: 12900,
-      priceMax: 12900,
-      currency: "USD",
-      descriptionHtml: "<p>Baseline product seeded for demo. Replace with verified copy when available.</p>",
-      specs: { note: "NEEDS_VERIFICATION" },
-    },
-    {
-      handle: "sunny-step-sandal",
-      title: "SunnyStep Sandal",
-      vendor: "SunnyStep",
-      productType: "Footwear",
-      tags: "footwear",
-      priceMin: 7900,
-      priceMax: 7900,
-      currency: "USD",
-      descriptionHtml: "<p>Baseline product seeded for demo. Replace with verified copy when available.</p>",
-      specs: { note: "NEEDS_VERIFICATION" },
-    },
-    {
-      handle: "sunny-step-boot",
-      title: "SunnyStep Boot",
-      vendor: "SunnyStep",
-      productType: "Footwear",
-      tags: "footwear",
-      priceMin: 15900,
-      priceMax: 15900,
-      currency: "USD",
-      descriptionHtml: "<p>Baseline product seeded for demo. Replace with verified copy when available.</p>",
-      specs: { note: "NEEDS_VERIFICATION" },
-    },
-    {
-      handle: "sunny-step-kids",
-      title: "SunnyStep Kids",
-      vendor: "SunnyStep",
-      productType: "Footwear",
-      tags: "footwear",
-      priceMin: 6900,
-      priceMax: 6900,
-      currency: "USD",
-      descriptionHtml: "<p>Baseline product seeded for demo. Replace with verified copy when available.</p>",
-      specs: { note: "NEEDS_VERIFICATION" },
-    },
-  ];
+  // Seed products for SunnyStep from bundled demo snapshot (includes local image paths served via /api/assets).
+  const productsFile = path.join(process.cwd(), "demo_sunnystep", "products.json");
+  const rawProducts = fs.readFileSync(productsFile, "utf8");
+  const sunnyProducts = (JSON.parse(rawProducts) as any[])
+    .map((p) => {
+      const url = String(p?.url || "").trim();
+      const urlHandle = url ? url.split("/products/")[1]?.split(/[?#]/)[0] : "";
+      const handle = slugify(urlHandle || p?.sku || p?.name || "");
+      const title = String(p?.name || handle).trim();
+      const vendor = String(p?.brand || "Sunnystep").trim() || "Sunnystep";
+      const currency = String(p?.priceCurrency || "SGD").trim() || "SGD";
+      const priceCents = priceToCents(p?.price);
+      const images = Array.isArray(p?.images) ? (p.images as any[]).map((x) => String(x || "").trim()).filter(Boolean) : [];
+      const description = String(p?.description || "").trim();
+
+      return {
+        handle,
+        title,
+        vendor,
+        currency,
+        priceMin: priceCents ?? undefined,
+        priceMax: priceCents ?? undefined,
+        images,
+        descriptionHtml: description ? `<p>${description}</p>` : undefined,
+        specs: { sourceUrl: url || null, seed: "demo_sunnystep/products.json" },
+      };
+    })
+    .filter((p) => p.handle);
 
   const createdProducts = [];
   for (const product of sunnyProducts) {
@@ -142,26 +123,24 @@ async function main() {
       update: {
         title: product.title,
         vendor: product.vendor,
-        productType: product.productType,
-        tags: product.tags,
         priceMin: product.priceMin,
         priceMax: product.priceMax,
+        currency: product.currency,
+        images: product.images as any,
         descriptionHtml: product.descriptionHtml,
         specs: product.specs,
-        currency: product.currency,
       },
       create: {
         customerId: sunnyCustomer.id,
         handle: product.handle,
         title: product.title,
         vendor: product.vendor,
-        productType: product.productType,
-        tags: product.tags,
         priceMin: product.priceMin,
         priceMax: product.priceMax,
+        currency: product.currency,
+        images: product.images as any,
         descriptionHtml: product.descriptionHtml,
         specs: product.specs,
-        currency: product.currency,
       },
     });
     createdProducts.push(result);
