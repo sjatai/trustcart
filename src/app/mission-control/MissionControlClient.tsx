@@ -96,6 +96,8 @@ function MissionDrawer({
   const [lastCommand, setLastCommand] = useState<string>("");
   const [scriptIdx, setScriptIdx] = useState(0);
   const [domainInput, setDomainInput] = useState(customerDomain);
+  const [resetBusy, setResetBusy] = useState(false);
+  const [resetMsg, setResetMsg] = useState<string>("");
 
   useEffect(() => {
     setScriptIdx(0);
@@ -131,6 +133,48 @@ function MissionDrawer({
       onRunComplete();
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function resetDemo() {
+    const domain = normalizeDomain(domainInput || customerDomain);
+    if (!domain) return;
+    // Extra safety guard: this is intended only for the single demo domain.
+    if (domain !== "sunnystep.com") {
+      setResetMsg("Reset is only enabled for sunnystep.com");
+      return;
+    }
+    const ok = window.confirm(
+      "Safe Demo Reset will remove Trustcart-created drafts/recommendations/published patches and regenerate fresh recommendations.\n\nIt will keep the seeded product catalog and baseline published FAQs/blogs.\n\nProceed?",
+    );
+    if (!ok) return;
+    const token = window.prompt("Enter DEMO_RESET_TOKEN (from Vercel env) to confirm:") || "";
+    if (!token.trim()) return;
+    setResetBusy(true);
+    setResetMsg("");
+    try {
+      const res = await fetch("/api/demo/reset", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ domain, token: token.trim() }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json?.ok === false) {
+        setResetMsg(`Reset failed: ${json?.error || res.status}`);
+        return;
+      }
+      setResetMsg("Reset complete. Refreshing…");
+      // Refresh rails + iframe consumers.
+      try {
+        window.dispatchEvent(new CustomEvent("trusteye:refresh"));
+      } catch {
+        // ignore
+      }
+      onRunComplete();
+      // Hard reload to clear any cached RSC content.
+      window.location.reload();
+    } finally {
+      setResetBusy(false);
     }
   }
 
@@ -185,7 +229,17 @@ function MissionDrawer({
         >
           {loading ? "Running…" : "Run"}
         </button>
+        <button
+          type="button"
+          onClick={() => resetDemo()}
+          disabled={resetBusy}
+          className="rounded-xl border border-[rgba(239,68,68,0.25)] bg-[rgba(239,68,68,0.06)] px-3 py-2 text-[14px] font-semibold text-slate-900 hover:bg-[rgba(239,68,68,0.09)] disabled:opacity-60"
+          title="Safe Demo Reset (sunnystep.com only)"
+        >
+          {resetBusy ? "Resetting…" : "Safe demo reset"}
+        </button>
       </div>
+      {resetMsg ? <div className="mt-2 text-[12px] text-[var(--te-muted)]">{resetMsg}</div> : null}
     </div>
   );
 }

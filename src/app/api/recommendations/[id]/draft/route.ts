@@ -38,6 +38,12 @@ export async function POST(req: Request) {
   const overrideMarkdown = typeof body?.overrideMarkdown === "string" ? body.overrideMarkdown.trim() : "";
   const existingDraft = (rec.llmEvidence as any)?.draft as any;
 
+  // If a prefilled draft already exists and the user isn't overriding it, return it as-is.
+  // This keeps seeded demo drafts stable and avoids unnecessary LLM/simulated regeneration.
+  if (!overrideMarkdown && existingDraft) {
+    return NextResponse.json({ ok: true, recommendationId: id, status: rec.status, draft: existingDraft });
+  }
+
   // If user is just editing an existing draft, do not re-run the LLM.
   if (overrideMarkdown && existingDraft) {
     const markers = extractNeedsVerificationMarkers(overrideMarkdown);

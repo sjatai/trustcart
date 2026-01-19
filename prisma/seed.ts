@@ -458,7 +458,7 @@ async function main() {
             suggestedContent: r.suggested,
             recommendedAssetType: "FAQ" as any,
             publishTarget: "FAQ" as any,
-            llmEvidence: { ...(null as any), stableSlug: r.stableSlug, draft } as any,
+            llmEvidence: { stableSlug: r.stableSlug, draft } as any,
           } as any,
         });
       } else {
