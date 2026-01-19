@@ -211,6 +211,79 @@ async function main() {
     console.warn("Skipped blog seed (missing/invalid files):", e);
   }
 
+  // Ensure the curated "exercise/comfort science" demo post is present and shows first with a nice hero image.
+  // This is intentionally deterministic and safe to run repeatedly (it updates or creates a single post).
+  try {
+    const curatedTitle = "Comfort science for walking + running: reduce fatigue, recover better";
+    const curatedSlug = "comfort-science-walking-running";
+    const curatedHero = "/images/blogs/woman_doing_run_walk_method.avif";
+    const curatedExcerpt = "A practical guide to reducing fatigue and recovering better—using comfort science principles for walking and running.";
+    const curatedMd = [
+      `# ${curatedTitle}`,
+      "",
+      curatedExcerpt,
+      "",
+      "## The simple idea",
+      "- Reduce pressure hotspots (heel + forefoot) with stable cushioning and support.",
+      "- Keep your gait efficient (less energy loss = less fatigue).",
+      "- Recover faster by lowering repetitive stress over long days.",
+      "",
+      "## Practical checklist",
+      "- Choose shoes with stable arch + heel support (especially for long walking/standing).",
+      "- If you run or do brisk walks, prioritize consistent cushioning and traction.",
+      "- Use the brand’s size guide for the best fit (fit drives comfort more than you think).",
+      "",
+      "Source: https://www.sunnystep.com/pages/frequently-asked-questions",
+      "",
+    ].join("\n");
+
+    const existing = await prisma.asset.findFirst({
+      where: { customerId: sunnyCustomer.id, type: "BLOG" as any, title: { equals: curatedTitle, mode: "insensitive" } as any },
+      include: { versions: { orderBy: { version: "desc" }, take: 1 } },
+    });
+
+    if (!existing) {
+      await prisma.asset.create({
+        data: {
+          customerId: sunnyCustomer.id,
+          type: "BLOG" as any,
+          status: "PUBLISHED" as any,
+          title: curatedTitle,
+          slug: curatedSlug,
+          meta: {
+            excerpt: curatedExcerpt,
+            imageUrl: curatedHero,
+            seed: "demo_curated/comfort_science",
+          } as any,
+          versions: { create: [{ version: 1, content: curatedMd }] },
+        } as any,
+      });
+      console.log("Seeded curated blog:", curatedSlug);
+    } else {
+      // Keep it on top by updating updatedAt (via any update) and only add a new version if content changed.
+      const latestContent = String(existing.versions?.[0]?.content || "");
+      const needsNewVersion = latestContent.trim() !== curatedMd.trim();
+      const latestVersion = existing.versions?.[0]?.version || 1;
+
+      await prisma.asset.update({
+        where: { id: existing.id },
+        data: {
+          status: "PUBLISHED" as any,
+          slug: existing.slug || curatedSlug,
+          meta: {
+            ...(typeof existing.meta === "object" && existing.meta ? (existing.meta as any) : {}),
+            excerpt: curatedExcerpt,
+            imageUrl: curatedHero,
+            seed: "demo_curated/comfort_science",
+          } as any,
+          versions: needsNewVersion ? { create: [{ version: latestVersion + 1, content: curatedMd }] } : undefined,
+        } as any,
+      });
+    }
+  } catch (e) {
+    console.warn("Skipped curated blog seed:", e);
+  }
+
   // Seed baseline FAQs for SunnyStep from the richer crawl export (data/sunnystep_seed.json).
   // IMPORTANT: do NOT seed the derived "What is this page about..." footer/policy pages as FAQs.
   // The storefront FAQ page pulls PUBLISHED FAQ assets; on fresh deploys we want a non-empty list.
