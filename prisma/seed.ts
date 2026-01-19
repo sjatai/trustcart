@@ -29,6 +29,39 @@ function priceToCents(price: unknown): number | null {
   return Number.isFinite(priceNum) ? Math.round(priceNum * 100) : null;
 }
 
+async function upsertClaimWithEvidence(args: {
+  customerId: string;
+  key: string;
+  value: string;
+  url: string;
+  snippet: string;
+  confidence?: number;
+}) {
+  const confidence = args.confidence ?? 95;
+  const existing = await prisma.claim.findFirst({ where: { customerId: args.customerId, key: args.key } });
+  const claim = existing
+    ? await prisma.claim.update({
+        where: { id: existing.id },
+        data: { value: args.value, confidence, freshnessAt: new Date() },
+      })
+    : await prisma.claim.create({
+        data: {
+          customerId: args.customerId,
+          key: args.key,
+          value: args.value,
+          confidence,
+          freshnessAt: new Date(),
+        },
+      });
+
+  // Always append evidence so we can show freshness/grounding.
+  await prisma.evidence.create({
+    data: { claimId: claim.id, url: args.url, snippet: args.snippet },
+  });
+
+  return claim;
+}
+
 async function main() {
   // SunnyStep-only demo seed (DB-driven)
   const sunnyDomain = "sunnystep.com";
@@ -236,6 +269,53 @@ async function main() {
         console.log("Seeded FAQ:", asset.slug);
       }
     }
+
+    // Seed a minimal set of VERIFIED claims needed to prefill two demo FAQ drafts.
+    // This keeps the demo deterministic even without OPENAI_API_KEY.
+    const faqSeedFile = path.join(process.cwd(), "data", "sunnystep_seed.json");
+    const rawFaqSeed = fs.readFileSync(faqSeedFile, "utf8");
+    const faqSeed = JSON.parse(rawFaqSeed) as {
+      faqs?: Array<{ question?: string; answer?: string; sourceUrl?: string }>;
+    };
+    const faqItems = Array.isArray(faqSeed?.faqs) ? faqSeed.faqs : [];
+    const findFaq = (q: string) => faqItems.find((x) => String(x.question || "").trim().toLowerCase() === q.toLowerCase()) || null;
+    const qStores = findFaq("Does Sunnystep have physical stores?");
+    const qSize = findFaq("How do I choose the right size?");
+
+    if (qStores?.answer) {
+      await upsertClaimWithEvidence({
+        customerId: sunnyCustomer.id,
+        key: "store.sg.locations",
+        value: String(qStores.answer).trim(),
+        url: String(qStores.sourceUrl || "https://www.sunnystep.com/pages/frequently-asked-questions"),
+        snippet: String(qStores.answer).trim().slice(0, 260),
+      });
+      // If the FAQ doesn't include hours explicitly, keep a conservative claim aligned with the site.
+      await upsertClaimWithEvidence({
+        customerId: sunnyCustomer.id,
+        key: "store.sg.hours",
+        value: "Store opening hours vary by location. Check the store locator for the latest hours for each store.",
+        url: "https://www.sunnystep.com/pages/store-locations",
+        snippet: "Store hours vary by location; check the store locator for the latest opening hours.",
+      });
+    }
+
+    if (qSize?.answer) {
+      await upsertClaimWithEvidence({
+        customerId: sunnyCustomer.id,
+        key: "product.fit.true_to_size",
+        value: String(qSize.answer).trim(),
+        url: String(qSize.sourceUrl || "https://www.sunnystep.com/pages/frequently-asked-questions"),
+        snippet: String(qSize.answer).trim().slice(0, 260),
+      });
+      await upsertClaimWithEvidence({
+        customerId: sunnyCustomer.id,
+        key: "size.guide.conversion",
+        value: "Use the size guide on the site for fit notes and size conversion guidance (US/EU/UK) where provided.",
+        url: "https://www.sunnystep.com/pages/frequently-asked-questions",
+        snippet: "Use the size guide on-site for fit notes and any available size conversion guidance.",
+      });
+    }
   } catch (e) {
     console.warn("Skipped FAQ seed (missing/invalid file):", e);
   }
@@ -280,6 +360,145 @@ async function main() {
     console.log("Seeded demand questions:", normalizedQuestions.length);
   } catch (e) {
     console.warn("Skipped question bank seed (missing/invalid file):", bankFile);
+  }
+
+  // Prefill two demo FAQ drafts (DRAFTED) so the "Open recommended content → Publish" demo is immediate.
+  // Does not require OPENAI_API_KEY: drafts are grounded using seeded claims/evidence above.
+  try {
+    const mkFaqDraft = (args: { title: string; stableSlug: string; shortAnswer: string; bodyMd: string }) => ({
+      type: "FAQ",
+      title: args.title,
+      slug: args.stableSlug,
+      targetUrl: "/faq",
+      content: {
+        shortAnswer: args.shortAnswer,
+        bodyMarkdown: args.bodyMd.trim() + "\n",
+        factsUsed: [],
+        needsVerification: [],
+        llmEvidence: [{ provider: "SIMULATED", quote: "Prefilled from seeded site facts (no OpenAI required)." }],
+      },
+    });
+
+    const storesDraftBody = [
+      `# FAQ: Where are your stores in Singapore, and what are the opening hours?`,
+      ``,
+      `SunnyStep has physical stores in Singapore where you can try on shoes in person.`,
+      ``,
+      `## Where to find store locations`,
+      `- Use the store locator to view current locations and details.`,
+      ``,
+      `## Opening hours`,
+      `- Opening hours vary by location. Check the store locator for the latest hours for each store.`,
+      ``,
+      `Source: https://www.sunnystep.com/pages/frequently-asked-questions`,
+    ].join("\n");
+
+    const sizeDraftBody = [
+      `# FAQ: How do I choose my size? (fit + size conversion)`,
+      ``,
+      `We recommend checking the size guide for the best fit, as sizing may vary between styles.`,
+      ``,
+      `## Fit notes`,
+      `- Most styles follow the size guide; if you are between sizes, follow the guide’s recommendation.`,
+      `- Note: for the Balance Space Runner, consider sizing up by two sizes (per the brand’s guidance).`,
+      ``,
+      `## Size conversion`,
+      `- Refer to the size guide on the site for any available US/EU/UK conversion guidance.`,
+      ``,
+      `Source: https://www.sunnystep.com/pages/frequently-asked-questions`,
+    ].join("\n");
+
+    const demoFaqRecs = [
+      {
+        title: "FAQ: Where are your stores in Singapore, and what are the opening hours?",
+        stableSlug: "faq-stores-singapore-hours",
+        targetUrl: "/faq",
+        why: "We found the underlying facts in discovery, but shoppers need a single clear FAQ answer.",
+        suggested: storesDraftBody,
+      },
+      {
+        title: "FAQ: How do I choose my size? (fit + size conversion)",
+        stableSlug: "faq-size-guide-conversion",
+        targetUrl: "/faq",
+        why: "We found the underlying facts in discovery, but shoppers need a single clear FAQ answer.",
+        suggested: sizeDraftBody,
+      },
+    ];
+
+    for (const r of demoFaqRecs) {
+      const existing = await prisma.contentRecommendation.findFirst({
+        where: { customerId: sunnyCustomer.id, title: r.title, publishTarget: "FAQ" as any },
+        select: { id: true },
+      });
+
+      const draft =
+        r.title.indexOf("stores") >= 0
+          ? mkFaqDraft({
+              title: r.title,
+              stableSlug: r.stableSlug,
+              shortAnswer: "Find SunnyStep stores in Singapore and check store-specific opening hours via the store locator.",
+              bodyMd: storesDraftBody,
+            })
+          : mkFaqDraft({
+              title: r.title,
+              stableSlug: r.stableSlug,
+              shortAnswer: "Use the size guide; fit may vary by style. Follow the brand’s fit notes and size conversion guidance where provided.",
+              bodyMd: sizeDraftBody,
+            });
+
+      if (existing) {
+        await prisma.contentRecommendation.update({
+          where: { id: existing.id },
+          data: {
+            status: "DRAFTED" as any,
+            kind: "CREATE" as any,
+            title: r.title,
+            why: r.why,
+            targetUrl: r.targetUrl,
+            suggestedContent: r.suggested,
+            recommendedAssetType: "FAQ" as any,
+            publishTarget: "FAQ" as any,
+            llmEvidence: { ...(null as any), stableSlug: r.stableSlug, draft } as any,
+          } as any,
+        });
+      } else {
+        await prisma.contentRecommendation.create({
+          data: {
+            customerId: sunnyCustomer.id,
+            kind: "CREATE" as any,
+            status: "DRAFTED" as any,
+            title: r.title,
+            why: r.why,
+            targetUrl: r.targetUrl,
+            suggestedContent: r.suggested,
+            recommendedAssetType: "FAQ" as any,
+            publishTarget: "FAQ" as any,
+            llmEvidence: { stableSlug: r.stableSlug, draft } as any,
+          } as any,
+        });
+      }
+
+      // Ensure there is a draft Asset row so versioning is clean even before first edit.
+      const existingAsset = await prisma.asset.findFirst({
+        where: { customerId: sunnyCustomer.id, type: "FAQ" as any, slug: r.stableSlug },
+        select: { id: true },
+      });
+      if (!existingAsset) {
+        await prisma.asset.create({
+          data: {
+            customerId: sunnyCustomer.id,
+            type: "FAQ" as any,
+            status: "DRAFT" as any,
+            title: r.title,
+            slug: r.stableSlug,
+            meta: { source: "seed_prefill", placement: "/faq" } as any,
+            versions: { create: { version: 1, content: r.suggested } },
+          } as any,
+        });
+      }
+    }
+  } catch (e) {
+    console.warn("Skipped prefilled demo FAQ drafts:", e);
   }
 
   // Receipt: seed baseline
