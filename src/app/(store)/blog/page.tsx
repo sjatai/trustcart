@@ -35,6 +35,7 @@ export default async function BlogPage() {
   // If the post is already published and in the list, hide the draft "Recommended blog" card
   // to avoid showing the same thing twice in the demo.
   const showRecommendedBlogCard = sortedBlogRecs.length > 0 && !hasComfortPost;
+  const showBlogRecsUi = sortedBlogRecs.length > 0 && !hasComfortPost;
   return (
     <div className="grid gap-6">
       <div>
@@ -42,7 +43,7 @@ export default async function BlogPage() {
         <div className="te-meta mt-2">Blog inventory seeded from discovery crawl.</div>
       </div>
 
-      <TrustEyeRecommendBar domain="sunnystep.com" label="Blog" recommendations={sortedBlogRecs as any} />
+      {showBlogRecsUi ? <TrustEyeRecommendBar domain="sunnystep.com" label="Blog" recommendations={sortedBlogRecs as any} /> : null}
 
       {showRecommendedBlogCard ? (
         <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
