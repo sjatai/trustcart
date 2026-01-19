@@ -85,7 +85,8 @@ export async function getActiveRecommendations(domain = STORE_DOMAIN) {
   const customer = await prisma.customer.findUnique({ where: { domain } });
   if (!customer) return [];
   return prisma.contentRecommendation.findMany({
-    where: { customerId: customer.id, status: { in: ["PROPOSED", "DRAFTED", "APPROVED"] as any } },
+    // Include PUBLISHED so the "open editor" flow remains accessible even after publishing.
+    where: { customerId: customer.id, status: { in: ["PROPOSED", "DRAFTED", "APPROVED", "PUBLISHED"] as any } },
     // Use updatedAt so stable, deterministic demo recommendations stay visible after regeneration.
     orderBy: { updatedAt: "desc" },
     take: 60,
