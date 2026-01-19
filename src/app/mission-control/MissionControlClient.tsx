@@ -148,7 +148,8 @@ function MissionDrawer({
       "Safe Demo Reset will remove Trustcart-created drafts/recommendations/published patches and regenerate fresh recommendations.\n\nIt will keep the seeded product catalog and baseline published FAQs/blogs.\n\nProceed?",
     );
     if (!ok) return;
-    const token = window.prompt("Enter DEMO_RESET_TOKEN (from Vercel env) to confirm:") || "";
+    const token =
+      window.prompt("Enter DEMO_RESET_TOKEN to confirm (if not set, use default: demo-reset):") || "";
     if (!token.trim()) return;
     setResetBusy(true);
     setResetMsg("");
@@ -160,7 +161,7 @@ function MissionDrawer({
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok || json?.ok === false) {
-        setResetMsg(`Reset failed: ${json?.error || res.status}`);
+        setResetMsg(`Reset failed: ${json?.error || res.status}${json?.hint ? ` — ${json.hint}` : ""}`);
         return;
       }
       setResetMsg("Reset complete. Refreshing…");

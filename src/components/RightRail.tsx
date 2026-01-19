@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { IntentGraph } from "@/components/intent/IntentGraph";
+import { IntentQuestionList } from "@/components/intent/IntentQuestionList";
 import type { ReactNode } from "react";
 import type { RailState } from "@/components/MissionControlShell";
 import { cleanSnippet } from "@/lib/evidenceFormat";
@@ -436,11 +436,7 @@ export function RightRail({
         {tab === "intent" ? (
           <div className="grid gap-3">
             <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
-              <div className="text-[14px] font-semibold text-[var(--te-text)]">Intent</div>
-              <div className="mt-2 text-[13px] text-slate-700">High-intent questions grouped by taxonomy (from discovery).</div>
-              <div className="mt-3">
-                <IntentGraph customerDomain={domain} />
-              </div>
+              <IntentQuestionList domain={domain} />
             </div>
           </div>
         ) : null}
