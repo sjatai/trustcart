@@ -19,15 +19,8 @@ function priceToCents(price: unknown): number | null {
 }
 
 async function main() {
-  // Controlled multi-domain demo (DB-driven, domain-safe)
-  const nissanDomain = "reliablenissan.com";
+  // SunnyStep-only demo seed (DB-driven)
   const sunnyDomain = "sunnystep.com";
-
-  const nissanCustomer = await prisma.customer.upsert({
-    where: { domain: nissanDomain },
-    update: { name: "Reliable Nissan" },
-    create: { name: "Reliable Nissan", domain: nissanDomain },
-  });
 
   const sunnyCustomer = await prisma.customer.upsert({
     where: { domain: sunnyDomain },
@@ -35,57 +28,7 @@ async function main() {
     create: { name: "SunnyStep", domain: sunnyDomain },
   });
 
-  // Seed EndCustomers (growth targeting)
-  const endCustomers: Array<{ email: string; firstName: string; lastName: string; attributes: any }> = [];
-  for (let i = 0; i < 10; i++) {
-    endCustomers.push({
-      email: `demo.advocate+${i + 1}@example.com`,
-      firstName: "Alex",
-      lastName: `Advocate${i + 1}`,
-      attributes: {
-        rating: 5,
-        sentiment: "positive",
-        referralSent: i % 4 === 0,
-        lastSeenAt: new Date(Date.now() - i * 86_400_000).toISOString(),
-      },
-    });
-  }
-  for (let i = 0; i < 6; i++) {
-    endCustomers.push({
-      email: `demo.neutral+${i + 1}@example.com`,
-      firstName: "Sam",
-      lastName: `Neutral${i + 1}`,
-      attributes: {
-        rating: 3,
-        sentiment: "neutral",
-        referralSent: false,
-        lastSeenAt: new Date(Date.now() - (i + 10) * 86_400_000).toISOString(),
-      },
-    });
-  }
-  for (let i = 0; i < 4; i++) {
-    endCustomers.push({
-      email: `demo.risk+${i + 1}@example.com`,
-      firstName: "Riley",
-      lastName: `Risk${i + 1}`,
-      attributes: {
-        rating: 1,
-        sentiment: "negative",
-        referralSent: false,
-        lastSeenAt: new Date(Date.now() - (i + 16) * 86_400_000).toISOString(),
-      },
-    });
-  }
-
-  for (const ec of endCustomers) {
-    await prisma.endCustomer.upsert({
-      where: { customerId_email: { customerId: nissanCustomer.id, email: ec.email } },
-      update: { firstName: ec.firstName, lastName: ec.lastName, attributes: ec.attributes },
-      create: { customerId: nissanCustomer.id, email: ec.email, firstName: ec.firstName, lastName: ec.lastName, attributes: ec.attributes },
-    });
-  }
-
-  console.log("Seeded customers:", nissanCustomer.domain, sunnyCustomer.domain);
+  console.log("Seeded customer:", sunnyCustomer.domain);
 
   // Seed products for SunnyStep from bundled demo snapshot (includes local image paths served via /api/assets).
   const productsFile = path.join(process.cwd(), "demo_sunnystep", "products.json");

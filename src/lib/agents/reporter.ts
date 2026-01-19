@@ -17,7 +17,7 @@ export async function runReporter(state: GraphState): Promise<{ step: AgentStep;
   step.decide.push("Compose a single executive answer with next actions.");
   step.do.push("Return assistant message and overlay cues.");
 
-  const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+  const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
   const customer = await getOrCreateCustomerByDomain(domain);
 
   const [

@@ -21,7 +21,7 @@ function daysAgo(n: number) {
 
 function getDemoProbeQuestions(domain: string): string[] | null {
   const d = (domain || "").toLowerCase();
-  if (!d.includes("reliablenissan.com")) return null;
+  if (!d.includes("sunnystep.com")) return null;
   // Curated set designed to show improvement after publishing verified FAQ/pages.
   return [
     "What are the service department hours today, and how do I book an appointment?",
@@ -140,7 +140,7 @@ export async function runAIO(state: GraphState): Promise<{ step: AgentStep; patc
   if (["probe", "reprobe_delta"].includes(state.command)) {
     step.decide.push("Run LLM probes (OpenAI + Gemini) and compute AI Visibility score.");
     step.do.push("Create a visibility score snapshot and store probe answers.");
-    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     // Prefer deterministic demo set when available; otherwise use top DB questions.
@@ -271,7 +271,7 @@ export async function runAIO(state: GraphState): Promise<{ step: AgentStep; patc
     step.do.push("Intent graph updated");
     step.do.push("Gaps identified with reasons");
 
-    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     // Ensure baseline question bank exists (creates Question + QuestionNeed rows).

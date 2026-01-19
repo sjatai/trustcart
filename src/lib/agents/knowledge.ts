@@ -162,7 +162,7 @@ export async function runKnowledge(state: GraphState): Promise<{ step: AgentStep
     step.decide.push("Run domain-limited crawl and extract claims + evidence.");
     step.do.push("Persist CrawlRun, CrawlPages, Claims, Evidence; update audit ledger.");
 
-    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     // Allow "shadow customers" for demo/testing that still crawl the real public site.
@@ -253,7 +253,7 @@ export async function runKnowledge(state: GraphState): Promise<{ step: AgentStep
   } else if (state.command === "generate_trust_pack" || state.command === "approve_publish") {
     step.decide.push("Generate Trust Assets (FAQ/blog/truth blocks) from gaps and claims; route for approval.");
     step.do.push("Create draft assets; on approval publish to /site routes.");
-    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     if (state.command === "generate_trust_pack") {

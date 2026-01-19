@@ -20,7 +20,7 @@ export async function runGrowth(state: GraphState): Promise<{ step: AgentStep; p
   if (state.command === "launch_campaign") {
     step.decide.push("Create campaign rule + compute eligible vs suppressed with reasons; default to dry-run; ensure trust gating passes.");
     step.do.push("Persist RuleSet, SegmentSnapshot, Campaign, SendReceipts; write canonical receipts.");
-    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+    const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getOrCreateCustomerByDomain(domain);
 
     const msg = (state.userMessage || "").toLowerCase();

@@ -19,7 +19,7 @@ export async function runTrust(state: GraphState): Promise<{ step: AgentStep; pa
   step.read.push("Consumer Trust is computed in Content/Publish steps (separate).");
   step.decide.push("Compute System Trust score snapshot and allowed actions based on thresholds.");
   step.do.push("Gate automation actions and return policy decisions for other agents.");
-  const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "reliablenissan.com";
+  const domain = state.customerDomain || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
   const customer = await getOrCreateCustomerByDomain(domain);
 
   // Real (non-fake) trust signals derived from persisted system activity.

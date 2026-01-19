@@ -4,7 +4,7 @@ const EnvSchema = z.object({
   // Demo-safe: allow missing env locally and fall back to the docker-compose default.
   DATABASE_URL: z.string().min(1).optional().default("postgresql://postgres:postgres@localhost:5432/trusteye?schema=public"),
   NEXT_PUBLIC_APP_NAME: z.string().default("TrustEye"),
-  NEXT_PUBLIC_DEMO_DOMAIN: z.string().default("reliablenissan.com"),
+  NEXT_PUBLIC_DEMO_DOMAIN: z.string().default("sunnystep.com"),
   // Optional: keep a separate customer row for repeated testing vs final demo run-through.
   NEXT_PUBLIC_TEST_DOMAIN: z.string().optional(),
   NEXT_PUBLIC_PRESENTATION_DOMAIN: z.string().optional(),
