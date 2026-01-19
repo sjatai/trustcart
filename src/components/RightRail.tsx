@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { IntentGraph } from "@/components/intent/IntentGraph";
 import type { ReactNode } from "react";
 import type { RailState } from "@/components/MissionControlShell";
 import { cleanSnippet } from "@/lib/evidenceFormat";
@@ -9,7 +10,7 @@ import { env } from "@/lib/env";
 import { DemandSignalsPanel } from "@/components/discovery/DemandSignalsPanel";
 import { RecommendationsPanel } from "@/components/discovery/RecommendationsPanel";
 
-type TabKey = "knowledge" | "scores" | "growth" | "receipts";
+type TabKey = "knowledge" | "scores" | "intent" | "receipts";
 
 function useSectionToggle(key: string) {
   const [open, setOpen] = useState(true);
@@ -100,7 +101,7 @@ function Icon({ name }: { name: TabKey }) {
           <path d="M19 19V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       );
-    case "growth":
+    case "intent":
       return (
         <svg className={common} viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M6 16l4-4 3 3 5-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -127,7 +128,7 @@ function Icon({ name }: { name: TabKey }) {
 function tabLabel(t: TabKey) {
   if (t === "knowledge") return "Knowledge";
   if (t === "scores") return "Scores";
-  if (t === "growth") return "Growth";
+  if (t === "intent") return "Intent";
   return "Receipts";
 }
 
@@ -149,7 +150,6 @@ export function RightRail({
   const [selectedClaimId, setSelectedClaimId] = useState<string | null>(null);
   const [trust, setTrust] = useState<any>(null);
   const [visibility, setVisibility] = useState<any>(null);
-  const [ruleSets, setRuleSets] = useState<any[] | null>(null);
   const [receipts, setReceipts] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [lastUpdatedAt, setLastUpdatedAt] = useState<number | null>(null);
@@ -193,12 +193,6 @@ export function RightRail({
           setTrust(t.json || null);
           setVisibility(v.json || null);
         }
-        if (tab === "growth") {
-          const r = await safeJson(`/api/rulesets?domain=${encodeDomain}`);
-          if (!alive) return;
-          setRuleSets(Array.isArray(r.json?.ruleSets) ? r.json.ruleSets : []);
-        }
-
         setLastUpdatedAt(Date.now());
       } catch {
         // ignore
@@ -212,7 +206,7 @@ export function RightRail({
     };
   }, [tab, refreshToken, customerDomain, encodeDomain]);
 
-  const tabs = useMemo(() => ["knowledge", "scores", "growth", "receipts"] as TabKey[], []);
+  const tabs = useMemo(() => ["knowledge", "scores", "intent", "receipts"] as TabKey[], []);
 
   if (railState === "collapsed") {
     return (
@@ -439,26 +433,13 @@ export function RightRail({
           </div>
         ) : null}
 
-        {tab === "growth" ? (
+        {tab === "intent" ? (
           <div className="grid gap-3">
             <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
-              <div className="text-[14px] font-semibold text-[var(--te-text)]">Growth</div>
-              <div className="mt-2 text-[13px] text-slate-700">Growth functions on intent to be integrated with customer main site.</div>
-              <div className="mt-3 space-y-2">
-                {(ruleSets || []).map((r: any) => (
-                  <div
-                    key={r.id}
-                    className="rounded-xl border border-[var(--te-border)] bg-white px-3 py-2 text-[13px] text-slate-700"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="font-semibold">{r.name}</div>
-                      <div className="text-[12px] text-[var(--te-muted)]">{r.active ? "active" : "off"}</div>
-                    </div>
-                  </div>
-                ))}
-                {ruleSets && ruleSets.length === 0 ? (
-                  <div className="mt-2 text-[13px] text-slate-700">No rulesets yet. Seed DB, then refresh.</div>
-                ) : null}
+              <div className="text-[14px] font-semibold text-[var(--te-text)]">Intent</div>
+              <div className="mt-2 text-[13px] text-slate-700">High-intent questions grouped by taxonomy (from discovery).</div>
+              <div className="mt-3">
+                <IntentGraph customerDomain={domain} />
               </div>
             </div>
           </div>

@@ -394,46 +394,100 @@ async function main() {
   }
 
   // Seed demand signals (Questions) for SunnyStep so the Inspect rail has a rich default set.
-  // This makes the demo deterministic on fresh deploys (Vercel runs `prisma db seed` in build).
-  const bankFile = path.join(process.cwd(), "data", "question_banks", "sunnystep_sg_v1.json");
-  try {
-    const rawBank = fs.readFileSync(bankFile, "utf8");
-    const bank = JSON.parse(rawBank) as {
-      questions?: Array<{ taxonomy?: string; weight?: number; text?: string }>;
-    };
-    const bankQuestions = Array.isArray(bank.questions) ? bank.questions : [];
-    const normalizedQuestions = bankQuestions
-      .map((q) => ({
-        taxonomy: String(q?.taxonomy || "SUITABILITY").toUpperCase(),
-        impactScore: Math.max(1, Math.min(100, Number(q?.weight ?? 60))),
-        text: String(q?.text || "").trim(),
-      }))
-      .filter((q) => q.text.length > 0);
+  // This is intentionally deterministic for demos (Vercel runs `prisma db seed` in build).
+  const curatedQuestions: Array<{ taxonomy: string; impactScore: number; text: string }> = [
+    // A) Near me / Location intent (10) — AVAILABILITY
+    { taxonomy: "AVAILABILITY", impactScore: 95, text: "Where can I buy comfortable sneakers near Orchard Road?" },
+    { taxonomy: "AVAILABILITY", impactScore: 94, text: "Best shoe store near Marina Bay Sands (MBS) for walking shoes?" },
+    { taxonomy: "AVAILABILITY", impactScore: 93, text: "Any shoe stores open late near Somerset MRT?" },
+    { taxonomy: "AVAILABILITY", impactScore: 92, text: "Where can I try shoes in-store near ION Orchard?" },
+    { taxonomy: "AVAILABILITY", impactScore: 91, text: "Shoe store near City Hall MRT with wide sizes?" },
+    { taxonomy: "AVAILABILITY", impactScore: 90, text: "Where can I find stylish sneakers near Bugis?" },
+    { taxonomy: "AVAILABILITY", impactScore: 89, text: "Best place to buy shoes near Raffles Place for office wear?" },
+    { taxonomy: "AVAILABILITY", impactScore: 88, text: "Shoe store near Dhoby Ghaut with good return policy?" },
+    { taxonomy: "AVAILABILITY", impactScore: 87, text: "Where can I get shoes delivered fast in Singapore CBD?" },
+    { taxonomy: "AVAILABILITY", impactScore: 86, text: "Is there a store where I can try and buy shoes same day in Singapore?" },
 
-    // Keep the demo domain clean/deterministic: replace questions wholesale.
-    await prisma.question.deleteMany({ where: { customerId: sunnyCustomer.id } });
-    if (normalizedQuestions.length) {
-      await prisma.question.createMany({
-        data: normalizedQuestions.map((q) => ({
-          customerId: sunnyCustomer.id,
-          taxonomy: q.taxonomy as any,
-          text: q.text,
-          impactScore: q.impactScore,
-          state: "UNANSWERED" as any,
-          recommendedAssetType: "FAQ" as any,
-        })),
-      });
-    }
+    // B) Comfort / walking / pain relief (10) — SUITABILITY
+    { taxonomy: "SUITABILITY", impactScore: 85, text: "Best sneakers for walking all day in Singapore?" },
+    { taxonomy: "SUITABILITY", impactScore: 84, text: "Shoes for plantar fasciitis available in Singapore?" },
+    { taxonomy: "SUITABILITY", impactScore: 83, text: "Best shoes for wide feet that don’t hurt?" },
+    { taxonomy: "SUITABILITY", impactScore: 82, text: "Comfortable shoes for standing long hours (retail / F&B)?" },
+    { taxonomy: "SUITABILITY", impactScore: 81, text: "Sneakers that are breathable for humid weather?" },
+    { taxonomy: "SUITABILITY", impactScore: 80, text: "Best shoes for travel and long walking days?" },
+    { taxonomy: "SUITABILITY", impactScore: 79, text: "Shoes that don’t cause heel pain?" },
+    { taxonomy: "SUITABILITY", impactScore: 78, text: "Comfortable shoes for flat feet?" },
+    { taxonomy: "SUITABILITY", impactScore: 77, text: "Best shoes for everyday commuting in Singapore?" },
+    { taxonomy: "SUITABILITY", impactScore: 76, text: "Sneakers that feel soft but still supportive?" },
 
-    // Clear only PROPOSED recs so `/api/content-recommendations` will regenerate against the new bank.
-    await prisma.contentRecommendation.deleteMany({
-      where: { customerId: sunnyCustomer.id, status: "PROPOSED" as any },
+    // C) Occasion intent (10) — SUITABILITY
+    { taxonomy: "SUITABILITY", impactScore: 75, text: "Best shoes for office work (smart casual) in Singapore?" },
+    { taxonomy: "SUITABILITY", impactScore: 74, text: "Shoes for a wedding that are comfortable?" },
+    { taxonomy: "SUITABILITY", impactScore: 73, text: "Comfortable shoes for party/night out?" },
+    { taxonomy: "SUITABILITY", impactScore: 72, text: "Shoes that match dress + comfort?" },
+    { taxonomy: "SUITABILITY", impactScore: 71, text: "Sneakers that look premium for business meetings?" },
+    { taxonomy: "SUITABILITY", impactScore: 70, text: "Best shoes for travel + airport + city walking?" },
+    { taxonomy: "SUITABILITY", impactScore: 69, text: "Shoes for date night but still comfy?" },
+    { taxonomy: "SUITABILITY", impactScore: 68, text: "Shoes for rainy days in Singapore?" },
+    { taxonomy: "SUITABILITY", impactScore: 67, text: "Shoes for school/college daily wear?" },
+    { taxonomy: "SUITABILITY", impactScore: 66, text: "Shoes for gym + casual (hybrid use)?" },
+
+    // D) Fit / size / comparison intent (8) — NEXT_STEP
+    { taxonomy: "NEXT_STEP", impactScore: 65, text: "How do I choose the right shoe size online in Singapore?" },
+    { taxonomy: "NEXT_STEP", impactScore: 64, text: "Do these sneakers run true to size?" },
+    { taxonomy: "NEXT_STEP", impactScore: 63, text: "Are they good for wide feet?" },
+    { taxonomy: "NEXT_STEP", impactScore: 62, text: "How do I measure my feet at home?" },
+    { taxonomy: "NEXT_STEP", impactScore: 61, text: "What if my size is between two sizes?" },
+    { taxonomy: "NEXT_STEP", impactScore: 60, text: "Do you have half sizes?" },
+    { taxonomy: "NEXT_STEP", impactScore: 59, text: "Are returns free if size doesn’t fit?" },
+    { taxonomy: "NEXT_STEP", impactScore: 58, text: "Can I exchange size in-store after ordering online?" },
+
+    // E) Shipping / delivery / returns intent (7) — NEXT_STEP
+    { taxonomy: "NEXT_STEP", impactScore: 57, text: "How fast is delivery within Singapore?" },
+    { taxonomy: "NEXT_STEP", impactScore: 56, text: "Do you offer same-day delivery?" },
+    { taxonomy: "NEXT_STEP", impactScore: 55, text: "Do you ship to Sentosa / Jurong / Tampines?" },
+    { taxonomy: "NEXT_STEP", impactScore: 54, text: "What’s the return policy for shoes (worn vs unworn)?" },
+    { taxonomy: "NEXT_STEP", impactScore: 53, text: "Can I return shoes bought online in-store?" },
+    { taxonomy: "NEXT_STEP", impactScore: 52, text: "How long does refund take in Singapore?" },
+    { taxonomy: "NEXT_STEP", impactScore: 51, text: "Is shipping free above a minimum order?" },
+
+    // F) Trust / authenticity / reviews intent (5) — RISK
+    { taxonomy: "RISK", impactScore: 50, text: "Are these shoes authentic and verified?" },
+    { taxonomy: "RISK", impactScore: 49, text: "How do I know if this shoe is good quality?" },
+    { taxonomy: "RISK", impactScore: 48, text: "What do customers say about comfort after long wear?" },
+    { taxonomy: "RISK", impactScore: 47, text: "Are there reviews for this specific shoe model?" },
+    { taxonomy: "RISK", impactScore: 46, text: "Is this brand good compared to other comfort sneaker brands?" },
+  ];
+
+  const normalizedQuestions = curatedQuestions
+    .map((q) => ({
+      taxonomy: String(q.taxonomy || "SUITABILITY").toUpperCase(),
+      impactScore: Math.max(1, Math.min(100, Number(q.impactScore ?? 60))),
+      text: String(q.text || "").trim(),
+    }))
+    .filter((q) => q.text.length > 0);
+
+  // Keep the demo domain clean/deterministic: replace questions wholesale.
+  await prisma.question.deleteMany({ where: { customerId: sunnyCustomer.id } });
+  if (normalizedQuestions.length) {
+    await prisma.question.createMany({
+      data: normalizedQuestions.map((q) => ({
+        customerId: sunnyCustomer.id,
+        taxonomy: q.taxonomy as any,
+        text: q.text,
+        impactScore: q.impactScore,
+        state: "UNANSWERED" as any,
+        recommendedAssetType: "FAQ" as any,
+      })),
     });
-
-    console.log("Seeded demand questions:", normalizedQuestions.length);
-  } catch (e) {
-    console.warn("Skipped question bank seed (missing/invalid file):", bankFile);
   }
+
+  // Clear only PROPOSED recs so `/api/content-recommendations` will regenerate against the new bank.
+  await prisma.contentRecommendation.deleteMany({
+    where: { customerId: sunnyCustomer.id, status: "PROPOSED" as any },
+  });
+
+  console.log("Seeded demand questions:", normalizedQuestions.length);
 
   // Prefill two demo FAQ drafts (DRAFTED) so the "Open recommended content → Publish" demo is immediate.
   // Does not require OPENAI_API_KEY: drafts are grounded using seeded claims/evidence above.

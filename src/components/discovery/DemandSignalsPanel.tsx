@@ -37,7 +37,7 @@ export function DemandSignalsPanel({ domain }: { domain: string }) {
 
           const sorted = normalized
             .sort((a, b) => (b.impactScore || 0) - (a.impactScore || 0))
-            .slice(0, 40);
+            .slice(0, 50);
 
           setSignals(sorted);
         } else {
