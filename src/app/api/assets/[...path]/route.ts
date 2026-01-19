@@ -1,6 +1,91 @@
 import path from "path";
 import fs from "fs/promises";
 
+const COMFORT_SCIENCE_HERO_SVG = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Comfort science hero">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F8FAFF"/>
+      <stop offset="55%" stop-color="#EEF2FF"/>
+      <stop offset="100%" stop-color="#FFF7ED"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1B62F8" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#7C3AED" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#F97316" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#0B1220" flood-opacity="0.18"/>
+    </filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#1E293B" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#grid)"/>
+
+  <path d="M-40 660 C 260 560, 480 770, 820 650 C 1040 575, 1140 560, 1240 590 L1240 940 L-40 940 Z" fill="url(#accent)" opacity="0.15"/>
+
+  <g filter="url(#shadow)">
+    <rect x="88" y="120" width="1024" height="560" rx="28" fill="#FFFFFF"/>
+    <rect x="88" y="120" width="1024" height="560" rx="28" fill="url(#accent)" opacity="0.045"/>
+  </g>
+
+  <g>
+    <rect x="140" y="170" width="260" height="44" rx="22" fill="#EEF2FF" stroke="#1B62F8" stroke-opacity="0.18"/>
+    <text x="270" y="199" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14" fill="#0F172A" font-weight="700" letter-spacing="0.4">
+      COMFORT SCIENCE
+    </text>
+  </g>
+
+  <text x="140" y="290" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="54" fill="#0B1220" font-weight="800">
+    Walking + Running
+  </text>
+  <text x="140" y="352" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="54" fill="#0B1220" font-weight="800">
+    Without Fatigue
+  </text>
+
+  <text x="140" y="420" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="20" fill="#334155" font-weight="600">
+    Reduce pressure hotspots. Recover better. Move longer.
+  </text>
+
+  <g transform="translate(140,470)">
+    <rect x="0" y="0" width="520" height="150" rx="18" fill="#F8FAFC" stroke="#0B1220" stroke-opacity="0.08"/>
+    <g opacity="0.95">
+      <circle cx="110" cy="82" r="34" fill="#1B62F8" opacity="0.10"/>
+      <circle cx="110" cy="82" r="18" fill="#1B62F8" opacity="0.16"/>
+      <circle cx="110" cy="82" r="8" fill="#1B62F8" opacity="0.28"/>
+
+      <circle cx="240" cy="62" r="30" fill="#7C3AED" opacity="0.10"/>
+      <circle cx="240" cy="62" r="16" fill="#7C3AED" opacity="0.16"/>
+      <circle cx="240" cy="62" r="7" fill="#7C3AED" opacity="0.28"/>
+
+      <circle cx="370" cy="92" r="32" fill="#F97316" opacity="0.10"/>
+      <circle cx="370" cy="92" r="17" fill="#F97316" opacity="0.16"/>
+      <circle cx="370" cy="92" r="7" fill="#F97316" opacity="0.28"/>
+    </g>
+    <text x="24" y="34" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14" fill="#475569" font-weight="700">
+      Pressure + cushioning zones (illustrative)
+    </text>
+  </g>
+
+  <g transform="translate(740,330)" opacity="0.9">
+    <path d="M36 240 C 60 150, 150 62, 290 70 C 380 74, 420 122, 420 156
+             C 420 190, 388 224, 332 236 C 278 248, 192 250, 118 252
+             C 76 254, 48 258, 36 240 Z"
+          fill="#0B1220" opacity="0.04" stroke="#0B1220" stroke-opacity="0.16" stroke-width="2"/>
+    <path d="M110 120 C 160 96, 234 94, 312 112" fill="none" stroke="url(#accent)" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+    <path d="M98 168 C 170 150, 250 152, 336 168" fill="none" stroke="#1B62F8" stroke-width="4" stroke-linecap="round" opacity="0.25"/>
+    <circle cx="320" cy="112" r="8" fill="#F97316" opacity="0.55"/>
+  </g>
+
+  <text x="140" y="720" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" font-size="14" fill="#64748B" font-weight="600">
+    Seeded demo hero image (not reused from older blog posts)
+  </text>
+</svg>
+`;
+
 function contentTypeForExt(ext: string): string {
   switch (ext.toLowerCase()) {
     case ".png":
@@ -40,6 +125,15 @@ export async function GET(_: Request, ctx: { params: { path: string[] } }) {
       },
     });
   } catch {
+    // Fallback for a small number of demo-only assets that may not be present in serverless traces.
+    if (normalized === "images/blogs/00_comfort-science_hero.svg") {
+      return new Response(COMFORT_SCIENCE_HERO_SVG, {
+        headers: {
+          "Content-Type": "image/svg+xml",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
     return new Response("Not found", { status: 404 });
   }
 }
