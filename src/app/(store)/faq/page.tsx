@@ -1,6 +1,9 @@
 import { FaqAccordion } from "@/components/store/FaqAccordion";
 import { getActiveRecommendations, getAssetMarkdown, getStoreFaqAssets, parseMarkdownHeading } from "@/lib/storeDb";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export default async function FaqPage({
   searchParams,
 }: {

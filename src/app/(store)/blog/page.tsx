@@ -3,6 +3,9 @@ import { BlogCard } from "@/components/store/BlogCard";
 import { TrustEyeRecommendBar } from "@/components/store/TrustEyeRecommendBar";
 import Link from "next/link";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export default async function BlogPage() {
   const assets = await getStoreBlogAssets();
   const recs = await getActiveRecommendations("sunnystep.com");
