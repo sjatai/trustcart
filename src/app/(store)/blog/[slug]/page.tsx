@@ -3,10 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAssetMarkdown, getStoreBlogAsset, parseMarkdownHeading } from "@/lib/storeDb";
 
-export async function generateStaticParams() {
-  // Keep empty for dynamic data; store inventory is DB-backed.
-  return [];
-}
+export const dynamic = "force-dynamic";
 
 function resolveImageSrc(img?: string | null) {
   const s = String(img || "").trim();

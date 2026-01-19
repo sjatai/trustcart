@@ -1,6 +1,8 @@
 import { getStoreProducts } from "@/lib/storeDb";
 import { ProductCard } from "@/components/store/ProductCard";
 
+export const dynamic = "force-dynamic";
+
 function stripHtml(html?: string | null) {
   const s = String(html || "");
   return s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();

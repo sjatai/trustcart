@@ -3,6 +3,8 @@ import { getAssetMarkdown, getStoreBlogAssets, getStoreProducts, parseMarkdownHe
 import { ProductCard } from "@/components/store/ProductCard";
 import { BlogCard } from "@/components/store/BlogCard";
 
+export const dynamic = "force-dynamic";
+
 function stripHtml(html?: string | null) {
   const s = String(html || "");
   return s.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();

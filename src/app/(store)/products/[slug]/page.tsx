@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getActiveRecommendations, getStoreProduct, getStoreProducts } from "@/lib/storeDb";
+import { getActiveRecommendations, getStoreProduct } from "@/lib/storeDb";
 import { TrustEyeInlineEditor } from "@/components/store/TrustEyeInlineEditor";
+
+export const dynamic = "force-dynamic";
 
 function featureSet(name: string) {
   const base = [
@@ -20,11 +22,6 @@ function featureSet(name: string) {
         : ["Lightweight feel for standing, commuting, and travel", "Clean lines that work with minimalist wardrobes"];
 
   return [...base.slice(0, 3), ...extra, ...base.slice(3)];
-}
-
-export async function generateStaticParams() {
-  const products = await getStoreProducts();
-  return products.map((p: any) => ({ slug: String(p.handle || "") }));
 }
 
 export default async function ProductDetailPage({
