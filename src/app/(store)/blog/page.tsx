@@ -31,11 +31,11 @@ export default async function BlogPage() {
         <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
           <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommended blog</div>
           <div className="mt-2 grid gap-3 md:grid-cols-[180px_minmax(0,1fr)]">
-            {/* Use an existing Sunnystep-style hero image so it matches the current blog tone */}
+            {/* Dedicated hero image for the recommended blog card (avoid reusing an older blog post's hero). */}
             <div
               className="rounded-xl border border-[var(--te-border)] bg-[#fbfcff]"
               style={{
-                backgroundImage: "url(/api/assets/images/blogs/11_one-step-at-a-time_hero.png)",
+                backgroundImage: "url(/api/assets/images/blogs/00_comfort-science_hero.svg)",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 aspectRatio: "4 / 3",

@@ -12,6 +12,8 @@ function contentTypeForExt(ext: string): string {
       return "image/gif";
     case ".webp":
       return "image/webp";
+    case ".svg":
+      return "image/svg+xml";
     default:
       return "application/octet-stream";
   }
