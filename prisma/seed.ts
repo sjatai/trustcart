@@ -13,6 +13,17 @@ function slugify(input: string) {
     .slice(0, 72);
 }
 
+function shortHash(input: string): string {
+  // Small deterministic hash for stable slugs (avoid extra deps in seed).
+  const s = String(input || "");
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) {
+    h = (h * 33) ^ s.charCodeAt(i);
+  }
+  // Convert to unsigned + base36 for compactness.
+  return (h >>> 0).toString(36).slice(0, 6);
+}
+
 function priceToCents(price: unknown): number | null {
   const priceNum = Number(String(price ?? "").trim());
   return Number.isFinite(priceNum) ? Math.round(priceNum * 100) : null;
@@ -167,31 +178,32 @@ async function main() {
     console.warn("Skipped blog seed (missing/invalid files):", e);
   }
 
-  // Seed baseline FAQs for SunnyStep from bundled demo snapshot.
+  // Seed baseline FAQs for SunnyStep from the richer crawl export (data/sunnystep_seed.json).
+  // IMPORTANT: do NOT seed the derived "What is this page about..." footer/policy pages as FAQs.
   // The storefront FAQ page pulls PUBLISHED FAQ assets; on fresh deploys we want a non-empty list.
-  // To avoid overwriting real content, only seed when there are zero published FAQ assets.
   try {
+    // Cleanup: remove previously-seeded derived/meta-only FAQ entries if they exist in the DB.
+    // This is safe because it only targets the "What is this page about..." titles.
+    await prisma.asset.deleteMany({
+      where: {
+        customerId: sunnyCustomer.id,
+        type: "FAQ" as any,
+        title: { startsWith: "What is this page about", mode: "insensitive" },
+      } as any,
+    });
+
     const publishedFaqCount = await prisma.asset.count({
       where: { customerId: sunnyCustomer.id, type: "FAQ" as any, status: "PUBLISHED" as any },
     });
 
-    if (publishedFaqCount === 0) {
-      const faqsFile = path.join(process.cwd(), "demo_sunnystep", "faqs.json");
-      const rawFaqs = fs.readFileSync(faqsFile, "utf8");
-      const faqs = JSON.parse(rawFaqs) as { items?: Array<{ question?: string; answer?: string; sourceUrl?: string }> };
-      const items = Array.isArray(faqs?.items) ? faqs.items : [];
-
-      // Keep slugs stable/deterministic while avoiding collisions.
-      const usedSlugs = new Set<string>();
-      const uniqueSlug = (base: string, idx: number) => {
-        let s = slugify(base) || `faq-${idx + 1}`;
-        if (!usedSlugs.has(s)) return s;
-        for (let i = 2; i < 50; i++) {
-          const candidate = `${s}-${i}`;
-          if (!usedSlugs.has(candidate)) return candidate;
-        }
-        return `${s}-${Date.now()}`;
+    // Seed only when the catalog is empty/sparse (don't overwrite real published content).
+    if (publishedFaqCount < 6) {
+      const seedFile = path.join(process.cwd(), "data", "sunnystep_seed.json");
+      const rawSeed = fs.readFileSync(seedFile, "utf8");
+      const seed = JSON.parse(rawSeed) as {
+        faqs?: Array<{ question?: string; answer?: string; sourceUrl?: string }>;
       };
+      const items = Array.isArray(seed?.faqs) ? seed.faqs : [];
 
       for (let i = 0; i < items.length; i++) {
         const q = String(items[i]?.question || "").trim();
@@ -199,11 +211,16 @@ async function main() {
         const url = String(items[i]?.sourceUrl || "").trim();
         if (!q || !a) continue;
 
-        const slug = uniqueSlug(q, i);
-        usedSlugs.add(slug);
+        const slugBase = `faq-${slugify(q).slice(0, 48)}`;
+        const slug = `${slugBase}-${shortHash(`${q}|${url}`)}`;
 
-        const md = [`# ${q}`, "", a, "", url ? `Source: ${url}` : "", ""].filter((line) => line !== "").join("\n");
+        const exists = await prisma.asset.findFirst({
+          where: { customerId: sunnyCustomer.id, type: "FAQ" as any, slug },
+          select: { id: true },
+        });
+        if (exists) continue;
 
+        const md = [`# ${q}`, "", a, "", url ? `Source: ${url}` : ""].filter(Boolean).join("\n");
         const asset = await prisma.asset.create({
           data: {
             customerId: sunnyCustomer.id,
@@ -211,7 +228,7 @@ async function main() {
             status: "PUBLISHED" as any,
             title: q,
             slug,
-            meta: { url: url || null, seed: "demo_sunnystep/faqs.json", derived: true } as any,
+            meta: { source: "sunnystep_seed", url: url || null, seed: "data/sunnystep_seed.json" } as any,
             versions: { create: [{ version: 1, content: md }] },
           } as any,
         });
