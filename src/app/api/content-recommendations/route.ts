@@ -25,7 +25,14 @@ export async function GET(req: Request) {
   const activeCount = await prisma.contentRecommendation.count({
     where: { customerId: customer.id, status: { in: activeStatuses as any } },
   });
-  if (force || activeCount === 0) {
+  const draftedApprovedCount = await prisma.contentRecommendation.count({
+    where: { customerId: customer.id, status: { in: ["DRAFTED", "APPROVED"] as any } },
+  });
+
+  // Demo-friendly: if we have only a tiny active set AND nobody has started drafting/approving,
+  // regenerate so the UI consistently shows a "Top 10" experience.
+  const shouldRegenerate = force || activeCount === 0 || (activeCount < 8 && draftedApprovedCount === 0);
+  if (shouldRegenerate) {
     await generateContentRecommendations(domain);
   }
 

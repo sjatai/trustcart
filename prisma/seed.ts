@@ -89,6 +89,48 @@ async function main() {
     createdProducts.push(result);
   }
 
+  // Seed demand signals (Questions) for SunnyStep so the Inspect rail has a rich default set.
+  // This makes the demo deterministic on fresh deploys (Vercel runs `prisma db seed` in build).
+  const bankFile = path.join(process.cwd(), "data", "question_banks", "sunnystep_sg_v1.json");
+  try {
+    const rawBank = fs.readFileSync(bankFile, "utf8");
+    const bank = JSON.parse(rawBank) as {
+      questions?: Array<{ taxonomy?: string; weight?: number; text?: string }>;
+    };
+    const bankQuestions = Array.isArray(bank.questions) ? bank.questions : [];
+    const normalizedQuestions = bankQuestions
+      .map((q) => ({
+        taxonomy: String(q?.taxonomy || "SUITABILITY").toUpperCase(),
+        impactScore: Math.max(1, Math.min(100, Number(q?.weight ?? 60))),
+        text: String(q?.text || "").trim(),
+      }))
+      .filter((q) => q.text.length > 0);
+
+    // Keep the demo domain clean/deterministic: replace questions wholesale.
+    await prisma.question.deleteMany({ where: { customerId: sunnyCustomer.id } });
+    if (normalizedQuestions.length) {
+      await prisma.question.createMany({
+        data: normalizedQuestions.map((q) => ({
+          customerId: sunnyCustomer.id,
+          taxonomy: q.taxonomy as any,
+          text: q.text,
+          impactScore: q.impactScore,
+          state: "UNANSWERED" as any,
+          recommendedAssetType: "FAQ" as any,
+        })),
+      });
+    }
+
+    // Clear only PROPOSED recs so `/api/content-recommendations` will regenerate against the new bank.
+    await prisma.contentRecommendation.deleteMany({
+      where: { customerId: sunnyCustomer.id, status: "PROPOSED" as any },
+    });
+
+    console.log("Seeded demand questions:", normalizedQuestions.length);
+  } catch (e) {
+    console.warn("Skipped question bank seed (missing/invalid file):", bankFile);
+  }
+
   // Receipt: seed baseline
   const alreadySeeded = await prisma.receipt.findFirst({
     where: { customerId: sunnyCustomer.id, summary: "Seeded demo customer baseline" },
