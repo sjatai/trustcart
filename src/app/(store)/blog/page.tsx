@@ -24,6 +24,17 @@ export default async function BlogPage() {
       image: String(a.meta && (a.meta as any).imageUrl ? (a.meta as any).imageUrl : ""),
     };
   });
+  const comfortSlug = "comfort-science-walking-running";
+  const hasComfortPost = posts.some((p) => p.slug === comfortSlug);
+  const sortedPosts = hasComfortPost
+    ? [
+        ...posts.filter((p) => p.slug === comfortSlug),
+        ...posts.filter((p) => p.slug !== comfortSlug),
+      ]
+    : posts;
+  // If the post is already published and in the list, hide the draft "Recommended blog" card
+  // to avoid showing the same thing twice in the demo.
+  const showRecommendedBlogCard = sortedBlogRecs.length > 0 && !hasComfortPost;
   return (
     <div className="grid gap-6">
       <div>
@@ -33,7 +44,7 @@ export default async function BlogPage() {
 
       <TrustEyeRecommendBar domain="sunnystep.com" label="Blog" recommendations={sortedBlogRecs as any} />
 
-      {sortedBlogRecs.length ? (
+      {showRecommendedBlogCard ? (
         <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
           <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommended blog</div>
           <div className="mt-2 grid gap-3 md:grid-cols-[180px_minmax(0,1fr)]">
@@ -68,7 +79,7 @@ export default async function BlogPage() {
       ) : null}
 
       <div className="grid gap-4 md:grid-cols-2">
-        {posts.map((p) => (
+        {sortedPosts.map((p) => (
           <BlogCard key={p.id} post={p as any} />
         ))}
       </div>
