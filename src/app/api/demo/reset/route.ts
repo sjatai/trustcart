@@ -159,6 +159,15 @@ export async function POST(req: Request) {
 
   // Restore two prefilled demo FAQ drafts as DRAFTED recs + ensure draft assets exist.
   const prefilled = prefilledDemoFaqDrafts();
+  // Make this idempotent: remove any existing copies of these demo FAQs that may have been created
+  // by generateContentRecommendations() or prior resets.
+  await prisma.contentRecommendation.deleteMany({
+    where: {
+      customerId: customer.id,
+      publishTarget: "FAQ" as any,
+      title: { in: prefilled.map((p) => p.title) } as any,
+    } as any,
+  });
   for (const r of prefilled) {
     const rec = await prisma.contentRecommendation.create({
       data: {
@@ -254,6 +263,37 @@ export async function POST(req: Request) {
         } as any,
       });
     }
+
+    // Also ensure the blog edit/publish flow is accessible:
+    // keep a single DRAFTED BLOG recommendation that opens the editor even if the post is already published.
+    await prisma.contentRecommendation.deleteMany({
+      where: { customerId: customer.id, publishTarget: "BLOG" as any, title: { contains: curatedTitle } as any } as any,
+    });
+    await prisma.contentRecommendation.create({
+      data: {
+        customerId: customer.id,
+        kind: "CREATE" as any,
+        status: "DRAFTED" as any,
+        title: `Create blog: ${curatedTitle}`,
+        why: "Demo: open the editor/publish flow for the curated comfort-science blog.",
+        targetUrl: "/blog",
+        suggestedContent: curatedExcerpt,
+        recommendedAssetType: "BLOG" as any,
+        publishTarget: "BLOG" as any,
+        llmEvidence: {
+          stableSlug: "blog-comfort-science-walking-running",
+          draft: {
+            type: "BLOG",
+            title: curatedTitle,
+            slug: curatedSlug,
+            targetUrl: "/blog",
+            content: {
+              bodyMarkdown: curatedMd.trim() + "\n",
+            },
+          },
+        } as any,
+      } as any,
+    });
   } catch {
     // ignore: reset should still succeed even if this fails
   }
