@@ -32,10 +32,10 @@ export default async function BlogPage() {
         ...posts.filter((p) => p.slug !== comfortSlug),
       ]
     : posts;
-  // If the post is already published and in the list, hide the draft "Recommended blog" card
-  // to avoid showing the same thing twice in the demo.
-  const showRecommendedBlogCard = sortedBlogRecs.length > 0 && !hasComfortPost;
-  const showBlogRecsUi = sortedBlogRecs.length > 0 && !hasComfortPost;
+  // Always show the "recommended blog → open editor/publish flow" UI.
+  // Even if the blog post exists, the demo needs the edit/publish flow accessible.
+  const showRecommendedBlogCard = sortedBlogRecs.length > 0;
+  const showBlogRecsUi = sortedBlogRecs.length > 0;
   return (
     <div className="grid gap-6">
       <div>
@@ -48,6 +48,7 @@ export default async function BlogPage() {
       {showRecommendedBlogCard ? (
         <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
           <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommended blog</div>
+          {hasComfortPost ? <div className="mt-1 text-[12px] text-[var(--te-muted)]">Already created — open the editor/publish flow here.</div> : null}
           <div className="mt-2 grid gap-3 md:grid-cols-[180px_minmax(0,1fr)]">
             {/* Dedicated hero image for the recommended blog card (avoid reusing an older blog post's hero). */}
             <div

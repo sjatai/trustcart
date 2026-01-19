@@ -29,76 +29,43 @@ export function FaqAccordion({
 
   const normalized = useMemo(() => items.map((it) => ({ ...it, id: it.id || it.sourceUrl || it.question })), [items]);
 
-  function matchesQuestion(rec: any, q: string) {
-    const a = String(q || "").toLowerCase();
-    const b = String(rec?.questionText || rec?.title || "").toLowerCase();
-    if (!a || !b) return false;
-    if (b.includes(a.slice(0, Math.min(24, a.length)))) return true;
-    // keyword match for policy-style FAQs
-    const keys = ["shipping", "delivery", "returns", "exchange", "refund", "warranty", "pickup", "store"];
-    const hit = keys.some((k) => a.includes(k) && b.includes(k));
-    return hit;
-  }
+  const { prefilledFaqRecs, otherFaqRecs } = useMemo(() => {
+    const prefilledSlugs = new Set(["faq-stores-singapore-hours", "faq-size-guide-conversion"]);
+    const faqRecs = (recommendations || []).filter((r: any) => String(r.publishTarget) === "FAQ");
+
+    // Dedupe (some demo flows can accidentally create duplicates)
+    const byKey = new Map<string, any>();
+    for (const r of faqRecs) {
+      const stableSlug = String(r?.llmEvidence?.stableSlug || "");
+      const title = String(r?.title || r?.questionText || "");
+      const key = `${stableSlug}|${title}`.toLowerCase();
+      if (!byKey.has(key)) byKey.set(key, r);
+    }
+    const deduped = Array.from(byKey.values());
+
+    const prefilled = deduped.filter((r: any) => prefilledSlugs.has(String(r?.llmEvidence?.stableSlug || "")));
+    const other = deduped.filter((r: any) => !prefilledSlugs.has(String(r?.llmEvidence?.stableSlug || "")));
+
+    // Keep deterministic ordering: newest first.
+    const sortByUpdated = (a: any, b: any) => String(b?.updatedAt || "").localeCompare(String(a?.updatedAt || ""));
+    prefilled.sort(sortByUpdated);
+    other.sort(sortByUpdated);
+
+    return { prefilledFaqRecs: prefilled, otherFaqRecs: other };
+  }, [recommendations]);
 
   return (
     <div className="grid gap-3">
-      {normalized.map((it) => {
-        const open = openId === it.id;
-        const relevant = (recommendations || []).filter(
-          (r: any) => String(r.publishTarget) === "FAQ" && matchesQuestion(r, it.question),
-        );
-        const updateRequired = relevant.some((r: any) => String(r.llmEvidence?.action || "").toUpperCase() === "UPDATE");
-        return (
-          <div key={it.id} className="te-panel">
-            <button
-              className="te-panelHeader"
-              onClick={() => setOpenId(open ? null : it.id)}
-              style={{ cursor: "pointer", width: "100%", textAlign: "left" }}
-            >
-              <div>
-                <div className="text-sm font-semibold">{cleanFaqTitle(it.question)}</div>
-                <div className="te-meta mt-1">{it.sourceUrl ? new URL(it.sourceUrl).pathname : it.slug}</div>
-              </div>
-              <div className="te-meta">{open ? "−" : "+"}</div>
-            </button>
-            {open ? (
-              <div className="te-panelBody">
-                <div className="te-body" style={{ whiteSpace: "pre-wrap" }}>
-                  {it.answer}
-                </div>
-                {updateRequired ? (
-                  <TrustEyeInlineEditor
-                    domain={domain}
-                    recommendations={relevant as any}
-                    autoOpenRecId={autoRecId}
-                    autoDraft={false}
-                    showRegenerate={false}
-                    emptyMessage="Please answer."
-                    reloadOnPublish
-                    publishVariant="subtle"
-                    showDiscard
-                  />
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-        );
-      })}
-
-      {(() => {
-        // Show draft/new FAQ recommendations after the published FAQ list (keeps demo clean).
-        const newFaq = (recommendations || []).filter(
-          (r: any) => String(r.publishTarget) === "FAQ" && String(r.llmEvidence?.action || "").toUpperCase() === "CREATE",
-        );
-        if (!newFaq.length) return null;
-        return (
-          <div className="mt-2 rounded-2xl border border-[var(--te-border)] bg-white p-4">
-            <div className="text-[12px] font-semibold text-[var(--te-text)]">Draft answers to publish</div>
-            <div className="mt-1 text-[12px] text-[var(--te-muted)]">These are recommended FAQs (not yet published). Review and publish when ready.</div>
+      {prefilledFaqRecs.length ? (
+        <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
+          <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommended FAQs (draft answers)</div>
+          <div className="mt-1 text-[12px] text-[var(--te-muted)]">These two are prefilled for the demo. Review and publish.</div>
+          <div className="mt-3">
             <TrustEyeInlineEditor
               domain={domain}
-              recommendations={newFaq as any}
+              recommendations={prefilledFaqRecs as any}
               autoOpenAll
+              autoOpenRecId={autoRecId}
               autoDraft={false}
               showRegenerate={false}
               emptyMessage="Please answer."
@@ -107,8 +74,59 @@ export function FaqAccordion({
               showDiscard
             />
           </div>
-        );
-      })()}
+        </div>
+      ) : null}
+
+      {otherFaqRecs.length ? (
+        <div className="rounded-2xl border border-[var(--te-border)] bg-white p-4">
+          <div className="text-[12px] font-semibold text-[var(--te-text)]">Recommendations</div>
+          <div className="mt-1 text-[12px] text-[var(--te-muted)]">Other FAQ recommendations (review and publish as needed).</div>
+          <div className="mt-3">
+            <TrustEyeInlineEditor
+              domain={domain}
+              recommendations={otherFaqRecs as any}
+              autoOpenRecId={autoRecId}
+              autoDraft={false}
+              showRegenerate={false}
+              emptyMessage="Please answer."
+              reloadOnPublish
+              publishVariant="subtle"
+              showDiscard
+            />
+          </div>
+        </div>
+      ) : null}
+
+      <div className="mt-2">
+        <div className="text-[12px] font-semibold text-[var(--te-text)]">FAQ list</div>
+        <div className="mt-2 grid gap-3">
+          {normalized.map((it) => {
+            const open = openId === it.id;
+            return (
+              <div key={it.id} className="te-panel">
+                <button
+                  className="te-panelHeader"
+                  onClick={() => setOpenId(open ? null : it.id)}
+                  style={{ cursor: "pointer", width: "100%", textAlign: "left" }}
+                >
+                  <div>
+                    <div className="text-sm font-semibold">{cleanFaqTitle(it.question)}</div>
+                    <div className="te-meta mt-1">{it.sourceUrl ? new URL(it.sourceUrl).pathname : it.slug}</div>
+                  </div>
+                  <div className="te-meta">{open ? "−" : "+"}</div>
+                </button>
+                {open ? (
+                  <div className="te-panelBody">
+                    <div className="te-body" style={{ whiteSpace: "pre-wrap" }}>
+                      {it.answer}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
