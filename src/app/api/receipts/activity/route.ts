@@ -11,7 +11,7 @@ export async function GET(req: Request) {
       url.searchParams.get("customerDomain") ||
       getDomainFromRequest(req) ||
       env.NEXT_PUBLIC_DEMO_DOMAIN ||
-      "sunnysteps.com";
+      "sunnystep.com";
 
     const customer = await getCustomerByDomain(customerDomain).catch(() => null);
     if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });

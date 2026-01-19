@@ -4,7 +4,7 @@ import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const domain = url.searchParams.get("domain") || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
+  const domain = url.searchParams.get("domain") || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
   const customer = await getCustomerByDomain(domain).catch(() => null);
   if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     body?.domain ||
     getDomainFromRequest(req) ||
     env.NEXT_PUBLIC_DEMO_DOMAIN ||
-    "sunnysteps.com";
+    "sunnystep.com";
   const customer = await getCustomerByDomain(domain).catch(() => null);
   if (!customer) return Response.json({ ok: false, error: "customer_not_found" }, { status: 404 });
 

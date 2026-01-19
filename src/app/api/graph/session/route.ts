@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const qpDomain = url.searchParams.get("domain")?.trim();
 
-    const customerDomain = qpDomain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
+    const customerDomain = qpDomain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
     const customer = await getCustomerByDomain(customerDomain).catch(() => null);
 
     const lastEvents = await prisma.event.findMany({

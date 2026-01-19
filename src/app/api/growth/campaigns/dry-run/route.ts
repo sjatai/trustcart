@@ -6,7 +6,7 @@ import { getCustomerByDomain, getDomainFromRequest } from "@/lib/domain";
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const url = new URL(req.url);
-  const domain = url.searchParams.get("domain") || body?.domain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnysteps.com";
+  const domain = url.searchParams.get("domain") || body?.domain || getDomainFromRequest(req) || env.NEXT_PUBLIC_DEMO_DOMAIN || "sunnystep.com";
   const ruleSetId: string = body?.ruleSetId;
   if (!ruleSetId) return Response.json({ ok: false, error: "missing_ruleSetId" }, { status: 400 });
 

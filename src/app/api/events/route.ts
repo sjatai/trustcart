@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       body?.customerDomain ||
       getDomainFromRequest(req) ||
       env.NEXT_PUBLIC_DEMO_DOMAIN ||
-      "sunnysteps.com";
+          "sunnystep.com";
 
     // Special-case: site intent events (client sends { type: "site_intent", intent, event }).
     const intent: string | undefined = body?.intent;
