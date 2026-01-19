@@ -14,7 +14,8 @@ export function FaqAccordion({
   domain: string;
   autoRecId?: string | null;
 }) {
-  const [openId, setOpenId] = useState<string | null>(items[0]?.sourceUrl || null);
+  // Default to opening the first published FAQ item (not a sourceUrl).
+  const [openId, setOpenId] = useState<string | null>(items[0]?.id || null);
 
   function cleanFaqTitle(q: string) {
     let s = (q || "").trim();
@@ -41,27 +42,6 @@ export function FaqAccordion({
 
   return (
     <div className="grid gap-3">
-      {(() => {
-        // New FAQ recommendations should surface at the top (not bundled at the bottom).
-        const newFaq = (recommendations || []).filter(
-          (r: any) => String(r.publishTarget) === "FAQ" && String(r.llmEvidence?.action || "").toUpperCase() === "CREATE",
-        );
-        if (!newFaq.length) return null;
-        return (
-          <TrustEyeInlineEditor
-            domain={domain}
-            recommendations={newFaq as any}
-            autoOpenAll
-            autoDraft={false}
-            showRegenerate={false}
-            emptyMessage="Please answer."
-            reloadOnPublish
-            publishVariant="subtle"
-            showDiscard
-          />
-        );
-      })()}
-
       {normalized.map((it) => {
         const open = openId === it.id;
         const relevant = (recommendations || []).filter(
@@ -104,6 +84,31 @@ export function FaqAccordion({
           </div>
         );
       })}
+
+      {(() => {
+        // Show draft/new FAQ recommendations after the published FAQ list (keeps demo clean).
+        const newFaq = (recommendations || []).filter(
+          (r: any) => String(r.publishTarget) === "FAQ" && String(r.llmEvidence?.action || "").toUpperCase() === "CREATE",
+        );
+        if (!newFaq.length) return null;
+        return (
+          <div className="mt-2 rounded-2xl border border-[var(--te-border)] bg-white p-4">
+            <div className="text-[12px] font-semibold text-[var(--te-text)]">Draft answers to publish</div>
+            <div className="mt-1 text-[12px] text-[var(--te-muted)]">These are recommended FAQs (not yet published). Review and publish when ready.</div>
+            <TrustEyeInlineEditor
+              domain={domain}
+              recommendations={newFaq as any}
+              autoOpenAll
+              autoDraft={false}
+              showRegenerate={false}
+              emptyMessage="Please answer."
+              reloadOnPublish
+              publishVariant="subtle"
+              showDiscard
+            />
+          </div>
+        );
+      })()}
     </div>
   );
 }
