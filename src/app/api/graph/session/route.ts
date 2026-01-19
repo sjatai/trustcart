@@ -61,6 +61,14 @@ export async function GET(req: Request) {
     if (isDbUnavailableError(err)) {
       return Response.json(dbUnavailablePayload({ route: "/api/graph/session" }));
     }
-    throw err;
+    // Never fail the build: Next may evaluate route handlers during "collect page data".
+    return Response.json(
+      {
+        ok: false,
+        error: "graph_session_failed",
+        route: "/api/graph/session",
+      },
+      { status: 200 }
+    );
   }
 }
