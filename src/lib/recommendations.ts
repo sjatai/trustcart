@@ -294,6 +294,21 @@ export async function generateContentRecommendations(domain: string) {
         questionText: "Where can I try SunnyStep shoes in Singapore, and what time are stores open?",
         claimKey: "store.sg.locations",
         evidence: mkEvidence(["store.sg.locations", "store.sg.hours"]),
+        stableSlug: "faq-stores-singapore-hours",
+        shortAnswer: "Find SunnyStep stores in Singapore and check store-specific opening hours via the store locator.",
+        bodyMarkdown: [
+          "# FAQ: Where are your stores in Singapore, and what are the opening hours?",
+          "",
+          "SunnyStep has physical stores in Singapore where you can try on shoes in person.",
+          "",
+          "## Where to find store locations",
+          "- Use the store locator to view current locations and details.",
+          "",
+          "## Opening hours",
+          "- Opening hours vary by location. Check the store locator for the latest hours for each store.",
+          "",
+          "Source: https://www.sunnystep.com/pages/frequently-asked-questions",
+        ].join("\n"),
       },
       {
         idSeed: "demo_faq_size_guide",
@@ -301,6 +316,22 @@ export async function generateContentRecommendations(domain: string) {
         questionText: "How do I choose the right size (true-to-size + US/EU/UK conversion)?",
         claimKey: "size.guide.conversion",
         evidence: mkEvidence(["product.fit.true_to_size", "size.guide.conversion"]),
+        stableSlug: "faq-size-guide-conversion",
+        shortAnswer: "Use the size guide; fit may vary by style. Follow the brand’s fit notes and size conversion guidance where provided.",
+        bodyMarkdown: [
+          "# FAQ: How do I choose my size? (fit + size conversion)",
+          "",
+          "We recommend checking the size guide for the best fit, as sizing may vary between styles.",
+          "",
+          "## Fit notes",
+          "- Most styles follow the size guide; if you are between sizes, follow the guide’s recommendation.",
+          "- Note: for the Balance Space Runner, consider sizing up by two sizes (per the brand’s guidance).",
+          "",
+          "## Size conversion",
+          "- Refer to the size guide on the site for any available US/EU/UK conversion guidance.",
+          "",
+          "Source: https://www.sunnystep.com/pages/frequently-asked-questions",
+        ].join("\n"),
       },
     ];
 
@@ -308,18 +339,32 @@ export async function generateContentRecommendations(domain: string) {
       recs.push({
         customerId: customer.id,
         kind: "CREATE",
+        status: "DRAFTED",
         publishTarget: "FAQ",
         title: d.title,
         why: "We found the underlying facts in discovery, but shoppers need a single clear FAQ answer.",
         targetUrl: "/site/faq",
-        suggestedContent: "",
+        suggestedContent: String(d.bodyMarkdown || "").trim() ? String(d.bodyMarkdown).trim() + "\n" : "",
         claimKey: d.claimKey,
         questionId: stableSlug("demo", `${domain}|${d.idSeed}`),
         questionText: d.questionText,
         recommendedAssetType: "FAQ",
         llmEvidence: {
           action: "CREATE" as RecAction,
-          stableSlug: stableSlug("faq", `${domain}|${d.idSeed}`),
+          stableSlug: d.stableSlug,
+          draft: {
+            type: "FAQ",
+            title: d.title,
+            slug: d.stableSlug,
+            targetUrl: "/site/faq",
+            content: {
+              shortAnswer: d.shortAnswer,
+              bodyMarkdown: String(d.bodyMarkdown || "").trim() ? String(d.bodyMarkdown).trim() + "\n" : "",
+              factsUsed: [],
+              needsVerification: [],
+              llmEvidence: [{ provider: "SIMULATED", quote: "Prefilled from seeded site facts (no OpenAI required)." }],
+            },
+          },
           evidence: {
             siteCoverage: { covered: true, snippets: d.evidence },
             llmAnswerQuality: "none",
@@ -550,30 +595,27 @@ export async function generateContentRecommendations(domain: string) {
     });
 
     if (existing) {
-      created.push(
-        await prisma.contentRecommendation.update({
-          where: { id: existing.id },
-          data: {
-            title: r.title,
-            why: r.why,
-            targetUrl: r.targetUrl,
-            suggestedContent: r.suggestedContent,
-            claimKey: r.claimKey,
-            recommendedAssetType: r.recommendedAssetType as any,
-            llmEvidence: r.llmEvidence as any,
-            questionText: r.questionText,
-            kind: r.kind as any,
-            productTitle: r.productTitle,
-          },
-        }),
-      );
+      const data: any = {
+        title: r.title,
+        why: r.why,
+        targetUrl: r.targetUrl,
+        suggestedContent: r.suggestedContent,
+        claimKey: r.claimKey,
+        recommendedAssetType: r.recommendedAssetType as any,
+        llmEvidence: r.llmEvidence as any,
+        questionText: r.questionText,
+        kind: r.kind as any,
+        productTitle: r.productTitle,
+      };
+      if (r.status) data.status = r.status as any;
+      created.push(await prisma.contentRecommendation.update({ where: { id: existing.id }, data }));
     } else {
       created.push(
         await prisma.contentRecommendation.create({
           data: {
             customerId: r.customerId,
             kind: r.kind as any,
-            status: "PROPOSED" as any,
+            status: (r.status || "PROPOSED") as any,
             title: r.title,
             why: r.why,
             targetUrl: r.targetUrl,
