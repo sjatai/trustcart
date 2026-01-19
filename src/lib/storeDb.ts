@@ -43,7 +43,16 @@ export async function getStoreBlogAssets(domain = STORE_DOMAIN, limit = 40) {
   const customer = await prisma.customer.findUnique({ where: { domain } });
   if (!customer) return [];
   return prisma.asset.findMany({
-    where: { customerId: customer.id, type: "BLOG" as any, status: "PUBLISHED" as any },
+    where: {
+      customerId: customer.id,
+      type: "BLOG" as any,
+      status: "PUBLISHED" as any,
+      // Filter out the crawled blog index page ("communitystory") which is not a real post.
+      NOT: [
+        { slug: "sunnystep-blog" },
+        { title: { equals: "Sunnystep Blog", mode: "insensitive" } as any },
+      ] as any,
+    } as any,
     orderBy: { updatedAt: "desc" },
     take: limit,
     include: { versions: { orderBy: { version: "desc" }, take: 1 } },
@@ -51,6 +60,8 @@ export async function getStoreBlogAssets(domain = STORE_DOMAIN, limit = 40) {
 }
 
 export async function getStoreBlogAsset(domain = STORE_DOMAIN, slug: string) {
+  // Hide the crawled blog index page ("communitystory") which is not a real post.
+  if (slug === "sunnystep-blog") return null;
   const customer = await prisma.customer.findUnique({ where: { domain } });
   if (!customer) return null;
   return prisma.asset.findFirst({
