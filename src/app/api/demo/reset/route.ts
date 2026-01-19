@@ -199,6 +199,68 @@ export async function POST(req: Request) {
     }
   }
 
+  // Ensure the curated demo blog is always visible immediately after reset
+  // (so the storefront /blog and homepage "Community story" are not empty).
+  try {
+    const curatedTitle = "Comfort science for walking + running: reduce fatigue, recover better";
+    const curatedSlug = "comfort-science-walking-running";
+    const curatedHero = "/images/blogs/woman_doing_run_walk_method.avif";
+    const curatedExcerpt =
+      "A practical guide to reducing fatigue and recovering better—using comfort science principles for walking and running.";
+    const curatedMd = [
+      `# ${curatedTitle}`,
+      "",
+      curatedExcerpt,
+      "",
+      "## The simple idea",
+      "- Reduce pressure hotspots (heel + forefoot) with stable cushioning and support.",
+      "- Keep your gait efficient (less energy loss = less fatigue).",
+      "- Recover faster by lowering repetitive stress over long days.",
+      "",
+      "## Practical checklist",
+      "- Choose shoes with stable arch + heel support (especially for long walking/standing).",
+      "- If you run or do brisk walks, prioritize consistent cushioning and traction.",
+      "- Use the brand’s size guide for the best fit (fit drives comfort more than you think).",
+      "",
+      "Source: https://www.sunnystep.com/pages/frequently-asked-questions",
+      "",
+    ].join("\n");
+
+    const existing = await prisma.asset.findFirst({
+      where: { customerId: customer.id, type: "BLOG" as any, slug: curatedSlug, status: "PUBLISHED" as any } as any,
+      include: { versions: { orderBy: { version: "desc" }, take: 1 } },
+    });
+
+    if (!existing) {
+      await prisma.asset.create({
+        data: {
+          customerId: customer.id,
+          type: "BLOG" as any,
+          status: "PUBLISHED" as any,
+          title: curatedTitle,
+          slug: curatedSlug,
+          meta: { excerpt: curatedExcerpt, imageUrl: curatedHero, seed: "demo_reset/ensure_curated_blog" } as any,
+          versions: { create: [{ version: 1, content: curatedMd }] },
+        } as any,
+      });
+    } else {
+      const latestContent = String(existing.versions?.[0]?.content || "");
+      const needsNewVersion = latestContent.trim() !== curatedMd.trim();
+      const latestVersion = existing.versions?.[0]?.version || 1;
+      await prisma.asset.update({
+        where: { id: existing.id },
+        data: {
+          // Touch updatedAt so it stays first in lists.
+          title: curatedTitle,
+          meta: { ...(typeof existing.meta === "object" && existing.meta ? (existing.meta as any) : {}), excerpt: curatedExcerpt, imageUrl: curatedHero } as any,
+          versions: needsNewVersion ? { create: [{ version: latestVersion + 1, content: curatedMd }] } : undefined,
+        } as any,
+      });
+    }
+  } catch {
+    // ignore: reset should still succeed even if this fails
+  }
+
   return NextResponse.json({
     ok: true,
     domain,
