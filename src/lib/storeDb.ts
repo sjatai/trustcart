@@ -86,8 +86,9 @@ export async function getActiveRecommendations(domain = STORE_DOMAIN) {
   if (!customer) return [];
   return prisma.contentRecommendation.findMany({
     where: { customerId: customer.id, status: { in: ["PROPOSED", "DRAFTED", "APPROVED"] as any } },
-    orderBy: { createdAt: "desc" },
-    take: 30,
+    // Use updatedAt so stable, deterministic demo recommendations stay visible after regeneration.
+    orderBy: { updatedAt: "desc" },
+    take: 60,
   });
 }
 
