@@ -4,8 +4,8 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Controlled multi-domain demo (DB-driven, domain-safe)
-  const nissanDomain = "reliablenissan.com-test";
-  const sunnyDomain = "sunnystep.com-test";
+  const nissanDomain = "reliablenissan.com";
+  const sunnyDomain = "sunnystep.com";
 
   const nissanCustomer = await prisma.customer.upsert({
     where: { domain: nissanDomain },
@@ -168,15 +168,21 @@ async function main() {
   }
 
   // Receipt: seed baseline
-  await prisma.receipt.create({
-    data: {
-      customerId: sunnyCustomer.id,
-      kind: "EXECUTE" as any,
-      actor: "CRAWLER" as any,
-      summary: "Seeded demo customer baseline",
-      input: { domain: sunnyDomain, products: sunnyProducts.length } as any,
-    },
+  const alreadySeeded = await prisma.receipt.findFirst({
+    where: { customerId: sunnyCustomer.id, summary: "Seeded demo customer baseline" },
+    select: { id: true },
   });
+  if (!alreadySeeded) {
+    await prisma.receipt.create({
+      data: {
+        customerId: sunnyCustomer.id,
+        kind: "EXECUTE" as any,
+        actor: "CRAWLER" as any,
+        summary: "Seeded demo customer baseline",
+        input: { domain: sunnyDomain, products: sunnyProducts.length } as any,
+      },
+    });
+  }
 }
 
 main()
